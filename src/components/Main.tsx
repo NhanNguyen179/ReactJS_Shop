@@ -7,6 +7,7 @@ import Cart from "./cart/Cart";
 import SearchResults from "./SearchResults";
 import SignIn from "../view/SignIn";
 import Register from "../view/Register";
+import Profile from "../view/Profile";
 
 export default function Main() {
   return (
@@ -19,7 +20,14 @@ export default function Main() {
         exact
         path="/product/:categoryName"
         component={CategoryPage}
-      ></Route>
+      >
+      </Route>
+      <Route
+        exact
+        path='/profile'
+        component={Profile}
+      >
+      </Route>
       <Route
         exact
         path="/product/:categoryName/:id"
