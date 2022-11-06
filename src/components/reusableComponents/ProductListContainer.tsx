@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      margin: "0px 0% 180px 0%",
+      margin: "180px 0% 180px 0%",
     },
   })
 );
@@ -33,18 +33,18 @@ const ProductListContainer: FC = ({ children }) => {
             : isfrom959px
             ? {
                 justifyContent: "start",
-                margin: "0px 14px",
+                margin: "0px 5px",
                 width: "auto",
               }
             : isto1279px
             ? {
                 justifyContent: "start",
-                margin: "0px 14px",
+                margin: "0px 5px",
                 width: "auto",
               }
             : {
                 justifyContent: "start",
-                margin: "0px 14px",
+                margin: "0px 5px",
                 width: "auto",
               }
         }

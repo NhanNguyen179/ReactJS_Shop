@@ -14,20 +14,18 @@ import orderApi from "../../api/orderApi";
 import productFunction from "../../api/productFunction";
 
 type Params = {
-  id: string;
+  productId: string;
 };
 
 export default function ProductView() {
-  const { id } = useParams<Params>();
+  const { productId } = useParams<Params>();
   const [reviews, setReviews] = React.useState<any>();
   const [product, setProduct] = React.useState<any>();
   React.useEffect(() => {
     // Update the document title using the browser API
     const fetch = async () => {
-      const responeGetProvince: any =
-        await productFunction.getDetailProductById(id);
-        console.log("ProductDetail",responeGetProvince )
-      setProduct(responeGetProvince);
+      const respone: any = await productFunction.getDetailProduct(productId);
+      setProduct(respone);
     };
     fetch();
   }, []);
@@ -48,7 +46,7 @@ export default function ProductView() {
         previousQuantity: quantityState.quantity,
         currentQuantity: quantityState.quantity,
         category: product.category,
-        shopId : product.shop.id,
+        shopId: product.shop.id,
       },
     });
     dispatch({
@@ -79,7 +77,7 @@ export default function ProductView() {
       <ProductViewContainer>
         <ImageView
           category={product?.category}
-          image={product?.image}
+          image={product?.imageUrl}
           name={product?.name}
         />
         <DescriptionView

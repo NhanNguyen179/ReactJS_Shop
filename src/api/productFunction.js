@@ -1,17 +1,17 @@
 import productApi from "./productConfig";
 
 const productAPI = {
-  async getProduct() {
-    return  await productApi.get("products");
+  async getProducts() {
+    return await productApi.get("products");
   },
   async getCategory() {
-    return  await productApi.get("/sv2/categories");
+    return await productApi.get("/sv2/categories");
   },
-  async getProductByCategoryId(id) {
-    return  await productApi.get(`/sv2/products?categoryId=${id}`);
+  async getProduct(categoryId) {
+    return await productApi.get(`/sv2/products?categoryId=${categoryId}`);
   },
-  async getDetailProductById(id) {
-    return  await productApi.get(`/sv2/products/${id}`);
+  async getDetailProduct(id) {
+    return await productApi.get(`/sv2/products/${id}`);
   },
   getUsersByUsername(username) {
     return productApi.get(`/user/getUsersByUsername/${username}`);

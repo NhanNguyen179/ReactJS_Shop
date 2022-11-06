@@ -1,37 +1,60 @@
 import { NavLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import CardActionArea from "@material-ui/core/CardActionArea";
+import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { makeStyles } from "@material-ui/core";
 
 type eachItemProps = {
   id?: string;
-  category?: string;
   name?: string;
   image?: string;
   price?: number;
 };
+const useStyles = makeStyles((theme) => ({
+  card: {
+    borderRadius: "10px",
+    transition: "0.3s",
+    "&:hover": {
+      "& img": {
+        transform: "scale(1.1)",
+      },
+      backgroundColor: "gray",
+    },
+  },
 
-const ProductListContainer = ({
+  media: {
+    height: "200px",
+    width: "100%",
+    objectFit: "cover",
+    transition: "0.3s",
+  },
+  name: {
+    fontSize: "1rem",
+    height: "2rem",
+    textOverflow: "ellipsis",
+  },
+  price: {
+    color: "#FFA500",
+    padding: "0.5rem 0",
+  },
+}));
+
+export default function ProductListContainer({
   id,
-  category,
   name,
   image,
   price,
-}: eachItemProps) => {
+}: eachItemProps) {
   const isMobile = useMediaQuery("(max-width:599px)");
   const isfrom959px = useMediaQuery("(min-width:960px)");
   const isto1279px = useMediaQuery("(max-width:1279px)");
-
-
+  const styles = useStyles();
   return (
     <Grid
       item
-      xs={6}
-      md={4}
-      lg={3}
       style={
         isMobile
           ? { flexBasis: "48%", marginBottom: "20px" }
@@ -42,25 +65,21 @@ const ProductListContainer = ({
           : { flexBasis: "80%", margin: "0%" }
       }
     >
-      <NavLink to={`/product/${category}/${id}`}>
-        <CardActionArea>
+      <NavLink to={`/product/${id}`}>
+        <Card className={styles.card}>
           <CardMedia
             component="img"
             alt={`${name}`}
-            height="280"
             image={` ${process.env.REACT_APP_API_BASE_URl_IMAGE}/${image}`}
             title={`${name}`}
+            className={styles.media}
           />
-          <CardContent style={{ padding: 0 }}>
+          <CardContent>
             <Typography
               gutterBottom
               variant="h5"
-              component="h2"
-              style={{
-                margin: "5px 0px 0px 0px",
-                fontSize: "18px",
-                color: "#242424",
-              }}
+              component="div"
+              className={styles.name}
             >
               {name}
             </Typography>
@@ -68,18 +87,13 @@ const ProductListContainer = ({
               variant="body2"
               color="textSecondary"
               component="p"
-              style={{
-                fontSize: "16px",
-                color: "#242424",
-              }}
+              className={styles.price}
             >
-              {price} kr
+              {price} đ
             </Typography>
           </CardContent>
-        </CardActionArea>
+        </Card>
       </NavLink>
     </Grid>
   );
-};
-
-export default ProductListContainer;
+}

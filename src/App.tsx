@@ -17,15 +17,22 @@ import FooterPositioning from "./context/FooterPositioning";
 import Navigation from "./components/common/Navigation";
 import Main from "./components/Main";
 import Footer from "./components/common/Footer";
+import { Switch, Route } from "react-router-dom";
+import SignIn from "./view/SignIn";
+import Register from "./view/Register";
+import Invoice from "./view/Invoice/Invoice";
 
 export default function App() {
   return (
     <AppProvider>
       <AppProviderSearch>
         <FooterPositioning>
-          <Navigation />
-          <Main />
-          <Footer />
+          <Switch>
+            <Route exact path="/sign-in" component={SignIn}></Route>
+            <Route exact path="/sign-up" component={Register}></Route>
+            <Route exact path="/bill/:id" component={Invoice}></Route>
+            <Route path="/" component={Main}></Route>
+          </Switch>
         </FooterPositioning>
       </AppProviderSearch>
     </AppProvider>

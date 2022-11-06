@@ -8,15 +8,36 @@ import Typography from "@material-ui/core/Typography";
 import productFunction from "../../api/productFunction";
 import * as React from "react";
 import Slider from "react-slick";
+import Container from "@mui/material/Container";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  card: {
     textAlign: "center",
     margin: "0% 5% 5% 5%",
-    // height: "200px",
-    // [theme.breakpoints.up(600)]: {
-    //   height: "100%",
-    // },
+    borderRadius: "10px",
+  },
+  header: {
+    fontFamily: "Roboto, sans-serif",
+    color: "#rgba(0,0,0,.54)",
+    textAlign: "center",
+    fontSize: "1.5rem",
+    padding: "20px 2% 20px 2%",
+  },
+  container: {
+    backgroundColor: "#fff",
+    borderRadius: "10px",
+  },
+  baner: {
+    width: "100%",
+    overflow: "hidden",
+    borderRadius: "20px",
+    margin: "5% 0 5% 0",
+    maxHeight: "200px",
+    objectFit: "cover",
+  },
+  categoryName: {
+    fontSize: "1rem",
+    height: "2rem",
   },
 }));
 
@@ -24,13 +45,14 @@ const settings = {
   className: "center",
   infinite: false,
   dots: true,
-  slidesToShow: 3,
-  speed: 500,
+  slidesToShow: 5,
+  speed: 600,
   rows: 2,
-  slidesPerRow: 2,
+  slidesPerRow: 1,
   slidesToScroll: 3,
   overflow: "initial",
   arrows: true,
+  adaptiveHeight: true,
   responsive: [
     {
       breakpoint: 1024,
@@ -58,57 +80,48 @@ export default function Home() {
 
   React.useEffect(() => {
     const fetch = async () => {
-      const responeGetProvince: any = await productFunction.getCategory();
-      console.log("responeGetProvince", responeGetProvince);
-      setCategories(responeGetProvince);
+      const categories: any = await productFunction.getCategory();
+      setCategories(categories);
     };
     fetch();
   }, []);
   return (
-    <div>
-      <div className="shop-by-category">Danh mục nổi bật</div>
-      <Slider {...settings}>
-        {categories?.map((item: any, index: any) => (
-          <div>
-            <Card className={classes.root}>
-              <CardActionArea>
-                <NavLink to={`/product/${item.id}`}>
-                  <CardMedia
-                    component="img"
-                    alt="CategoryImage"
-                    image="https://th.bing.com/th/id/R.724205bb5ea34be06b1f55cf2726652d?rik=zxsjph0CFaJ41A&riu=http%3a%2f%2fi.huffpost.com%2fgadgets%2fslideshows%2f329660%2fslide_329660_3226556_free.jpg&ehk=qWt6UMhcWD2LBmUM%2fb7Lnqk2hxkHnrCRnrs6p%2bojFT8%3d&risl=&pid=ImgRaw&r=0"
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      component="p"
-                      style={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {item.name}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                      style={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {item.description}
-                    </Typography>
-                  </CardContent>
-                </NavLink>
-              </CardActionArea>
-            </Card>
-          </div>
-        ))}
-      </Slider>
-    </div>
+    <Container fixed>
+      <img
+        className={classes.baner}
+        alt=""
+        src="https://images.unsplash.com/photo-1628271093159-6e186bc0d973?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx"
+      />
+      <div className={classes.container}>
+        <div className={classes.header}>Danh mục nổi bật</div>
+        <Slider {...settings}>
+          {categories?.map((item: any, index: any) => (
+            <div>
+              <Card className={classes.card}>
+                <CardActionArea>
+                  <NavLink to={`/category/${item.id}`}>
+                    <CardMedia
+                      component="img"
+                      alt="CategoryImage"
+                      image={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item.imageUrl}`}
+                      loading="lazy"
+                    />
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        component="p"
+                        className={classes.categoryName}
+                      >
+                        {item.name}
+                      </Typography>
+                    </CardContent>
+                  </NavLink>
+                </CardActionArea>
+              </Card>
+            </div>
+          ))}
+        </Slider>
+      </div>
+    </Container>
   );
 }

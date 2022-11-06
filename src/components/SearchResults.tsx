@@ -20,7 +20,6 @@ export default function SearchResults() {
         <ProductListPaper
           key={product.id}
           id={product.id}
-          category={product.category}
           name={product.name}
           image={product.image}
           price={product.price}

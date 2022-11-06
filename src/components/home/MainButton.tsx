@@ -12,7 +12,7 @@ export default function MainButton() {
                 isMobile ? "main-button_mobile" : "main-button_bigger-screen"
             }
         >
-            <NavLink to="product/Succulents">
+            <NavLink to="product">
                 <WhiteButton
                     variant="contained"
                     color="primary"
