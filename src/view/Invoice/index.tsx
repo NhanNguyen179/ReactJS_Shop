@@ -43,14 +43,12 @@ export default function Invoice() {
       console.log("voucher", voucher);
       const objectShip = {
         from_district: Number(auth.profile.district_code),
-        to_district: 1804,
+        to_district: 1526,
       };
       const service = await orderApi.getService(objectShip);
       setService(service.data);
       console.log("service", service);
       setVoucher(voucher.data);
-   
-     
     }
     fetchData();
   }, []);
@@ -136,6 +134,7 @@ export default function Invoice() {
       service_id: e.target.value,
       to_district_id: auth.profile.district_code,
       to_ward_code: auth.profile.ward_code,
+      toPhone: auth.profile.phone_number,
       items: invoice.map((item: any) => ({
         product_id: item.id,
         quantity: item.quantity,
@@ -148,12 +147,12 @@ export default function Invoice() {
       setServiceId(e.target.value);
     });
   };
-  const orderProduct = () => {
+  const orderProduct = async () => {
     console.log("AUTH", invoice?.at(0)?.shopId);
     console.log("Service", service);
     console.log("voucherId", voucherId);
     console.log("serviceId", serviceId);
-    console.log()
+    console.log();
     const objectCall = {
       // shopId: "8dcc9380-95ed-4ec2-a43f-9e3eeae7d697",
       shopId: invoice?.at(0)?.shopId,
@@ -163,14 +162,14 @@ export default function Invoice() {
       toStreet: auth.profile.address,
       toWardCode: auth.profile.ward_code,
       toDistrictId: auth.profile.district_code,
-      serviceId: serviceId.toString(),
-      voucherId: voucherId.toString(),
+      serviceId: serviceId,
+      voucherId: voucherId,
       items: invoice.map((item: any) => ({
         product_id: item.id,
         quantity: item.quantity,
       })),
     };
-    orderApi.createOrder(objectCall);
+    await orderApi.createOrder(objectCall);
   };
   return (
     <WrapAll style={{ padding: 20 }}>
@@ -262,7 +261,7 @@ export default function Invoice() {
 
                   <TableCell align="right">{totalPrice}</TableCell>
                   <TableCell align="right">
-                    <Button onClick={orderProduct}> Thanh toan </Button>
+                    <Button onClick={orderProduct}> Thanh toán </Button>
                   </TableCell>
                 </TableRow>
               </TableBody>

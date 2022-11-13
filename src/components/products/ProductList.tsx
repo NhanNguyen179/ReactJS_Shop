@@ -1,6 +1,5 @@
 import {
   Card,
-  CardActionArea,
   CardContent,
   CardMedia,
   Grid,
@@ -34,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     objectFit: "cover",
     transition: "0.3s",
+    [theme.breakpoints.down("sm")]: {
+      height: "150px",
+    },
+    [theme.breakpoints.down("md")]: {
+      height: "180px",
+    },
   },
   name: {
     fontSize: "1rem",
@@ -55,8 +60,9 @@ const ProductList = ({ products }: any) => {
           key={product.id}
           item
           xs={6}
-          sm={3}
-          md={2}
+          sm={4}
+          md={3}
+          lg={2}
           className={styles.item}
         >
           <NavLink to={`/product/${product.id}`}>
