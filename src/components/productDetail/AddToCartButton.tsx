@@ -1,6 +1,6 @@
 import React from "react";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { Button } from "@mui/material";
+import { CustomButton } from "../common/CustomButton";
 
 type AddToCartButtonProps = {
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
@@ -9,13 +9,13 @@ type AddToCartButtonProps = {
 export default function AddToCartButton({ onClick }: AddToCartButtonProps) {
   return (
     <div className="add-to-cart-button">
-      <Button variant="contained" color="primary" onClick={onClick}>
+      <CustomButton onClick={onClick}>
         <ShoppingCartIcon
           className="add-to-cart-button-icon"
           style={{ fontSize: "26px" }}
         />
-        ADD TO CART
-      </Button>
+        Thêm vào giỏ hàng
+      </CustomButton>
     </div>
   );
 }

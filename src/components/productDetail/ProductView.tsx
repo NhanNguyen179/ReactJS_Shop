@@ -78,10 +78,15 @@ export default function ProductView() {
 
   if (product && isMobile) {
     return (
-      <Container fixed>
+      <Container fixed style={{ marginTop: "100px" }}>
         <ImageView
           category={product?.category}
-          image={product?.imageUrl}
+          images={product?.imageUrl.map((item: any) => {
+            return {
+              original: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
+              thumbnail: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
+            };
+          })}
           name={product?.name}
         />
         <DescriptionView
@@ -98,19 +103,23 @@ export default function ProductView() {
     );
   } else if (product && !isMobile) {
     return (
-      <Container fixed>
+      <Container fixed style={{ marginTop: "100px" }} maxWidth="lg">
         <Grid
           container
           style={{
             justifyContent: "space-between",
             width: "100%",
-            margin: "0px auto",
           }}
         >
           <Grid item xs={12} sm={6} style={{ flexBasis: "45%" }}>
             <ImageView
               category={product?.category}
-              image={product?.imageUrl}
+              images={product?.imageUrl.map((item: any) => {
+                return {
+                  original: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
+                  thumbnail: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
+                };
+              })}
               name={product?.name}
             />
           </Grid>

@@ -11,7 +11,6 @@ import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    minHeight: "80vh",
     padding: "20px 0",
   },
   item: {

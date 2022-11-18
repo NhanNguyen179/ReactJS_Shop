@@ -3,7 +3,9 @@ import Button from "@mui/material/Button";
 
 export const CustomButton = styled(Button)({
   fontFamily: "Montserrat, sans-serif",
-  display: "inline-block",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   fontWeight: 700,
   textDecoration: "none",
   color: "#fff",
@@ -21,5 +23,8 @@ export const CustomButton = styled(Button)({
   "&:hover": {
     color: "#FFA500",
     background: "#211b19",
+    "& svg": {
+      color: "#FFA500",
+    },
   },
 });

@@ -110,7 +110,7 @@ dist
 
 # testing
 /coverage
-
+.idea
 # production
 /build
 

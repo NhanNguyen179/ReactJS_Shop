@@ -27,7 +27,7 @@ export default function ReviewContainer(child: any) {
   const [ratingSearch, setRatingSearch] = useState(0);
   const [page, setPage] = useState(1);
   const [totalRating, setTotalRating] = useState(0);
-  const [numOfPage, setNumOfPage] = useState(0);
+  const [numOfPage, setNumOfPage] = useState(1);
 
   useEffect(() => {
     async function fetch() {
@@ -95,7 +95,7 @@ export default function ReviewContainer(child: any) {
         }}
       >
         <Grid item xs={2}>
-          <h3 style={{ color: amber[700] }}>
+          <h3 style={{ color: amber[900] }}>
             Đánh giá {totalRating}/5 <Star style={{ color: "yellow" }} />
           </h3>
         </Grid>
@@ -130,7 +130,7 @@ export default function ReviewContainer(child: any) {
         }}
       >
         <Pagination
-          count={20}
+          count={numOfPage}
           defaultPage={1}
           color={"primary"}
           variant="outlined"

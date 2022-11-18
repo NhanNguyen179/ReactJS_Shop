@@ -8,8 +8,9 @@ import { CustomSelect } from "../../components/common/CustomSelect";
 import { CustomButton } from "../../components/common/CustomButton";
 import Loading from "../../components/Loading";
 import userAPI from "../../api/userFunction";
-import { Avatar, Box, Grid, IconButton } from "@mui/material";
+import { Avatar, Box, Grid, IconButton, TextField } from "@mui/material";
 import orderApi from "../../api/orderApi";
+import { PhotoCamera } from "@mui/icons-material";
 
 export default function Profile() {
   const navigated = useHistory();
@@ -27,6 +28,8 @@ export default function Profile() {
   const [wardId, setWardId] = React.useState<string>("");
   const [wards, setWards] = React.useState<any>([]);
   const [gender, setGender] = useState<string>("");
+  const [image, setImage] = useState<any>();
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const dataTemp = new FormData(event.currentTarget);
@@ -69,21 +72,13 @@ export default function Profile() {
       setPaymentType(responeAllPaymentType);
       setPaymentApi(respone.profile);
       setProfile(respone.profile);
+      setImage(
+        process.env.REACT_APP_API_BASE_URl_IMAGE + respone.profile.avatar
+      );
       setLoading(false);
     };
     fetch();
   }, []);
-  let logoStyle = {
-    width: "50px",
-    transition: "400ms ease",
-    borderRadius: "50%",
-    padding: "5px",
-  };
-
-  let navlinkLogoStyle = {
-    display: "flex",
-    alignItems: "center",
-  };
 
   if (loading) return <Loading />;
   const handleChangePayment = (paymentValue: any) => {
@@ -146,37 +141,54 @@ export default function Profile() {
       console.log("paymentApi", paymentApi);
     }
   };
+
+  const handleUploadClick = (event: any) => {
+    console.log();
+    var file = event.target.files[0];
+    const reader = new FileReader();
+    var url = reader.readAsDataURL(file);
+
+    reader.onloadend = function (e: any) {
+      setImage([reader.result]);
+    }.bind(event);
+    console.log(url);
+
+    setImage(event.target.files[0]);
+
+    userAPI.uploadAvatar(event.target.files[0]).then();
+  };
+
   return (
     <Grid container>
       <Container component="main" maxWidth="sm">
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: "100px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          {/* <NavLink to="/" style={navlinkLogoStyle}>
-            <img src={Logo} alt="logo" style={logoStyle} />
-          </NavLink> */}
-          {/* <IconButton
+          <IconButton
             color="primary"
             aria-label="upload picture"
             component="label"
           >
-            <image
-              src="/images/example.jpg"
+            <input
+              hidden
+              accept="image/*"
+              type="file"
+              onChange={handleUploadClick}
+            />
+            <Avatar
+              src={image}
               style={{
                 margin: "10px",
-                width: "60px",
-                height: "60px",
+                width: "100px",
+                height: "100px",
               }}
-              type="file"
-              accept="image/*"
-              
             />
-          </IconButton> */}
+          </IconButton>
           <Typography component="h1" variant="h5">
             Thông tin cá nhân
           </Typography>
@@ -189,6 +201,7 @@ export default function Profile() {
               fullWidth
               name="name"
               label="Tên người dùng"
+              autoFocus
               type="text"
               id="name"
               defaultValue={profile?.name}
@@ -231,7 +244,6 @@ export default function Profile() {
                 label="Tuổi"
                 name="age"
                 autoComplete="age"
-                autoFocus
                 defaultValue={profile?.age}
               />
             </Grid>
@@ -257,7 +269,6 @@ export default function Profile() {
               label="Email"
               name="email"
               autoComplete="email"
-              autoFocus
               defaultValue={profile?.email}
             />
           </Grid>
@@ -312,7 +323,6 @@ export default function Profile() {
               label="Đia chỉ"
               name="address"
               autoComplete="address"
-              autoFocus
               defaultValue={profile?.address}
             />
           </Grid>

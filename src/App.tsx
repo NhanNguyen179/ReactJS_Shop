@@ -19,7 +19,6 @@ import SignIn from "./components/SignIn";
 import Register from "./components/Register";
 import Invoice from "./view/Invoice";
 import Dashboard from "./view/DashBoard/Dashboard";
-import Profile from "./view/Profile";
 
 export default function App() {
   return (
@@ -31,7 +30,6 @@ export default function App() {
             <Route exact path="/dash-board" component={Dashboard}></Route>
             <Route exact path="/sign-up" component={Register}></Route>
             <Route exact path="/bill/:id" component={Invoice}></Route>
-            <Route path="/profile" component={Profile}></Route>
             <Route path="/" component={Main}></Route>
           </Switch>
         </FooterPositioning>

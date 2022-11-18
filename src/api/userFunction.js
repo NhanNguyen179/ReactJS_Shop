@@ -35,6 +35,11 @@ const userAPI = {
   async updateProfile(data) {
     return await userApi.put(`/sv1/users/me/update_profile/`, data);
   },
+  async uploadAvatar(data) {
+    var bodyFormData = new FormData();
+    bodyFormData.append("files", data);
+    await userApi.post(`/sv1/users/me/up_image/`, bodyFormData);
+  },
   // getUserByUsername(username) {
   //   return userApi.get(`/user/getUserByUsername/${username}`)
   // },

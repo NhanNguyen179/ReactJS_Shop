@@ -3,13 +3,8 @@ import { useHistory } from "react-router-dom";
 import { AppContextSearch } from "../../context/ContextSearch";
 import { Types } from "../../context/ReducersSearch";
 import SearchIcon from "@material-ui/icons/Search";
-import {
-  alpha,
-  createStyles,
-  InputBase,
-  makeStyles,
-  Theme,
-} from "@material-ui/core";
+import { alpha, createStyles, makeStyles, Theme } from "@material-ui/core";
+import { InputBase } from "@mui/material";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
