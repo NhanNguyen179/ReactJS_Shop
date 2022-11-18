@@ -7,6 +7,7 @@ import Navigation from "./layout/Navigation";
 import Footer from "./layout/Footer";
 import ProductsPage from "./products/ProductsPage";
 import Profile from "../view/Profile";
+import OrderContainer from "./order/OrderContainer";
 
 export default function Main() {
   return (
@@ -18,6 +19,8 @@ export default function Main() {
         <Route exact path="/product/:productId" component={ProductView}></Route>
         <Route exact path="/cart" component={Cart}></Route>
         <Route path="/profile" component={Profile}></Route>
+          <Route exact path="/order" component={OrderContainer}></Route>
+
         <Route
           exact
           path="/search/query=:query"
