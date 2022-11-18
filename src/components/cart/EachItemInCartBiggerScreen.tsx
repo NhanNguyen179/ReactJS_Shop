@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 import CardMedia from "@material-ui/core/CardMedia";
-import ClearIcon from "@material-ui/icons/Clear";
 import Button from "@material-ui/core/Button";
 import QuantitySelectCartTextField from "./QuantitySelectCart_TextField";
 import QuantitySelectCartDropDown from "./QuantitySelectCart_DropDown";
 import QuantitySetButtonSwitch from "./QuantitySetButtonSwitch";
 import { useStyles } from "./CartStyles";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type eachItemProps = {
   category: string;
@@ -97,7 +97,7 @@ const EachItemInCartBiggerScreen = ({
           className="product-name-in-cart_bigger-screen"
           style={{ flexBasis: "20%" }}
         >
-          {name}{shopId}
+          {name}
         </div>
         <QuantityPresentationSwitch />
         <div className="price-in-cart_bigger-screen">{price} VND</div>
@@ -105,7 +105,7 @@ const EachItemInCartBiggerScreen = ({
           onClick={() => deleteProduct(id, quantity, price)}
           className="delete-button-in-cart_bigger-screen"
         >
-          <ClearIcon />
+          <DeleteIcon />
         </Button>
       </div>
     </div>

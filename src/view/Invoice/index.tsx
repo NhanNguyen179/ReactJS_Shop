@@ -1,9 +1,9 @@
 import * as React from "react";
 import styled from "styled-components";
 import {
-  Button,
   Container,
   InputLabel,
+  makeStyles,
   MenuItem,
   Paper,
   Select,
@@ -16,29 +16,135 @@ import {
 } from "@material-ui/core";
 import { AppContext } from "../../context/Context";
 import orderApi from "../../api/orderApi";
-type Props = {};
+import { CustomButton } from "../../components/common/CustomButton";
+import Value from "../../components/Value";
+import { CustomSelect } from "../../components/common/CustomSelect";
+
+const useStyles = makeStyles((theme) => ({
+  tableContainer: {
+    background: "rgba(255, 255, 255, 0.8)",
+    borderRadius: " 10px !important",
+    border: " 1px solid rgb(219 125 13) !important",
+  },
+  table: {
+    "& tr": {
+      minHeight: "100px !important",
+      height: "100px !important",
+    },
+
+    cursor: "pointer",
+  },
+  THead: {
+    "& th": {
+      borderBottom: "none !important",
+      fontWeight: "bold",
+      fontSize: "20px",
+    },
+
+    borderBottom: "1px solid #7e7979",
+  },
+  TBody: {
+    "& :hover ": {
+      background: "#F7A75D",
+    },
+    "& tr th": {
+      borderBottom: "none !important",
+      textAlign: "left !important",
+      fontSize: "18px",
+    },
+    "& tr td": {
+      borderBottom: "none !important",
+      fontSize: "18px",
+    },
+  },
+  tableHead: {
+    "&>:nth-child(1)": {
+      color: "#000 !important",
+
+      width: "100px ",
+    },
+    "&>:nth-child(2)": {
+      color: "#000 !important",
+
+      width: "150px",
+    },
+    "&>:nth-child(3)": {
+      color: "#000 !important",
+
+      width: "200px",
+    },
+    "&>:nth-child(4)": {
+      color: "#000 !important",
+
+      width: "20px",
+    },
+    "&>:nth-child(5)": {
+      color: "#000 !important",
+
+      width: "200px",
+    },
+  },
+  tableBody: {
+    "&>:nth-child(1)": {
+      color: "#000 !important",
+
+      width: "100px !important",
+      textAlign: "left !important",
+    },
+    "&>:nth-child(2)": {
+      color: "#000 !important",
+
+      width: "150px",
+    },
+    "&>:nth-child(3)": {
+      color: "#000 !important",
+
+      width: "200px",
+    },
+    "&>:nth-child(4)": {
+      color: "#000 !important",
+
+      width: "200px",
+    },
+    "&>:nth-child(5)": {
+      color: "#000 !important",
+
+      width: "200px",
+    },
+  },
+  gridItem: {
+    height: "100%",
+    borderRadius: "12px",
+    [theme.breakpoints.up("md")]: {
+      height: "90px",
+    },
+  },
+  TokenSymbol: {
+    padding: "0px !important",
+  },
+  textCenter: {
+    textAlign: "center",
+  },
+  gridWrapper: {
+    paddingTop: "40px",
+  },
+}));
 export default function Invoice() {
   const { state, dispatch, invoice, setInvoice, auth, setAuth } =
     React.useContext(AppContext);
-
   const [feeShip, setFeeShip] = React.useState<any>();
   const [voucher, setVoucher] = React.useState<any>();
   const [service, setService] = React.useState<any>();
   const [voucherId, setVoucherId] = React.useState<any>();
   const [serviceId, setServiceId] = React.useState<any>();
-
   const [totalPrice, setTotalPrice] = React.useState<any>(
     invoice
       .map((item: any) => item.quantity * item.price)
       .reduce((acc: any, value: any) => acc + value)
       .toFixed(2)
   );
-  console.log(auth);
-  console.log(typeof invoice);
-  console.log("INvoice", invoice);
   React.useEffect(() => {
     async function fetchData() {
-      // You can await here
       const voucher = await orderApi.getVoucher();
       console.log("voucher", voucher);
       const objectShip = {
@@ -51,73 +157,8 @@ export default function Invoice() {
       setVoucher(voucher.data);
     }
     fetchData();
-  }, []);
-  const invoiceItems = [
-    {
-      qty: 1,
-      price: 84.99,
-      subtotal: 84.99,
-      currency: "USD",
-      name: "Gaming Headset",
-    },
-    {
-      qty: 2,
-      price: 99.99,
-      subtotal: 199.98,
-      currency: "USD",
-      name: "Gaming Controller",
-    },
-    {
-      qty: 1,
-      price: 19.99,
-      subtotal: 19.99,
-      currency: "USD",
-      name: "USB PowerPort",
-    },
-    {
-      qty: 5,
-      price: 5.08,
-      subtotal: 25.4,
-      currency: "USD",
-      name: "Smartphone Screen Protector",
-    },
-    {
-      qty: 3,
-      price: 17.99,
-      subtotal: 53.97,
-      currency: "USD",
-      name: "V-Neck T-Shirt",
-    },
-    {
-      qty: 1,
-      price: 33.96,
-      subtotal: 33.96,
-      currency: "USD",
-      name: "Night Vision Binoculars",
-    },
-    {
-      qty: 0,
-      price: 8.49,
-      subtotal: 0,
-      currency: "USD",
-      name: "USB Car Charger",
-    },
-    {
-      qty: 1,
-      price: 79.99,
-      subtotal: 79.99,
-      currency: "USD",
-      name: "Car Dash Cam",
-    },
-    { qty: 0, price: 11.44, subtotal: 0, currency: "USD", name: "Sunglasses" },
-    {
-      qty: 1,
-      price: 21.99,
-      subtotal: 21.99,
-      currency: "USD",
-      name: "Leather Belt",
-    },
-  ];
+  }, [auth.profile.district_code]);
+
   const handleChangeVoucher = (e: any) => {
     // let temp = Number(totalPrice);
     // if (e.target.value > 1) {
@@ -148,11 +189,6 @@ export default function Invoice() {
     });
   };
   const orderProduct = async () => {
-    console.log("AUTH", invoice?.at(0)?.shopId);
-    console.log("Service", service);
-    console.log("voucherId", voucherId);
-    console.log("serviceId", serviceId);
-    console.log();
     const objectCall = {
       // shopId: "8dcc9380-95ed-4ec2-a43f-9e3eeae7d697",
       shopId: invoice?.at(0)?.shopId,
@@ -173,39 +209,48 @@ export default function Invoice() {
   };
   return (
     <WrapAll style={{ padding: 20 }}>
-      <Container maxWidth="md">
-        <Button> Quay lai </Button>
-
-        <h2 style={{ textAlign: "center" }}>Invoice</h2>
+      <CustomButton onClick={orderProduct}>Quay lại</CustomButton>
+      <WrapContainer maxWidth="md">
+        <WrapTitle>
+          <Value value={`Đơn hàng của bạn `} size="40px" color="#FFA500" />
+        </WrapTitle>
         <Paper>
           <div>
-            <b>Tên: {auth.profile.name} </b>{" "}
+            <Value
+              value={`Tên: ${auth.profile.name} `}
+              size="20px"
+              color="#FFA500"
+            />
           </div>
           <div>
-            <b>Địa chỉ: </b>{" "}
+            <Value
+              value={`Địa chỉ: ${auth.profile.name} `}
+              size="20px"
+              color="#FFA500"
+            />
           </div>
           <div>
-            <b>Email: </b> {auth.profile.email}
+            <Value
+              value={`Email: : ${auth.profile.email} `}
+              size="20px"
+              color="#FFA500"
+            />
           </div>
           <div>
-            {" "}
-            <b>SDT: </b> {auth.profile.phone_number}
+            <Value
+              value={`SDT: ${auth.profile.phone_number} `}
+              size="20px"
+              color="#FFA500"
+            />{" "}
           </div>
-
           <TableContainer>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>{Object.keys(invoiceItems[0])[4]}</TableCell>
-                  <TableCell align="right">
-                    {Object.keys(invoiceItems[0])[0]}
-                  </TableCell>
-                  <TableCell align="right">
-                    {Object.keys(invoiceItems[0])[1]}
-                  </TableCell>
-                  <TableCell align="right">
-                    {Object.keys(invoiceItems[0])[2]}
-                  </TableCell>
+                  <TableCell>Tên sản phẩm</TableCell>
+                  <TableCell align="right">Số lượng</TableCell>
+                  <TableCell align="right">Đơn giá</TableCell>
+                  <TableCell align="right">Giá tiền</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -222,54 +267,85 @@ export default function Invoice() {
                     </TableRow>
                   );
                 })}
-                <TableRow>
-                  <TableCell align="left">
-                    <InputLabel id="demo-simple-select-label">
-                      Voucher{" "}
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      label="Age"
-                      onChange={handleChangeVoucher}
-                    >
-                      {voucher?.map((item: any) => (
-                        <MenuItem value={item.id}>{item.name}</MenuItem>
-                      ))}
-                    </Select>
-                  </TableCell>
-                  <TableCell align="left">
-                    <InputLabel id="demo-simple-select-label">
-                      Service{" "}
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      label="Age"
-                      onChange={getFeeShip}
-                    >
-                      {service?.map((item: any) => (
-                        <MenuItem value={item?.service_id}>
-                          {item.short_name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </TableCell>
-                  <TableCell align="right">
-                    <strong>Total Amount in EUR</strong>
-                  </TableCell>
-
-                  <TableCell align="right">{totalPrice}</TableCell>
-                  <TableCell align="right">
-                    <Button onClick={orderProduct}> Thanh toán </Button>
-                  </TableCell>
-                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
+          <WrapActionBill>
+            <WrapSelect>
+              <Value value={`Voucher `} size="16px" color="#FFA500" />
+
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Age"
+                onChange={handleChangeVoucher}
+              >
+                {voucher?.map((item: any) => (
+                  <MenuItem value={item.id}>{item.name}</MenuItem>
+                ))}
+              </Select>
+            </WrapSelect>
+            <WrapSelect>
+              <Value
+                value={`Phương thức vận chuyển `}
+                size="16px"
+                color="#FFA500"
+              />
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Age"
+                onChange={getFeeShip}
+              >
+                {service?.map((item: any) => (
+                  <MenuItem value={item?.service_id}>
+                    {item.short_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </WrapSelect>
+            <WrapSelect>
+              <Value value={`Tổng tiền `} size="16px" color="#FFA500" />
+            </WrapSelect>
+            <WrapSelect>
+              <Value value={`${totalPrice} `} size="22px" color="#FFA500" />
+            </WrapSelect>
+            <WrapSelect>
+              <CustomButton onClick={orderProduct}>Thanh toán</CustomButton>
+            </WrapSelect>
+          </WrapActionBill>
         </Paper>
-      </Container>
+      </WrapContainer>
     </WrapAll>
   );
 }
 const WrapAll = styled.div``;
+const WrapContainer = styled(Container)`
+  height: 100%;
+`;
+const WrapTitle = styled.div`
+  margin-top: 30px;
+  display: flex;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+`;
+const WrapSelect = styled.div`
+  margin-top: 10px;
+  display: flex;
+  gap: 20px;
+`;
+const WrapActionBill = styled.div`
+  margin-top: 30px;
+  display: flex;
+  margin-left: 20px;
+  display: flex;
+  justify-content: end;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+`;
