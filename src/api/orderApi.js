@@ -49,6 +49,9 @@ const orderApi = {
   async createReview(payload){
     return await orderConfig.post('/reviews',payload)
   },
+  async updateReview(payload){
+    return await orderConfig.put(`/reviews/${payload.id}`,payload)
+  }
 
 };
 

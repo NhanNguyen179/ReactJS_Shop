@@ -81,7 +81,18 @@ export default function OrderDetail(child:any){
         } as IReviewCreatePayload
 
         if(review?.id){
-
+            orderApi.updateReview(review).then(
+                res => {
+                    // get review
+                    orderApi.getReviewByOrderId(orderId).then((response)=>{
+                        if(response.data) {
+                            const data = response.data as IReviewOrder
+                            setReview(data)
+                            setEnableReview(false)
+                        }
+                    })
+                }
+            )
         }else{
           orderApi.createReview(payload).then(
               res=>window.location.reload()
