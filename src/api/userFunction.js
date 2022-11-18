@@ -23,6 +23,15 @@ const userAPI = {
   async getInforUser() {
     return userApi.get(`/sv1/users/me/get_user/`);
   },
+  async getShops() {
+    const axiosInstance = axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+      headers: {
+        "Bypass-Tunnel-Reminder": "true",
+      },
+    });
+    return axiosInstance.get(`/sv1/users/get_list_shop/`);
+  },
   async getAllUser() {
     return userApi.get(`/sv1/users/`);
   },
