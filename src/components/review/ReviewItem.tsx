@@ -8,6 +8,7 @@ import { Label } from "@material-ui/icons";
 import Link from "@mui/material/Link";
 import { IReview } from "./Interface";
 import { useState } from "react";
+import util from "../order/util";
 
 export default function ReviewItem(review: IReview) {
   return (
@@ -57,7 +58,7 @@ export default function ReviewItem(review: IReview) {
                 <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
               }
             />
-            <span style={{ marginLeft: "20px" }}>{review.updatedAt}</span>
+            <span style={{ marginLeft: "20px" }}>{util.getFormattedDate(new Date(review.updatedAt))}</span>
           </Box>
           <Box>
             <p style={{ fontSize: "16px" }}>{review.content}</p>
