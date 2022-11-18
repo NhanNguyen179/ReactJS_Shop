@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
+import { Container } from "@mui/material";
 // Generate Order Data
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -78,7 +79,7 @@ export default function Users() {
   };
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Title>Danh sách người dùng</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -113,7 +114,10 @@ export default function Users() {
                 align="left"
                 style={{ maxWidth: "100px", overflow: "hidden" }}
               >{`$${row.profile.certificate}`}</TableCell>
-              <TableCell align="left" style={{ minWidth: "300px", overflow: "hidden" }}>
+              <TableCell
+                align="left"
+                style={{ minWidth: "300px", overflow: "hidden" }}
+              >
                 {viewRm && (
                   <Box sx={{ width: "100%" }}>
                     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -169,9 +173,6 @@ export default function Users() {
           ))}
         </TableBody>
       </Table>
-      {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
-      </Link> */}
     </React.Fragment>
   );
 }

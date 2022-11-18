@@ -136,7 +136,7 @@ export default function ProductView() {
             />
           </Grid>
         </Grid>
-        <ReviewContainer productId={"8dcc9380-95ed-4ec2-a43f-9e3eeae7d612"} />
+        <ReviewContainer productId={productId} />
       </Container>
     );
   } else {
