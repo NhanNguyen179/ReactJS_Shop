@@ -95,7 +95,7 @@ export default function ReviewContainer(child: any) {
         }}
       >
         <Grid item xs={2}>
-          <h3 style={{ color: amber[700] }}>
+          <h3 style={{ color: amber[900] }}>
             Đánh giá {totalRating}/5 <Star style={{ color: "yellow" }} />
           </h3>
         </Grid>
