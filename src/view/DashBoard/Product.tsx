@@ -55,7 +55,7 @@ function preventDefault(event: React.MouseEvent) {
 }
 
 export default function Product() {
-  const [active, setActive] = React.useState<String>("")
+  const [active, setActive] = React.useState<String>("");
   const [value, setValue] = React.useState(0);
   const [checkSwitch, setCheckSwitch] = React.useState(false);
   const [viewRm, setViewRm] = React.useState(false);
@@ -64,33 +64,34 @@ export default function Product() {
   };
 
   const [products, setProducts] = React.useState([]);
-  React.useEffect(() => {
-    const fetch = async () => {
-      const respone: any = await productAPI.getProducts(null);
-      setProducts(respone.data);
-    };
-    fetch();
-  }, []);
-  const fetchProduct = async (active: string) => {
-    setProducts([]);
-    const respone: any = await productAPI.getProductActive(active);
+  const getProducts = async () => {
+    const respone: any = await productAPI.getProducts(null);
     setProducts(respone.data);
-  }
+  };
+  const getDeactiveProducts = async () => {
+    const respone: any = await productAPI.getDeactiveProducts();
+    setProducts(respone.data);
+  };
+
+  React.useEffect(() => {
+    getProducts();
+  }, []);
   const handleActiveChange = (active: string) => {
     setActive(active);
-    fetchProduct(active);
+    active === "true" ? getProducts() : getDeactiveProducts();
   };
   return (
     <React.Fragment>
-      <Title>Product</Title>
+      <Title>Sản phẩm</Title>
       <CustomSelect
-        label="Kich hoat"
+        label="Phân loại"
         options={[
-          { value: "true", label: "da kick hoat" },
-          { value: "false", label: "chua kich hoat" },
+          { value: "true", label: "Đã phê duyệt" },
+          { value: "false", label: "Chưa phê duyệt" },
         ]}
         value={active}
         setValue={handleActiveChange}
+        defaultValue="true"
       />
       <Table size="small">
         <TableHead>
@@ -106,14 +107,15 @@ export default function Product() {
               <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
                 <img
                   src={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${row?.imageUrl}`}
-                  style={{ width: '100px', height: '100px' }}
-                ></img>
+                  style={{ width: "100px", height: "100px" }}
+                  alt="img"
+                />
               </TableCell>
               <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
                 {row.name}
               </TableCell>
               <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
-                {row.price}
+                {row.price} đ
               </TableCell>
               {/* <TableCell
                 align="left"

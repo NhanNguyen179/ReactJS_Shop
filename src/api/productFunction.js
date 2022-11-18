@@ -13,9 +13,9 @@ const productAPI = {
   getUsersByUsername(username) {
     return productApi.get(`/user/getUsersByUsername/${username}`);
   },
-  async getProductActive(active) {
-    return await productApi.get(`/sv2/products`);
-  }
+  async getDeactiveProducts() {
+    return await productApi.get(`/sv2/products/deactive`);
+  },
   // getUserByUsername(username) {
   //   return productApi.get(`/user/getUserByUsername/${username}`)
   // },
