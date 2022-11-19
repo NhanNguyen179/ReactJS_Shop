@@ -1,16 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,35 +20,20 @@ export const drawerWidth = 240;
 const useStyles = makeStyles((theme: any) => ({
   root: {
     display: "flex",
-    fontFamily: "Montserrat, sans-serif",
   },
   logo: {
     color: "white",
     textDecoration: "none",
     fontFamily: "Montserrat, sans-serif",
   },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     backgroundColor: `#FFA500`,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  active: {
-    backgroundColor: theme.palette.action.selected,
   },
 }));
 

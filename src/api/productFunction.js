@@ -5,6 +5,7 @@ const productAPI = {
     return await productApi.get("/sv2/categories");
   },
   async getProducts(request) {
+    console.log(request);
     return await productApi.get("/sv2/products", request);
   },
   async getDetailProduct(id) {
@@ -15,6 +16,12 @@ const productAPI = {
   },
   async getDeactiveProducts() {
     return await productApi.get(`/sv2/products/deactive`);
+  },
+  async deactiveProduct(id) {
+    await productApi.put(`/sv2/products/${id}/deactive`);
+  },
+  async activeProduct(id) {
+    await productApi.put(`/sv2/products/${id}/active`);
   },
   // getUserByUsername(username) {
   //   return productApi.get(`/user/getUserByUsername/${username}`)

@@ -59,7 +59,7 @@ export default function HomeProducts() {
     setLoading(true);
     const fetch = async () => {
       setLoading(true);
-      const respone: any = await productFunction.getProducts(null);
+      const respone: any = await productFunction.getProducts();
       setProducts(respone.data);
       setLoading(false);
     };
