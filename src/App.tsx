@@ -27,9 +27,9 @@ export default function App() {
         <FooterPositioning>
           <Switch>
             <Route exact path="/sign-in" component={SignIn}></Route>
-            <Route path="/dash-board" component={Dashboard}></Route>
             <Route exact path="/sign-up" component={Register}></Route>
             <Route exact path="/bill/:id" component={Invoice}></Route>
+            <Route path="/dash-board" component={Dashboard}></Route>
             <Route path="/" component={Main}></Route>
           </Switch>
         </FooterPositioning>
