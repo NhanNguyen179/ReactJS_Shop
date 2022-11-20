@@ -32,7 +32,7 @@ const orderApi = {
     return await orderConfig.post(`/sv1/users/${idShop}`);
   },
   // manage order
-  async searchOrderByStatus(status,page,shopId = ""){
+  async searchOrderByStatus(status,page = 1,shopId = ""){
     return await orderConfig.get(`/orders?limit=5&page=${page}&status=${status}&shopId=${shopId}`)
   },
   async updateStatusOrder(id,data){
