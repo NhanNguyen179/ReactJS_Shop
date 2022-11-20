@@ -1,11 +1,16 @@
 import productApi from "./productConfig";
 
 const productAPI = {
-  async getCategory() {
+  async getCategories() {
     return await productApi.get("/sv2/categories");
   },
+  async getBrands() {
+    return await productApi.get("/sv2/brands");
+  },
+  async getOptions() {
+    return await productApi.get("/sv2/options");
+  },
   async getProducts(request) {
-    console.log(request);
     return await productApi.get("/sv2/products", request);
   },
   async getDetailProduct(id) {
@@ -23,21 +28,9 @@ const productAPI = {
   async activeProduct(id) {
     await productApi.put(`/sv2/products/${id}/active`);
   },
-  // getUserByUsername(username) {
-  //   return productApi.get(`/user/getUserByUsername/${username}`)
-  // },
-  // follow(userId) {
-  //   return productApi.get(`/user/follow/${userId}`)
-  // },
-  // unfollow(userId) {
-  //   return productApi.get(`/user/unfollow/${userId}`)
-  // },
-  // setAvatarAndDesc(data) {
-  //   return productApi.post(`/user/setAvatarAndDesc`, data)
-  // },
-  // setDesc(desc) {
-  //   return productApi.post(`/user/setDesc`, { desc })
-  // },
+  async createProduct(request) {
+    return await productApi.post("/sv2/products", request);
+  },
 };
 
 export default productAPI;

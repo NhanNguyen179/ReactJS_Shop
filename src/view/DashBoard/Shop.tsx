@@ -84,83 +84,26 @@ export default function Shop() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {shops?.map((shop: any) => (
-            <TableRow key={shop.id}>
-            <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
-            <img
-            src={`${process.env.REACT_APP_API_BASE_URl_IMAGE}${shop?.profile.avatar}`}
-            style={{ width: "100px" }}
-            alt="img"
-            />
-            </TableCell>
-            <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
-            {shop.profile.name}
-            </TableCell>
-              <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
-              {shop.profile.email}
-              </TableCell>
+            {shops?.map((shop: any) => (
+              <TableRow
+                hover
+                key={shop.id}
+                onClick={(e) => {
+                  history.push(`/dash-board/shop/${shop.id}`);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <TableCell>
+                  <Avatar
+                    src={`${process.env.REACT_APP_API_BASE_URl_IMAGE}${shop?.profile.avatar}`}
+                    sx={{ width: 56, height: 56 }}
+                    alt="img"
+                  />
+                </TableCell>
+                <TableCell>{shop.profile.name}</TableCell>
+                <TableCell>{shop.id}</TableCell>
               </TableRow>
-            ))} */}
-            <TableRow
-              hover
-              key="358ccf48-dcd7-4db3-a805-903faa468c7c"
-              onClick={(e) => {
-                history.push(
-                  `/dash-board/shop/358ccf48-dcd7-4db3-a805-903faa468c7c`
-                );
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              <TableCell>
-                <Avatar
-                  src="https://cdn.nguyenkimmall.com/images/companies/_1/tin-tuc/review/phim/anime-naruto.jpg"
-                  sx={{ width: 56, height: 56 }}
-                  alt="img"
-                />
-              </TableCell>
-              <TableCell>Huy Phan</TableCell>
-              <TableCell>358ccf48-dcd7-4db3-a805-903faa468c7c</TableCell>
-            </TableRow>
-            <TableRow
-              hover
-              key="358ccf48-dcd7-4db3-a805-903faa468c7c"
-              onClick={(e) => {
-                history.push(
-                  `/dash-board/shop/358ccf48-dcd7-4db3-a805-903faa468c7c`
-                );
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              <TableCell>
-                <Avatar
-                  src="https://cdn.nguyenkimmall.com/images/companies/_1/tin-tuc/review/phim/anime-naruto.jpg"
-                  sx={{ width: 56, height: 56 }}
-                  alt="img"
-                />
-              </TableCell>
-              <TableCell>Huy Phan</TableCell>
-              <TableCell>358ccf48-dcd7-4db3-a805-903faa468c7c</TableCell>
-            </TableRow>
-            <TableRow
-              hover
-              key="358ccf48-dcd7-4db3-a805-903faa468c7c"
-              onClick={(e) => {
-                history.push(
-                  `/dash-board/shop/358ccf48-dcd7-4db3-a805-903faa468c7c`
-                );
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              <TableCell>
-                <Avatar
-                  src="https://cdn.nguyenkimmall.com/images/companies/_1/tin-tuc/review/phim/anime-naruto.jpg"
-                  sx={{ width: 56, height: 56 }}
-                  alt="img"
-                />
-              </TableCell>
-              <TableCell>Huy Phan</TableCell>
-              <TableCell>358ccf48-dcd7-4db3-a805-903faa468c7c</TableCell>
-            </TableRow>
+            ))}
           </TableBody>
         </Table>
       </Paper>

@@ -86,7 +86,7 @@ export default function Home() {
   React.useEffect(() => {
     const fetch = async () => {
       setLoading(true);
-      const categories: any = await productFunction.getCategory();
+      const categories: any = await productFunction.getCategories();
       setCategories(categories);
       setLoading(false);
     };
