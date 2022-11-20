@@ -27,6 +27,7 @@ interface IOrderSearch {
     id:string,
     status:string,
     total:number,
+    reasonCancel:string,
     createdAt:string,
     updatedAt:string,
     shop:IShopOrder,
@@ -50,6 +51,7 @@ interface IOrderDetail {
     deliveryFee:number
     total:number
     status:string
+    reasonCancel:string
     customer:IOrderDetailCustomer
     shop:IOrderDetailShop
     items:Array<IOrderAndProduct>
@@ -84,6 +86,12 @@ interface IReviewCreatePayload {
     userType: string;
 }
 
+interface IOrderUpdatePayload {
+    idOrder:string,
+    status:string,
+    reason:string
+}
+
 export type {
     IStatusOrder,
     IProductItem,
@@ -92,6 +100,7 @@ export type {
     IOrderSearch,
     IResponseOrder,
     IOrderDetail,
+    IOrderUpdatePayload,
     IOrderDetailCustomer,
     IOrderDetailShop,
     IReviewOrder,

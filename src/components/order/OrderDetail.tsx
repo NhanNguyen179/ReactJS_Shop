@@ -1,4 +1,4 @@
-import {Avatar, Box, Button, FormControl, Grid, Rating, Switch} from "@mui/material";
+import {Avatar, Box, Button, CircularProgress, FormControl, Grid, Rating, Switch} from "@mui/material";
 import React, {useEffect, useRef, useState} from "react";
 import orderApi from "../../api/orderApi";
 import {IOrderDetail, IReviewCreatePayload, IReviewOrder} from "./interface";
@@ -22,22 +22,37 @@ export default function OrderDetail(child:any){
         // else return true
         return false
     })
+
+    // loading
+    const [orderLoading,setOrderLoading] = useState<boolean>(false)
+    const [reviewLoading,setReviewLoading] = useState<boolean>(false)
+
     useEffect(()=>{
         async function fetch(){
-            const response1 = await orderApi.detailOrderById(orderId)
-            const data = response1.data as IOrderDetail
-            if(data){
-                setOrder(data)
+            try{
+                setOrderLoading(p=>true)
+                const response1 = await orderApi.detailOrderById(orderId)
+                setOrderLoading(p=>false)
+                if(response1.data){
+                    const data = response1.data as IOrderDetail
+                    setOrder(data)
+                }
+
+                // get review
+                setReviewLoading(p=>true)
+                orderApi.getReviewByOrderId(orderId).then((response)=>{
+                    if(response.data) {
+                        const data = response.data as IReviewOrder
+                        setReview(data)
+                        setEnableReview(false)
+                        setReviewLoading(p=>false)
+                    }
+                })
+            }catch (err){
+                setOrderLoading(p=>false)
+                setReviewLoading(p=>false)
             }
 
-            // get review
-            orderApi.getReviewByOrderId(orderId).then((response)=>{
-                if(response.data) {
-                    const data = response.data as IReviewOrder
-                    setReview(data)
-                    setEnableReview(false)
-                }
-            })
         }
         fetch().then()
     },[])
@@ -84,18 +99,31 @@ export default function OrderDetail(child:any){
             orderApi.updateReview(review).then(
                 res => {
                     // get review
+                    setReviewLoading(p=>true)
                     orderApi.getReviewByOrderId(orderId).then((response)=>{
                         if(response.data) {
                             const data = response.data as IReviewOrder
                             setReview(data)
                             setEnableReview(false)
+                            setReviewLoading(p=>false)
                         }
                     })
                 }
-            )
+            ).catch(err =>setReviewLoading(p=>false))
         }else{
           orderApi.createReview(payload).then(
-              res=>window.location.reload()
+              res=>{
+                  setReviewLoading(p=>true)
+                  orderApi.getReviewByOrderId(orderId).then((response)=>{
+                      if(response.data) {
+                          const data = response.data as IReviewOrder
+                          setReview(data)
+                          setEnableReview(false)
+                          setReviewLoading(p=>false)
+                      }
+                  })
+              }
+          ).catch(err =>setReviewLoading(p=>false)
           )
         }
     }
@@ -144,18 +172,23 @@ export default function OrderDetail(child:any){
                                 />
                             </Box>
                             <Box sx={enableReview?{display:"block"}:{display: "none"}} >
-                            <FormControl  style={{width:'80%'}}>
-                                <div style={{display:"flex",flexDirection:"column"}}>
-                                    <label htmlFor={"contentReview"}>Nội dung đánh giá </label>
-                                    <textarea rows={10} ref={refReviewContent} style={{resize:"none",columns:30,maxHeight:300}} id={"contentReview"} value={review?review.content:""} onChange={(e)=>handleReviewContentChange(e)}/>
-                                    <br/>
-                                    <label htmlFor={"ratingReview"}>Xếp hạng </label>
-                                    <div style={{width:"100%",textAlign:"center"}}>
-                                        <Rating size={'large'} id={"ratingReview"} value={review?.rating} onChange={(e, value)=>handleChangeRating(e,value)}/>
-                                    </div>
-                                    <Button onClick={(e)=>handleSubmitReview()} style={{backgroundColor:amber[900],color:"white"}}>Đánh giá</Button>
-                                </div>
-                            </FormControl>
+                                {
+                                    reviewLoading?<CircularProgress/>:
+                                        (
+                                            <FormControl  style={{width:'80%'}}>
+                                                <div style={{display:"flex",flexDirection:"column"}}>
+                                                    <label htmlFor={"contentReview"}>Nội dung đánh giá </label>
+                                                    <textarea rows={10} ref={refReviewContent} style={{resize:"none",columns:30,maxHeight:300}} id={"contentReview"} value={review?review.content:""} onChange={(e)=>handleReviewContentChange(e)}/>
+                                                    <br/>
+                                                    <label htmlFor={"ratingReview"}>Xếp hạng </label>
+                                                    <div style={{width:"100%",textAlign:"center"}}>
+                                                        <Rating size={'large'} id={"ratingReview"} value={review?.rating} onChange={(e, value)=>handleChangeRating(e,value)}/>
+                                                    </div>
+                                                    <Button onClick={(e)=>handleSubmitReview()} style={{backgroundColor:amber[900],color:"white"}}>Đánh giá</Button>
+                                                </div>
+                                            </FormControl>
+                                        )
+                                }
                             </Box>
                         </Grid>
                         <Grid xs={4}>
