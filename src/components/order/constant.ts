@@ -7,6 +7,13 @@ const status = {
     canceled:{name:"Đã hủy",value:"cancelled"},
 }
 
+const reasonCancel = [
+    {id:1,name:"thay đổi địa chỉ nhận hàng"},
+   {id:2,name:'mua thêm sản phẩm'},
+    {id:3,name:'khác'}
+]
+
 export default {
-    status
+    status,
+    reasonCancel,
 }
