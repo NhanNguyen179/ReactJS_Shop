@@ -66,8 +66,8 @@ export default function OrderView(child:any) {
          fetch().then()
     },[page,inputStatus])
 
-    const handleChangePage = (e: any) => {
-        setPage(e.value);
+    const handleChangePage = (e: any,value:number) => {
+        setPage(value);
     };
 
     const handlerClickOrderRow = (id:string|null)=>{
@@ -137,6 +137,8 @@ export default function OrderView(child:any) {
                                             <TableCell align="left">số sản phẩm</TableCell>
                                             {inputStatus === constant.status.waitForConfirm.value ?
                                                 <TableCell align="left">Hủy đặt hàng </TableCell> : <></>}
+                                            {inputStatus === constant.status.canceled.value ?
+                                                <TableCell align="left">Lý do hủy </TableCell> : <></>}
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -162,6 +164,7 @@ export default function OrderView(child:any) {
                                                 <TableCell align="left">{row.items.length}</TableCell>
                                                 {inputStatus === constant.status.waitForConfirm.value ? <TableCell align="left"><Button
                                                     onClick={e => handlerCancelOrder(row.id)}><DeleteIcon/></Button></TableCell> : <></>}
+                                                {inputStatus === constant.status.canceled.value ? <TableCell align="left">{row.reasonCancel}</TableCell> : <></>}
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -180,7 +183,7 @@ export default function OrderView(child:any) {
                                         defaultPage={1}
                                         color={"primary"}
                                         variant="outlined"
-                                        onChange={(e) => handleChangePage(e)}
+                                        onChange={(e,value) => handleChangePage(e,value)}
                                     />
                                 </Box>
                             </TableContainer>
