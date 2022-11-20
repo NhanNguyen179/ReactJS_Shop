@@ -49,21 +49,18 @@ const userAPI = {
     bodyFormData.append("files", data);
     await userApi.post(`/sv1/users/me/up_image/`, bodyFormData);
   },
-  // getUserByUsername(username) {
-  //   return userApi.get(`/user/getUserByUsername/${username}`)
-  // },
-  // follow(userId) {
-  //   return userApi.get(`/user/follow/${userId}`)
-  // },
-  // unfollow(userId) {
-  //   return userApi.get(`/user/unfollow/${userId}`)
-  // },
-  // setAvatarAndDesc(data) {
-  //   return userApi.post(`/user/setAvatarAndDesc`, data)
-  // },
-  // setDesc(desc) {
-  //   return userApi.post(`/user/setDesc`, { desc })
-  // },
+  async forgotPassword(data) {
+    const axiosInstance = axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+      headers: {
+        "Bypass-Tunnel-Reminder": "true",
+      },
+    });
+    return await axiosInstance.post(`sv1/auth/forgot_password/`, data);
+  },
+  async changePassword(data) {
+    return await userApi.put(`sv1/auth/me/change_password/`, data);
+  }
 };
 
 export default userAPI;

@@ -19,6 +19,8 @@ import SignIn from "./components/SignIn";
 import Register from "./components/Register";
 import Invoice from "./view/Invoice";
 import Dashboard from "./view/DashBoard/Dashboard";
+import Forgotpassword from "./components/change_for_password/forgotpassword";
+import ChangePassword from "./components/change_for_password/changepassword";
 
 export default function App() {
   return (
@@ -30,6 +32,8 @@ export default function App() {
             <Route exact path="/sign-up" component={Register}></Route>
             <Route exact path="/bill/:id" component={Invoice}></Route>
             <Route path="/dash-board" component={Dashboard}></Route>
+            <Route path="/forgot-password" component={Forgotpassword}></Route>
+            <Route path="/change-password" component={ChangePassword}></Route>
             <Route path="/" component={Main}></Route>
           </Switch>
         </FooterPositioning>
