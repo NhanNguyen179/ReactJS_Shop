@@ -14,7 +14,7 @@ const getListStatus = ()=>{
 
 const getNameStatusByValue = (value:string|undefined):string=>{
     if(value){
-        const a = listStatus.find(x=>x.value==value)
+        const a = listStatus.find(x=>x.value===value)
         if(a){
             return a.name
         }

@@ -37,6 +37,15 @@ interface IOrderSearch {
 interface IResponseOrder {
     orders:Array<IOrderSearch>,
     numOfPage:number
+    nextAction: Array<INextActionResponse>;
+}
+
+interface INextActionResponse {
+    id:number
+    name:string
+    value:string
+    isRequireReason:boolean
+    color:string
 }
 
 // detail component
@@ -104,5 +113,6 @@ export type {
     IOrderDetailCustomer,
     IOrderDetailShop,
     IReviewOrder,
-    IReviewCreatePayload
+    IReviewCreatePayload,
+    INextActionResponse
 }

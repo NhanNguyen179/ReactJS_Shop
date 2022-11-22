@@ -2,13 +2,16 @@ import orderConfig from "./orderConfig";
 
 const orderApi = {
   async getProvinces() {
-    return await orderConfig.get("provinces/");
+    return await orderConfig.get("/provinces/");
   },
   async getReviewByOrderId(id){
     return await orderConfig.get(`/reviews/${id}`)
   },
   async getDistricts(idProvice) {
     return await orderConfig.get(`districts/${idProvice}`);
+  },
+  async getConfigOrder() {
+    return await orderConfig.get(`/config-order`);
   },
   async getWards(idWard) {
     return await orderConfig.get(`wards/${idWard}`);
