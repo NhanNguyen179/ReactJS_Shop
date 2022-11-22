@@ -5,6 +5,8 @@ import Users from "./Users";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Product from "./Product";
+import ShopOrder from "./ShopOrder";
+import Order from "./Order";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +37,16 @@ function DashboardContent() {
           <Container maxWidth="xl" className={classes.container}>
             <Switch>
               <Route exact path="/dash-board" component={Shop}></Route>
+              <Route
+                exact
+                path="/dash-board/order/:shopId"
+                component={Order}
+              ></Route>
+              <Route
+                exact
+                path="/dash-board/orders"
+                component={ShopOrder}
+              ></Route>
               <Route exact path="/dash-board/users" component={Users}></Route>
               <Route exact path="/dash-board/shops" component={Shop}></Route>
               <Route

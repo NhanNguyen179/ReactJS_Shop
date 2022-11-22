@@ -21,11 +21,11 @@ export default function Profile() {
   const [paymentValue, setPaymentValue] = useState<any>();
   const [valuePaymentNumber, setValuePaymentNumber] = useState<any>("");
   const [paymentApi, setPaymentApi] = useState<any>();
-  const [provinceId, setProvinceId] = React.useState<string>("");
+  const [provinceId, setProvinceId] = React.useState<any>("");
   const [provinces, setProvinces] = React.useState<any>([]);
-  const [districtId, setDistrictId] = React.useState<string>("");
+  const [districtId, setDistrictId] = React.useState<any>("");
   const [districts, setDistricts] = React.useState<any>([]);
-  const [wardId, setWardId] = React.useState<string>("");
+  const [wardId, setWardId] = React.useState<any>("");
   const [wards, setWards] = React.useState<any>([]);
   const [gender, setGender] = useState<string>("");
   const [image, setImage] = useState<any>();
@@ -33,6 +33,22 @@ export default function Profile() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const dataTemp = new FormData(event.currentTarget);
+    console.log("provinces", provinces);
+    console.log("wards", wards);
+    console.log("districts", districts);
+    console.log("provinceId", provinceId);
+    console.log("wardId", wardId);
+    console.log("districtId", districtId);
+    const provinceName = provinces.find(
+      (item: any) => item.provinceId.toString() === provinceId
+    );
+    const wardName = wards.find((item: any) => item.wardId === wardId);
+    const districtname = districts.find(
+      (item: any) => item.districtId.toString() === districtId
+    );
+    console.log("provinceName", provinceName);
+    console.log("wardName", wardName);
+    console.log("districtname", districtname);
     const data = {
       name: dataTemp.get("name"),
       phone_number: dataTemp.get("phone_number"),
@@ -45,7 +61,7 @@ export default function Profile() {
       ward_code: wardId,
       age: dataTemp.get("age"),
     };
-
+    console.log("paymentAPi", paymentApi);
     paymentApi.name = data.name;
     paymentApi.address = data.address;
     paymentApi.phone_number = data.phone_number;
@@ -53,7 +69,9 @@ export default function Profile() {
     paymentApi.province_code = data.province_code;
     paymentApi.district_code = data.district_code;
     paymentApi.ward_code = data.ward_code;
-
+    paymentApi.province = provinceName.name;
+    paymentApi.ward = wardName.name;
+    paymentApi.district = districtname.name;
     console.log("paymentApi", data);
     console.log("data", JSON.parse(JSON.stringify(paymentApi)));
     await userAPI.updateProfile(JSON.parse(JSON.stringify(paymentApi)));
@@ -67,6 +85,7 @@ export default function Profile() {
     const fetch = async () => {
       setLoading(true);
       const respone: any = await userAPI.getInforUser();
+      console.log("respone", respone);
       const responeAllPaymentType: any = await userAPI.paymentType();
       console.log(responeAllPaymentType);
       setPaymentType(responeAllPaymentType);
@@ -150,7 +169,7 @@ export default function Profile() {
 
     reader.onloadend = function (e: any) {
       setImage([reader.result]);
-    }.bind(event);
+    };
     console.log(url);
 
     setImage(event.target.files[0]);

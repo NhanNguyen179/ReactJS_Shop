@@ -55,7 +55,7 @@ const orderApi = {
   async updateReview(payload){
     return await orderConfig.put(`/reviews/${payload.id}`,payload)
   }
-
+  
 };
 
 export default orderApi;

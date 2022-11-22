@@ -55,6 +55,11 @@ function ResponsiveDrawer(props: any) {
             display: "Cửa hàng",
             icon: "shopping_cart",
           },
+          {
+            text: "dash-board/orders",
+            display: "Đơn hàng",
+            icon: "shopping_cart",
+          },
           // { text: "people", icon: "people" },
           // { text: "map", icon: "map" },
           // { text: "components", icon: "apps" },
