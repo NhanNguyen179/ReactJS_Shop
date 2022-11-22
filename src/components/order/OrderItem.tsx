@@ -45,7 +45,11 @@ export default function OrderItem(child: any) {
           <Avatar
             variant={"rounded"}
             sx={{ width: 60, height: 60 }}
-            src={item.product?.avatar}
+            src={
+              process.env.REACT_APP_API_BASE_URl_IMAGE +
+              "/" +
+              item.product?.avatar
+            }
           ></Avatar>
         </Grid>
         <Grid item sm={8} md={8} xs={10}>
