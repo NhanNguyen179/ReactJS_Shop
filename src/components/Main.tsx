@@ -23,7 +23,7 @@ export default function Main() {
   let roleName = window.localStorage.getItem("role");
 
   useEffect(() => {
-    setRole(window.localStorage.getItem("role"))
+    setRole(window.localStorage.getItem("role"));
     // Update the document title using the browser API
     console.log("ROLE SGOP", roleName);
   }, []);
@@ -37,7 +37,6 @@ export default function Main() {
         {role ? (
           <>
             <Switch>
-              <Route exact path="/bill" component={Invoice}></Route>
               {role === "admin" && (
                 <Route path="/dash-board" component={Dashboard}></Route>
               )}
@@ -75,10 +74,9 @@ export default function Main() {
                         path={`${url}/search/query=:query`}
                         component={SearchResults}
                       ></Route>
-                       <Route
-                        path={`${url}`}
-                        component={Home}
-                      ></Route>
+                      <Route path={`${url}/bill`} component={Invoice}></Route>
+
+                      <Route exact path={`${url}`} component={Home}></Route>
                     </>
                   )}
                 />

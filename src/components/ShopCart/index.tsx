@@ -95,7 +95,7 @@ const ShopCart = ({ shopId, listProductShop, shopName }: Props) => {
   };
   const payItem = () => {
     setInvoice(listProductShop);
-    history.push("./bill/1");
+    history.push("/m/bill/1");
   };
   return (
     <>

@@ -80,7 +80,7 @@ export default function Navigation() {
     return (
       <div className="navbar" style={style}>
         <div className="logo_bigger-screen">
-          <NavLink to="/" style={navlinkLogoStyle}>
+          <NavLink to="/m" style={navlinkLogoStyle}>
             <img src={logo} alt="logo" style={logoStyle} />
             ShopBee
           </NavLink>
