@@ -24,7 +24,7 @@ export default function CartPreviewContents({
                 : "cart-preview_container_bigger-screen"
             }
           >
-            <div className="title-in-cart-preview">YOUR SHOPPING CART</div>
+            <div className="title-in-cart-preview">Giỏ hàng của bạn</div>
             <div
               className={
                 isMobile

@@ -3,10 +3,11 @@ import Category from "./Category";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import HomeProducts from "./HomeProducts";
 import { makeStyles } from "@material-ui/core/styles";
+import { grey } from "@mui/material/colors";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: grey[100],
   },
 }));
 
