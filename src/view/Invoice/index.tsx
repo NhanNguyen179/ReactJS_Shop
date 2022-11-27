@@ -146,14 +146,12 @@ export default function Invoice() {
   React.useEffect(() => {
     async function fetchData() {
       const voucher = await orderApi.getVoucher();
-      console.log("voucher", voucher);
       const objectShip = {
         from_district: Number(auth.profile.district_code),
         to_district: 1526,
       };
       const service = await orderApi.getService(objectShip);
       setService(service.data);
-      console.log("service", service);
       setVoucher(voucher.data);
     }
     fetchData();
@@ -182,7 +180,6 @@ export default function Invoice() {
       })),
     };
     orderApi.getFeeShip(objectCall).then((rs) => {
-      console.log(Number(rs.data.total));
       setTotalPrice(Number(totalPrice) + Number(rs.data.total));
       setFeeShip(Number(rs.data.total));
       setServiceId(e.target.value);

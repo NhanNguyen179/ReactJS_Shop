@@ -66,7 +66,6 @@ const Register = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(districts);
     const body = {
       username: data.get("username"),
       password: data.get("password"),

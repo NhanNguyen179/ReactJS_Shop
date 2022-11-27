@@ -43,13 +43,17 @@ const AppContext = createContext<{
   setInvoice: (newValue: []) => void;
   auth: any;
   setAuth: (newValue: {}) => void;
+  role: any;
+  setRole: (newValue: any) => void;
 }>({
   state: initialState,
   dispatch: () => null,
   invoice: [],
   auth: {},
   setInvoice: () => undefined,
+  setRole: () => undefined,
   setAuth: () => undefined,
+  role : "",
 });
 
 const mainReducer = (
@@ -69,6 +73,7 @@ const AppProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(mainReducer, initialState);
   const [invoice, setInvoice] = React.useState<[]>([]);
   const [auth, setAuth] = React.useState<any>();
+  const [role, setRole] = React.useState<any>();
 
   return (
     <AppContext.Provider
@@ -79,6 +84,8 @@ const AppProvider: React.FC = ({ children }) => {
         setInvoice,
         auth,
         setAuth,
+        role,
+        setRole,
       }}
     >
       {children}

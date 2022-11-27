@@ -97,7 +97,6 @@ const ShopCart = ({ shopId, listProductShop, shopName }: Props) => {
     setInvoice(listProductShop);
     history.push("./bill/1");
   };
-  console.log("listProductShop",listProductShop)
   return (
     <>
       <WrapShopCardItem>

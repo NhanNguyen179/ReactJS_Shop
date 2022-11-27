@@ -87,7 +87,7 @@ export default function Navigation() {
         </div>
         {auth ? (
           <>
-            <NavLink to="/profile" style={navlinkStyle}>
+            <NavLink to="/m/profile" style={navlinkStyle}>
               <AccountCircleIcon /> <span>{auth.profile.name}</span>
             </NavLink>
           </>

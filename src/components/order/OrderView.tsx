@@ -83,7 +83,6 @@ export default function OrderView(child: any) {
   };
 
   const handleUpdateStatus = (orderId: string, a: INextActionResponse) => {
-    console.log(orderId, a);
     let temp: IOrderUpdatePayload | null = null;
     setUpdatePayload((prevState) => {
       temp = {
@@ -187,10 +186,7 @@ export default function OrderView(child: any) {
                     <TableCell component="th" scope="row">
                       <Box style={{ display: "flex", alignItems: "center" }}>
                         <Avatar
-                          src={
-                            process.env.REACT_APP_API_BASE_URl_IMAGE +
-                            row.shop.avatar
-                          }
+                          src={row.shop.avatar}
                           style={{ marginRight: "5px" }}
                           variant={"rounded"}
                         ></Avatar>

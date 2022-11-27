@@ -54,7 +54,6 @@ const DescriptionView = ({
     });
   };
 
-  console.log(options);
 
   return (
     <div>

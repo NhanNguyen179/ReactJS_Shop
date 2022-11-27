@@ -5,11 +5,9 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import userAPI from "../../api/userFunction";
-import { Avatar, Container, DialogActions, Paper, Typography } from "@mui/material";
+import { Avatar, Container, Paper, Typography } from "@mui/material";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, FormControl, MenuItem, Modal } from "@material-ui/core";
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,8 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ShopOrder() {
-
+export default function Shop() {
   const [shops, setShops] = React.useState([]);
   let history = useHistory();
   const classes = useStyles();
@@ -92,29 +89,24 @@ export default function ShopOrder() {
                 hover
                 key={shop.id}
                 onClick={(e) => {
-                  history.push(`/dash-board/order/${shop.id}`);
+                  history.push(`/dash-board/shop/${shop.id}`);
                 }}
                 style={{ cursor: "pointer" }}
               >
-                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
+                <TableCell>
                   <Avatar
                     src={`${process.env.REACT_APP_API_BASE_URl_IMAGE}${shop?.profile.avatar}`}
-                    style={{ width: "100px" }}
+                    sx={{ width: 56, height: 56 }}
                     alt="img"
                   />
                 </TableCell>
-                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
-                  {shop.profile.name}
-                </TableCell>
-                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
-                  {shop.profile.email}
-                </TableCell>
+                <TableCell>{shop.profile.name}</TableCell>
+                <TableCell>{shop.id}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </Paper>
-    
     </Container>
   );
 }
