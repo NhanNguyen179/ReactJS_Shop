@@ -1,11 +1,8 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/Context";
-import ContinueShoppingButton from "./ContinueShoppingButton";
 import NoProductInCart from "./NoProductInCart";
 import ProductInCart from "./ProductInCart";
 import CartContainer from "./CartContainer";
-import TotalInCart from "./TotalInCart";
-import ShopCart from "../ShopCart";
 
 const Cart = () => {
   const { state } = useContext(AppContext);

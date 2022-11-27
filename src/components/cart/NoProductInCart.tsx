@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { CustomButton } from "../common/CustomButton";
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
-import { Card } from "@mui/material";
 
 const NoProductInCart = () => {
   return (
@@ -15,7 +14,7 @@ const NoProductInCart = () => {
     >
       <h3>Không có sản phẩm trong giỏ hàng</h3>
       <div style={{ maxWidth: "270px" }}>
-        <NavLink to="/">
+        <NavLink to="/m">
           <CustomButton>
             <KeyboardReturnIcon />
             Tiếp tục mua sắm
