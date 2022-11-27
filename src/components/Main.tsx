@@ -1,7 +1,6 @@
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Home from "./home/Home";
 import ProductView from "./productDetail/ProductView";
-import Cart from "./cart/Cart";
 import SearchResults from "./SearchResults";
 import Navigation from "./layout/Navigation";
 import Footer from "./layout/Footer";
@@ -17,6 +16,7 @@ import Register from "./Register";
 import Forgotpassword from "./change_for_password/forgotpassword";
 import ChangePassword from "./change_for_password/changepassword";
 import ShopDashBoard from "../view/ShopDashBoard/Dashboard";
+import { CardInfo } from "./ShopCart/CartInfo";
 
 export default function Main() {
   const { role, setRole } = React.useContext(AppContext);
@@ -61,7 +61,7 @@ export default function Main() {
                         path={`${url}/product/:productId`}
                         component={ProductView}
                       ></Route>
-                      <Route path={`${url}/cart`} component={Cart}></Route>
+                      <Route path={`${url}/cart`} component={CardInfo}></Route>
                       <Route
                         path={`${url}/profile`}
                         component={Profile}
