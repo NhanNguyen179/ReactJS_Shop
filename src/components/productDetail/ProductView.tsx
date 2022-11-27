@@ -97,6 +97,13 @@ export default function ProductView() {
           quantityState={quantityState}
           setQuantityState={setQuantityState}
           quantity={quantityState.quantity}
+          options={product?.options.map((item: any) => {
+            return {
+              id: item.id,
+              name: item.option,
+              choices: item.name,
+            };
+          })}
           AddProduct={AddProduct}
         />
       </Container>
@@ -132,6 +139,13 @@ export default function ProductView() {
               quantityState={quantityState}
               setQuantityState={setQuantityState}
               quantity={quantityState.quantity}
+              options={product?.options.map((item: any) => {
+                return {
+                  id: item.id,
+                  name: item.option,
+                  choices: item.name,
+                };
+              })}
               AddProduct={AddProduct}
             />
           </Grid>

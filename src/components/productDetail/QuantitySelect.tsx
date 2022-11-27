@@ -32,14 +32,14 @@ export default function Quantityselect({ onChange, value }: quantityProps) {
         <FormControl variant="outlined" className={classes.formControl}>
           <div style={{ zIndex: -1 }}>
             <InputLabel htmlFor="outlined-age-native-simple">
-              Quantity
+              Số lượng
             </InputLabel>
           </div>
           <Select
             native
             value={value}
             onChange={onChange}
-            label="Quantity"
+            label="Số lượng"
             inputProps={{
               name: "quantity",
               id: "outlined-age-native-simple",
