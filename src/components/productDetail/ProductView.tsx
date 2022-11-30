@@ -27,10 +27,14 @@ export default function ProductView() {
       setLoading(true);
       const respone: any = await productFunction.getDetailProduct(productId);
       setProduct(respone);
+      setQuantityState({
+        quantity: respone.quantity,
+        name: respone.name,
+      });
       setLoading(false);
     };
     fetch();
-  }, []);
+  }, [productId]);
   const isMobile = useMediaQuery("(max-width:599px)");
 
   const { dispatch } = useContext(AppContext);
@@ -78,7 +82,7 @@ export default function ProductView() {
 
   if (product && isMobile) {
     return (
-      <Container fixed style={{ marginTop: "100px" }}>
+      <Container fixed style={{ marginTop: "100px", backgroundColor: "white" }}>
         <ImageView
           category={product?.category}
           images={product?.imageUrl.map((item: any) => {
@@ -96,7 +100,7 @@ export default function ProductView() {
           id={product?.id}
           quantityState={quantityState}
           setQuantityState={setQuantityState}
-          quantity={quantityState.quantity}
+          quantity={product.quantity}
           options={product?.options.map((item: any) => {
             return {
               id: item.id,
@@ -110,7 +114,15 @@ export default function ProductView() {
     );
   } else if (product && !isMobile) {
     return (
-      <Container fixed style={{ marginTop: "100px" }} maxWidth="lg">
+      <Container
+        fixed
+        style={{
+          marginTop: "100px",
+          backgroundColor: "white",
+          borderRadius: "10px",
+        }}
+        maxWidth="lg"
+      >
         <Grid
           container
           style={{
@@ -138,7 +150,7 @@ export default function ProductView() {
               id={product?.id}
               quantityState={quantityState}
               setQuantityState={setQuantityState}
-              quantity={quantityState.quantity}
+              quantity={product.quantity}
               options={product?.options.map((item: any) => {
                 return {
                   id: item.id,

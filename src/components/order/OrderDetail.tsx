@@ -71,7 +71,6 @@ export default function OrderDetail(child: any) {
   }, [orderId]);
 
   const handleEnabelReviewChange = (e: any) => {
-    console.log(e.target.checked);
     if (e.target.checked) {
       setEnableReview(true);
     } else {
@@ -85,7 +84,6 @@ export default function OrderDetail(child: any) {
         content: refReviewContent.current.value,
       } as IReviewOrder;
     });
-    console.log(review);
   };
   const handleChangeRating = (e: any, value: number | null) => {
     if (value) {
@@ -96,7 +94,6 @@ export default function OrderDetail(child: any) {
         } as IReviewOrder;
       });
     }
-    console.log(review);
   };
 
   const handleSubmitReview = () => {

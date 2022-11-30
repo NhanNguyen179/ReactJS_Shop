@@ -1,11 +1,26 @@
-import ContinueShoppingButton from "./ContinueShoppingButton";
+import { NavLink } from "react-router-dom";
+import { CustomButton } from "../common/CustomButton";
+import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
+import { Card } from "@mui/material";
 
 const NoProductInCart = () => {
   return (
-    <div className="no-product-in-cart-preview">
-      There is no product in your cart.
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
+      <h3>Không có sản phẩm trong giỏ hàng</h3>
       <div style={{ maxWidth: "270px" }}>
-        <ContinueShoppingButton />
+        <NavLink to="/">
+          <CustomButton>
+            <KeyboardReturnIcon />
+            Tiếp tục mua sắm
+          </CustomButton>
+        </NavLink>
       </div>
     </div>
   );

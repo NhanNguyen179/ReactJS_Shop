@@ -19,6 +19,7 @@ import orderApi from "../../api/orderApi";
 import { CustomButton } from "../../components/common/CustomButton";
 import Value from "../../components/Value";
 import { CustomSelect } from "../../components/common/CustomSelect";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -130,6 +131,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function Invoice() {
+  const history = useHistory();
   const { state, dispatch, invoice, setInvoice, auth, setAuth } =
     React.useContext(AppContext);
   const [feeShip, setFeeShip] = React.useState<any>();
@@ -146,14 +148,12 @@ export default function Invoice() {
   React.useEffect(() => {
     async function fetchData() {
       const voucher = await orderApi.getVoucher();
-      console.log("voucher", voucher);
       const objectShip = {
         from_district: Number(auth.profile.district_code),
         to_district: 1526,
       };
       const service = await orderApi.getService(objectShip);
       setService(service.data);
-      console.log("service", service);
       setVoucher(voucher.data);
     }
     fetchData();
@@ -182,7 +182,6 @@ export default function Invoice() {
       })),
     };
     orderApi.getFeeShip(objectCall).then((rs) => {
-      console.log(Number(rs.data.total));
       setTotalPrice(Number(totalPrice) + Number(rs.data.total));
       setFeeShip(Number(rs.data.total));
       setServiceId(e.target.value);
@@ -207,10 +206,11 @@ export default function Invoice() {
     };
     await orderApi.createOrder(objectCall);
   };
+
   return (
     <WrapAll style={{ padding: 20 }}>
-      <CustomButton onClick={orderProduct}>Quay lại</CustomButton>
       <WrapContainer maxWidth="md">
+        <CustomButton onClick={() => history.goBack()}>Quay lại</CustomButton>
         <WrapTitle>
           <Value value={`Đơn hàng của bạn `} size="40px" color="#FFA500" />
         </WrapTitle>
@@ -321,6 +321,7 @@ export default function Invoice() {
 }
 const WrapAll = styled.div``;
 const WrapContainer = styled(Container)`
+  margin-top: 100px;
   height: 100%;
 `;
 const WrapTitle = styled.div`

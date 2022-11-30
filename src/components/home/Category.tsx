@@ -110,7 +110,7 @@ export default function Home() {
               <div key={item.id}>
                 <Card className={classes.card}>
                   <CardActionArea>
-                    <NavLink to={`/products?categoryId=${item.id}`}>
+                    <NavLink to={`/m/products?categoryId=${item.id}`}>
                       <CardMedia
                         component="img"
                         alt="CategoryImage"

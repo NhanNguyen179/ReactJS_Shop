@@ -10,15 +10,17 @@ import Logo from "../../img/Logo/logo.png";
 import { CustomTextField } from "../common/CustomTextField";
 import { CustomCheckBox } from "../common/CustomCheckBox";
 import { CustomSelect } from "../common/CustomSelect";
-import { useState } from "react";
+import React, { useState } from "react";
 import Loading from "../Loading";
 import { CustomButton } from "../common/CustomButton";
+import { AppContext } from "../../context/Context";
 
 export default function SignIn() {
+  const { role, setRole } = React.useContext(AppContext);
   const navigated = useHistory();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [role, setRole] = useState<string>("");
+  const [roleUi, setRoleUi] = useState<string>("");
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const dataTemp = new FormData(event.currentTarget);
@@ -28,11 +30,32 @@ export default function SignIn() {
     };
     try {
       setLoading(true);
-      const response: any = await userFunction.login(data, role);
-      console.log(response.data);
+      const response: any = await userFunction.login(data, roleUi);
       localStorage.setItem("jwtToken", response.data.access_token);
+      console.log("response.data.role", response.data.role);
+      localStorage.setItem("role",response.data.role);
+      setRole(response.data.role);
+      switch (roleUi) {
+        case "shop":
+          // code block
+          navigated.push("/shop-dash-board");
+
+          break;
+        case "customer":
+          // code block
+          navigated.push("/m");
+
+          break;
+        case "admin":
+          // code block
+          navigated.push("/dash-board");
+
+          break;
+        default:
+        // code block
+      }
       setLoading(false);
-      navigated.push("/");
+
     } catch (err) {
       console.log(err);
       setError("Sai tên đăng nhập hoặc mật khẩu");
@@ -97,9 +120,10 @@ export default function SignIn() {
               options={[
                 { value: "shop", label: "Cửa hàng" },
                 { value: "customer", label: "Người dùng" },
+                { value: "admin", label: "Admin" },
               ]}
-              value={role}
-              setValue={setRole}
+              value={roleUi}
+              setValue={setRoleUi}
             />
             <CustomCheckBox label="Nhớ tài khoản" />
             <Typography

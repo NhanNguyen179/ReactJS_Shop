@@ -5,6 +5,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { useStyles } from "./NavigationItemStyles";
+import NoResult from "../../img/Card/NoResult.png";
+import util from "../order/util";
 
 type CartPreviewContentsProps = {
   onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
@@ -15,10 +17,20 @@ const CartPreviewContentsSwitch = ({ onClick }: CartPreviewContentsProps) => {
 
   const { state } = useContext(AppContext);
 
+  console.log(state.products);
+
   if (state.products[0] == null) {
     return (
-      <div className="no-product-in-cart-preview">
-        There is no product in your cart.
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <img src={NoResult} alt="NoResult" />
+        <div>Không có sản phẩm</div>
       </div>
     );
   } else {
@@ -26,13 +38,10 @@ const CartPreviewContentsSwitch = ({ onClick }: CartPreviewContentsProps) => {
       <div>
         {state.products.map((productInCart) => (
           <Card className={classes.root} key={productInCart.id}>
-            <NavLink
-              to={`/product/${productInCart.category}/${productInCart.id}`}
-              onClick={onClick}
-            >
+            <NavLink to={`/product/${productInCart.id}`} onClick={onClick}>
               <CardMedia
                 className={classes.cover}
-                image={productInCart.image}
+                image={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${productInCart.image[0]}`}
                 title="Product"
               />
             </NavLink>
@@ -43,10 +52,10 @@ const CartPreviewContentsSwitch = ({ onClick }: CartPreviewContentsProps) => {
                     {productInCart.name}
                   </div>
                   <div className="sub-info-in-cart-preview">
-                    {productInCart.price} VND
+                    {util.convertToMoneyString(productInCart.price)}
                   </div>
                   <div className="sub-info-in-cart-preview">
-                    Quantity: {productInCart.quantity}
+                    Số lượng: {productInCart.quantity}
                   </div>
                 </div>
               </CardContent>

@@ -33,12 +33,6 @@ export default function Profile() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const dataTemp = new FormData(event.currentTarget);
-    console.log("provinces", provinces);
-    console.log("wards", wards);
-    console.log("districts", districts);
-    console.log("provinceId", provinceId);
-    console.log("wardId", wardId);
-    console.log("districtId", districtId);
     const provinceName = provinces.find(
       (item: any) => item.provinceId.toString() === provinceId
     );
@@ -46,9 +40,6 @@ export default function Profile() {
     const districtname = districts.find(
       (item: any) => item.districtId.toString() === districtId
     );
-    console.log("provinceName", provinceName);
-    console.log("wardName", wardName);
-    console.log("districtname", districtname);
     const data = {
       name: dataTemp.get("name"),
       phone_number: dataTemp.get("phone_number"),
@@ -61,7 +52,6 @@ export default function Profile() {
       ward_code: wardId,
       age: dataTemp.get("age"),
     };
-    console.log("paymentAPi", paymentApi);
     paymentApi.name = data.name;
     paymentApi.address = data.address;
     paymentApi.phone_number = data.phone_number;
@@ -72,8 +62,6 @@ export default function Profile() {
     paymentApi.province = provinceName.name;
     paymentApi.ward = wardName.name;
     paymentApi.district = districtname.name;
-    console.log("paymentApi", data);
-    console.log("data", JSON.parse(JSON.stringify(paymentApi)));
     await userAPI.updateProfile(JSON.parse(JSON.stringify(paymentApi)));
   };
   React.useEffect(() => {
@@ -85,9 +73,7 @@ export default function Profile() {
     const fetch = async () => {
       setLoading(true);
       const respone: any = await userAPI.getInforUser();
-      console.log("respone", respone);
       const responeAllPaymentType: any = await userAPI.paymentType();
-      console.log(responeAllPaymentType);
       setPaymentType(responeAllPaymentType);
       setPaymentApi(respone.profile);
       setProfile(respone.profile);
@@ -157,21 +143,16 @@ export default function Profile() {
           id: paymentValue,
         },
       });
-      console.log("paymentApi", paymentApi);
     }
   };
 
   const handleUploadClick = (event: any) => {
-    console.log();
     var file = event.target.files[0];
     const reader = new FileReader();
     var url = reader.readAsDataURL(file);
-
     reader.onloadend = function (e: any) {
       setImage([reader.result]);
     };
-    console.log(url);
-
     setImage(event.target.files[0]);
 
     userAPI.uploadAvatar(event.target.files[0]).then();
