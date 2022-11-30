@@ -20,7 +20,9 @@ export default function Index(chart:IChartResponse) {
     const theme = useTheme();
 
   return (
-    <div style={{ width: 720, height: 400, margin: " 100px auto" }}>
+    <div style={{ width: 900, height: 300, margin: " 50px auto",position:'relative' }}>
+        <h1 style={{position:"absolute",top:0,left:0}}>Doanh số (VNĐ) </h1>
+        <h1 style={{position:"absolute",bottom:-50,left:'50%'}}>Thời gian</h1>
       <div
         style={{
           display: "flex",
@@ -49,17 +51,6 @@ export default function Index(chart:IChartResponse) {
             stroke={theme.palette.text.secondary}
             style={theme.typography.body2}
           >
-            <Label
-              angle={270}
-              position="left"
-              style={{
-                textAnchor: "middle",
-                fill: theme.palette.text.primary,
-                ...theme.typography.body1,
-              }}
-            >
-              Doanh số (VND)
-            </Label>
           </YAxis>
           <Line
             isAnimationActive={false}

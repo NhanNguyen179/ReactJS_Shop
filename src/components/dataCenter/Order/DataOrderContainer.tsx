@@ -23,7 +23,7 @@ export default function DataOrderContainer(){
                 const data = {
                     dataType:response.data[0].value,
                     numOfLastDays:1,
-                    selectedDate:(new Date()).toString()
+                    selectedDate:new Date()
                 } as IOrderDataCenterQuery
                 fetchData(data).then()
 
@@ -49,7 +49,7 @@ export default function DataOrderContainer(){
     const handleSubmit = ()=>{
         const data = {
             dataType:configSelect,
-            selectedDate:anchor.toString(),
+            selectedDate:anchor,
             numOfLastDays:0
         } as IOrderDataCenterQuery
 
@@ -60,13 +60,14 @@ export default function DataOrderContainer(){
         <div style={{
             width:'100%',
             backgroundColor:grey[100],
-            paddingTop:50
+            paddingTop:50,
+            paddingBottom:50
         }}>
             {/*container*/}
             <div style={{width:1024,backgroundColor:"white",minHeight:500
             ,margin:'100px auto',
                 boxSizing:"border-box",
-                padding:'0 16px'
+                padding:'0 16px 100px'
             }}>
                 {/*header*/}
                 <div style={{width:'100%',borderBottom:`3px solid ${amber[800]}`,paddingBottom:10}}>
@@ -86,7 +87,7 @@ export default function DataOrderContainer(){
                 <Grid container spacing={2} style={{marginTop:20}}>
                     {
                         response?.data?.map((item)=>{
-                            return <Grid item xs={4}><Card dataCard={item} ></Card></Grid>
+                            return <Grid item xs={3}><Card dataCard={item} ></Card></Grid>
                         })
                     }
                 </Grid>
