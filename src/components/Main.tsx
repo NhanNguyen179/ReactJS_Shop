@@ -17,6 +17,7 @@ import Forgotpassword from "./change_for_password/forgotpassword";
 import ChangePassword from "./change_for_password/changepassword";
 import ShopDashBoard from "../view/ShopDashBoard/Dashboard";
 import { CardInfo } from "./ShopCart/CartInfo";
+import Cart from "./cart/Cart";
 
 export default function Main() {
   const { role, setRole } = React.useContext(AppContext);
@@ -34,59 +35,36 @@ export default function Main() {
         <Route path="/sign-up" component={Register}></Route>
         <Route path="/forgot-password" component={Forgotpassword}></Route>
         <Route path="/change-password" component={ChangePassword}></Route>
-        {role ? (
-          <>
-            <Switch>
-              {role === "admin" && (
-                <Route path="/dash-board" component={Dashboard}></Route>
-              )}
-              {role === "shop" && (
-                <Route
-                  path="/shop-dash-board"
-                  component={ShopDashBoard}
-                ></Route>
-              )}
 
-              {(role === "customer" || role === undefined) && (
-                <Route
-                  path="/m"
-                  render={({ match: { url } }) => (
-                    <>
-                      <Navigation />
-                      <Route
-                        path={`${url}/products`}
-                        component={ProductsPage}
-                      ></Route>
-                      <Route
-                        path={`${url}/product/:productId`}
-                        component={ProductView}
-                      ></Route>
-                      <Route path={`${url}/cart`} component={CardInfo}></Route>
-                      <Route
-                        path={`${url}/profile`}
-                        component={Profile}
-                      ></Route>
-                      <Route
-                        path={`${url}/order`}
-                        component={OrderContainer}
-                      ></Route>
-                      <Route
-                        path={`${url}/search/query=:query`}
-                        component={SearchResults}
-                      ></Route>
-                      <Route path={`${url}/bill`} component={Invoice}></Route>
+        <Route path="/dash-board" component={Dashboard}></Route>
 
-                      <Route exact path={`${url}`} component={Home}></Route>
-                    </>
-                  )}
-                />
-              )}
-            </Switch>
-            <Footer />
-          </>
-        ) : (
-          <div></div>
-        )}
+        <Route path="/shop-dash-board" component={ShopDashBoard}></Route>
+
+        <Route
+          path="/m"
+          render={({ match: { url } }) => (
+            <>
+              <Navigation />
+              <Route path={`${url}/products`} component={ProductsPage}></Route>
+              <Route
+                path={`${url}/product/:productId`}
+                component={ProductView}
+              ></Route>
+              <Route path={`${url}/cart`} component={Cart}></Route>
+              <Route path={`${url}/profile`} component={Profile}></Route>
+              <Route path={`${url}/order`} component={OrderContainer}></Route>
+              <Route
+                path={`${url}/search/query=:query`}
+                component={SearchResults}
+              ></Route>
+              <Route path={`${url}/bill`} component={Invoice}></Route>
+
+              <Route exact path={`${url}`} component={Home}></Route>
+            </>
+          )}
+        />
+
+        <Footer />
       </BrowserRouter>
     </>
   );

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     borderRadius: "20px",
     margin: "5% 0 5% 0",
-    maxHeight: "200px",
+    height: "600px",
     objectFit: "cover",
     [theme.breakpoints.down("sm")]: {
       margin: "10% 0 10% 0",
@@ -95,10 +95,11 @@ export default function Home() {
 
   return (
     <Container fixed>
+      
       <img
         className={classes.baner}
         alt=""
-        src="https://images.unsplash.com/photo-1628271093159-6e186bc0d973?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx"
+        src="https://cf.shopee.vn/file/368b9ca41121b5e89bae5292a389ace5"
       />
       <div className={classes.container}>
         <div className={classes.header}>Danh mục nổi bật</div>
