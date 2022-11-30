@@ -19,7 +19,7 @@ import { Switch } from "react-router-dom";
 
 export default function App() {
   return (
-    <AppProvider>
+    <AppProvider >
       <AppProviderSearch>
         <FooterPositioning>
           <Switch>

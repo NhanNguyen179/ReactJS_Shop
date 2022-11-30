@@ -16,11 +16,12 @@ iframe {
   pointer-events: none;
 }
 
-p {
-  font-family: "Roboto", sans-serif;
-}
-
 a:-webkit-any-link {
   text-decoration: none;
   color: #242424;
+}
+*{
+  font-family: Helvetica Neue,Helvetica,Arial,文泉驛正黑,WenQuanYi Zen Hei,Hiragino Sans GB,儷黑 Pro,LiHei Pro,Heiti TC,微軟正黑體,Microsoft JhengHei UI,Microsoft JhengHei,sans-serif;
+  line-height: 1.2;
+  font-size: 0.875rem;
 }
