@@ -54,6 +54,14 @@ const orderApi = {
   },
   async updateReview(payload){
     return await orderConfig.put(`/reviews/${payload.id}`,payload)
+  },
+
+  // data center
+  async getConfigDataCenter(){
+    return await orderConfig.get(`/config-order/data-center`)
+  },
+  async getDataCenterOrder(data){
+    return await orderConfig.post(`/data-center/order/me`,data)
   }
   
 };
