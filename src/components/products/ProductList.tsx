@@ -70,7 +70,11 @@ const ProductList = ({ products }: any) => {
               <CardMedia
                 component="img"
                 alt={`${product.name}`}
-                image={` ${process.env.REACT_APP_API_BASE_URl_IMAGE}/${product.imageUrl}`}
+                image={
+                  product.imageUrl === null
+                    ? ""
+                    : `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${product.imageUrl}`
+                }
                 title={`${product.name}`}
                 className={styles.media}
               />

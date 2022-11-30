@@ -1,4 +1,4 @@
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import Home from "./home/Home";
 import ProductView from "./productDetail/ProductView";
 import SearchResults from "./SearchResults";
@@ -20,16 +20,16 @@ import { CardInfo } from "./ShopCart/CartInfo";
 
 export default function Main() {
   const { role, setRole } = React.useContext(AppContext);
-  let roleName = window.localStorage.getItem("role");
 
   useEffect(() => {
     setRole(window.localStorage.getItem("role"));
-    // Update the document title using the browser API
-    console.log("ROLE SGOP", roleName);
-  }, []);
+  }, [role]);
   return (
     <>
       <BrowserRouter>
+        <Route exact path="/">
+          <Redirect to="/m" />
+        </Route>
         <Route path="/sign-in" component={SignIn}></Route>
         <Route path="/sign-up" component={Register}></Route>
         <Route path="/forgot-password" component={Forgotpassword}></Route>
@@ -47,7 +47,7 @@ export default function Main() {
                 ></Route>
               )}
 
-              {role === "customer" && (
+              {(role === "customer" || role === undefined) && (
                 <Route
                   path="/m"
                   render={({ match: { url } }) => (

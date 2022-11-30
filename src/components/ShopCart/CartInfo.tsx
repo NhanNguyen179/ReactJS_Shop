@@ -1,5 +1,4 @@
 import { Card, Container, Grid } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import { useContext } from "react";
 import { AppContext } from "../../context/Context";
 import NoProductInCart from "../cart/NoProductInCart";

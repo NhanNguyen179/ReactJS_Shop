@@ -18,7 +18,9 @@ export default function Navigation() {
       const information = await userAPI.getInforUser();
       setAuth(information);
     }
-    fetchData();
+    if (auth !== null) {
+      fetchData();
+    }
   }, []);
 
   const [change, setChange] = useState(false);
