@@ -15,7 +15,7 @@ import SignIn from "./SignIn";
 import Register from "./Register";
 import Forgotpassword from "./change_for_password/forgotpassword";
 import ChangePassword from "./change_for_password/changepassword";
-import ShopDashBoard from "../view/ShopDashBoard/Dashboard";
+import ShopDashBoard from "../view/ShopDashBoard/ShopDashboard";
 import { CardInfo } from "./cart/CartInfo";
 
 export default function Main() {

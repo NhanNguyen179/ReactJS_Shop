@@ -1,7 +1,6 @@
 import AppBarAndDrawer from "./AppBarAndDrawer";
 import { Route, Switch } from "react-router-dom";
 import Shop from "./Shop";
-import Users from "./Users";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Product from "./Product";
@@ -36,23 +35,16 @@ function DashboardContent() {
         <main className={classes.content}>
           <Container maxWidth="xl" className={classes.container}>
             <Switch>
-              <Route exact path="/dash-board" component={Shop}></Route>
+              <Route exact path="/shop-dash-board" component={Shop}></Route>
               <Route
                 exact
-                path="/dash-board/order/:shopId"
-                component={Order}
-              ></Route>
-              <Route
-                exact
-                path="/dash-board/orders"
+                path="/shop-dash-board/orders"
                 component={ShopOrder}
               ></Route>
-              <Route exact path="/dash-board/users" component={Users}></Route>
-              <Route exact path="/dash-board/shops" component={Shop}></Route>
               <Route
                 exact
-                path="/dash-board/shop/:shopId"
-                component={Product}
+                path="/shop-dash-board/products"
+                component={ShopOrder}
               ></Route>
             </Switch>
           </Container>

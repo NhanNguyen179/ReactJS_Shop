@@ -5,6 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import AddIcon from "@material-ui/icons/Add";
+import { AppContext } from "../../context/Context";
 import {
   Avatar,
   Button,
@@ -70,12 +71,12 @@ export default function Product() {
   const [products, setProducts] = React.useState([]);
   const [active, setActive] = React.useState(true);
   const [snackOpen, setSnackOpen] = React.useState(false);
-  const shopId = useParams<{ shopId: string }>().shopId;
+  const { auth, setAuth } = React.useContext(AppContext);
   const classes = useStyles();
   const getProducts = async () => {
     const request = {
       params: {
-        shopId: shopId,
+        shopId: auth.Id,
       },
     };
     const respone: any = await productAPI.getProducts(request);
@@ -85,7 +86,7 @@ export default function Product() {
   const getDeactiveProducts = async () => {
     const request = {
       params: {
-        shopId: shopId,
+        shopId: auth.Id,
       },
     };
     const respone: any = await productAPI.getDeactiveProducts();
