@@ -123,7 +123,6 @@ export default function Navigation() {
       const information = await userAPI.getInforUser();
       setAuth(information);
     }
-
     if (auth !== null) {
       fetchData();
     }
