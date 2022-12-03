@@ -1,7 +1,9 @@
 import * as React from "react";
 import styled from "styled-components";
 import {
+  CardMedia,
   Container,
+  Grid,
   InputLabel,
   makeStyles,
   MenuItem,
@@ -24,8 +26,9 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
     background: "rgba(255, 255, 255, 0.8)",
-    borderRadius: " 10px !important",
     border: " 1px solid rgb(219 125 13) !important",
+    borderRadius: "10px",
+    padding: "20px",
   },
   table: {
     "& tr": {
@@ -123,14 +126,15 @@ const useStyles = makeStyles((theme) => ({
   TokenSymbol: {
     padding: "0px !important",
   },
-  textCenter: {
-    textAlign: "center",
+  tablerContainer: {
+    borderBottom: "1px solid !important",
   },
   gridWrapper: {
     paddingTop: "40px",
   },
 }));
 export default function Invoice() {
+  const classes = useStyles();
   const history = useHistory();
   const { state, dispatch, invoice, setInvoice, auth, setAuth } =
     React.useContext(AppContext);
@@ -145,19 +149,19 @@ export default function Invoice() {
       .reduce((acc: any, value: any) => acc + value)
       .toFixed(2)
   );
-  React.useEffect(() => {
-    async function fetchData() {
-      const voucher = await orderApi.getVoucher();
-      const objectShip = {
-        from_district: Number(auth.profile.district_code),
-        to_district: 1526,
-      };
-      const service = await orderApi.getService(objectShip);
-      setService(service.data);
-      setVoucher(voucher.data);
-    }
-    fetchData();
-  }, [auth.profile.district_code]);
+  // React.useEffect(() => {
+  //   async function fetchData() {
+  //     const voucher = await orderApi.getVoucher();
+  //     const objectShip = {
+  //       from_district: Number(auth.profile.district_code),
+  //       to_district: 1526,
+  //     };
+  //     const service = await orderApi.getService(objectShip);
+  //     setService(service.data);
+  //     setVoucher(voucher.data);
+  //   }
+  //   fetchData();
+  // }, [auth.profile.district_code]);
 
   const handleChangeVoucher = (e: any) => {
     // let temp = Number(totalPrice);
@@ -210,12 +214,10 @@ export default function Invoice() {
   return (
     <WrapAll style={{ padding: 20 }}>
       <WrapContainer maxWidth="md">
-        <CustomButton onClick={() => history.goBack()}>Quay lại</CustomButton>
-        <WrapTitle>
-          <Value value={`Đơn hàng của bạn `} size="40px" color="#FFA500" />
-        </WrapTitle>
-        <Paper>
-          <div>
+        {/* <CustomButton onClick={() => history.goBack()}>Quay lại</CustomButton> */}
+
+        <Paper className={classes.tableContainer}>
+          {/* <div>
             <Value
               value={`Tên: ${auth.profile.name} `}
               size="20px"
@@ -242,11 +244,16 @@ export default function Invoice() {
               size="20px"
               color="#FFA500"
             />{" "}
-          </div>
-          <TableContainer>
+          </div> */}
+          <WrapTitle>
+            <Value value={`Đơn hàng của bạn `} size="50px" color="#FFA500" />
+          </WrapTitle>
+
+          <TableContainer className={classes.tablerContainer}>
             <Table>
-              <TableHead>
+              <TableHead className={classes.THead}>
                 <TableRow>
+                  <TableCell>Ảnh sản phẩm</TableCell>
                   <TableCell>Tên sản phẩm</TableCell>
                   <TableCell align="right">Số lượng</TableCell>
                   <TableCell align="right">Đơn giá</TableCell>
@@ -254,10 +261,18 @@ export default function Invoice() {
                 </TableRow>
               </TableHead>
 
-              <TableBody>
+              <TableBody className={classes.TBody}>
                 {invoice?.map((item: any) => {
+                  console.log(
+                    `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item.image[0]}`
+                  );
                   return (
                     <TableRow key={item.name}>
+                      <TableCell>
+                        <CardMedia
+                          image={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item.image[0]}`}
+                        />
+                      </TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell align="right">{item.quantity} </TableCell>
                       <TableCell align="right"> {item.price} </TableCell>
@@ -271,82 +286,143 @@ export default function Invoice() {
             </Table>
           </TableContainer>
           <WrapActionBill>
-            <WrapSelect>
-              <Value value={`Voucher `} size="16px" color="#FFA500" />
+            <Grid container spacing={4}>
+              <Grid item md={12}>
+                <WrapVoucher>
+                  <Value value={`Phương thức vận chuyển `} size="24px"  />
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Age"
+                    onChange={getFeeShip}
+                  >
+                    {service?.map((item: any) => (
+                      <MenuItem value={item?.service_id}>
+                        {item.short_name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </WrapVoucher>
+              </Grid>
+              <Grid item md={12}>
+                <WrapVoucher>
+                  <Value value={`Bee Voucher `} size="24px" />
 
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Age"
-                onChange={handleChangeVoucher}
-              >
-                {voucher?.map((item: any) => (
-                  <MenuItem value={item.id}>{item.name}</MenuItem>
-                ))}
-              </Select>
-            </WrapSelect>
-            <WrapSelect>
-              <Value
-                value={`Phương thức vận chuyển `}
-                size="16px"
-                color="#FFA500"
-              />
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Age"
-                onChange={getFeeShip}
-              >
-                {service?.map((item: any) => (
-                  <MenuItem value={item?.service_id}>
-                    {item.short_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </WrapSelect>
-            <WrapSelect>
-              <Value value={`Tổng tiền `} size="16px" color="#FFA500" />
-            </WrapSelect>
-            <WrapSelect>
-              <Value value={`${totalPrice} `} size="22px" color="#FFA500" />
-            </WrapSelect>
-            <WrapSelect>
-              <CustomButton onClick={orderProduct}>Thanh toán</CustomButton>
-            </WrapSelect>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Age"
+                    onChange={handleChangeVoucher}
+                  >
+                    {voucher?.map((item: any) => (
+                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                    ))}
+                  </Select>
+                </WrapVoucher>
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <WrapInformation>
+                  <Value value={`Tên: `} size="16px" />
+                </WrapInformation>
+                <WrapInformation>
+                  <Value value={`Địa chỉ:  `} size="16px" />
+                </WrapInformation>
+                <WrapInformation>
+                  <Value value={`Email: : `} size="16px" />
+                </WrapInformation>
+                <WrapInformation>
+                  <Value value={`SĐT: `} size="16px" />{" "}
+                </WrapInformation>
+              </Grid>
+
+              <Grid item md={6}>
+                <WrapPrice>
+                  <Value value={`Tổng tiền: `} size="16px" />
+                  <Value value={`${totalPrice} VNĐ`} size="16px" />
+                </WrapPrice>
+                <WrapPrice>
+                  <Value value={`Giảm giá: `} size="16px" />
+                  <Value value={`- ${totalPrice} VNĐ`} size="16px" />
+                </WrapPrice>
+                <WrapPrice>
+                  <Value value={`Cần thanh toán: `} size="16px" />
+                  <Value value={`${totalPrice} VNĐ`} size="16px" color="red" />
+                </WrapPrice>
+              </Grid>
+            </Grid>
           </WrapActionBill>
+          <WrapCenter>
+            <CustomButton onClick={orderProduct}>
+              HOÀN TẤT ĐẶT HÀNG
+            </CustomButton>
+          </WrapCenter>
         </Paper>
       </WrapContainer>
     </WrapAll>
   );
 }
 const WrapAll = styled.div``;
+
+const WrapPrice = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+  margin: 10px 0px;
+  border-bottom: 1px solid;
+  padding: 10px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+const WrapCenter = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
 const WrapContainer = styled(Container)`
   margin-top: 100px;
   height: 100%;
 `;
+
 const WrapTitle = styled.div`
   margin-top: 30px;
-  display: flex;
-  margin-left: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   height: 100%;
   width: 100%;
+  margin-bottom: 30px;
+  padding: 10px;
 `;
+
 const WrapSelect = styled.div`
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
+  align-item: center;
+  width: 100%;
   gap: 20px;
 `;
+
+const WrapVoucher = styled.div`
+  margin-top: 20px;
+  display: flex;
+  align-item: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+`;
+
 const WrapActionBill = styled.div`
   margin-top: 30px;
-  display: flex;
-  margin-left: 20px;
-  display: flex;
-  justify-content: end;
-  height: 100%;
-  width: 100%;
-  flex-direction: column;
+  padding: 15px;
+`;
+
+const WrapInformation = styled.div`
+  margin: 10px 0px 10px 0px;
+  border-bottom: 1px solid;
+  padding: 10px;
 `;
