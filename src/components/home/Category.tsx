@@ -95,7 +95,6 @@ export default function Home() {
 
   return (
     <Container fixed>
-      
       <img
         className={classes.baner}
         alt=""
@@ -111,7 +110,7 @@ export default function Home() {
               <div key={item.id}>
                 <Card className={classes.card}>
                   <CardActionArea>
-                    <NavLink to={`/m/products?categoryId=${item.id}`}>
+                    <NavLink to={`/products?categoryId=${item.id}`}>
                       <CardMedia
                         component="img"
                         alt="CategoryImage"

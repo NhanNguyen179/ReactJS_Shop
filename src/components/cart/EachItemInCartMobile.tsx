@@ -122,7 +122,7 @@ const EachItemInCartMobile = ({
   return (
     <div>
       <Card className={classes.root}>
-        <NavLink to={`/m/product/${id}`}>
+        <NavLink to={`/product/${id}`}>
           <CardMedia
             className={classes.cover}
             image={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${image[0]}`}

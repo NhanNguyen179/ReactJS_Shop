@@ -49,7 +49,7 @@ const CartPreviewContentsSwitch = ({ onClick }: CartPreviewContentsProps) => {
             }}
             key={productInCart.id}
           >
-            <NavLink to={`/m/product/${productInCart.id}`} onClick={onClick}>
+            <NavLink to={`/product/${productInCart.id}`} onClick={onClick}>
               <CardMedia
                 className={classes.cover}
                 image={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${productInCart.image[0]}`}

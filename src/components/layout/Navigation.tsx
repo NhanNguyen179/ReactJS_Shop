@@ -42,7 +42,7 @@ function SimpleDialog(props: SimpleDialogProps) {
       <List sx={{ pt: 0 }}>
         <ListItem onClick={() => handleListItemClick("addAccount")}>
           <NavLink
-            to="/m/profile"
+            to="/profile"
             style={{
               display: "flex",
               justifyContent: "center",
@@ -59,7 +59,7 @@ function SimpleDialog(props: SimpleDialogProps) {
         </ListItem>
         <ListItem onClick={() => handleListItemClick("addAccount")}>
           <NavLink
-            to="/m/order"
+            to="/order"
             style={{
               display: "flex",
               justifyContent: "center",
@@ -102,8 +102,6 @@ function SimpleDialog(props: SimpleDialogProps) {
 
 export default function Navigation() {
   const { auth, setAuth } = useContext(AppContext);
-
-  //
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState("");
 
@@ -208,7 +206,7 @@ export default function Navigation() {
     return (
       <div className="navbar" style={style}>
         <div className="logo_bigger-screen">
-          <NavLink to="/m" style={navlinkLogoStyle}>
+          <NavLink to="/" style={navlinkLogoStyle}>
             <img src={logo} alt="logo" style={logoStyle} />
             ShopBee
           </NavLink>

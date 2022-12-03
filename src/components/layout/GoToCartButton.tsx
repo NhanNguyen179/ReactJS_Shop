@@ -10,7 +10,7 @@ type GoToCartButtonProps = {
 export default function GoToCartButton({ onClick }: GoToCartButtonProps) {
   return (
     <div className="go-to-cart-button">
-      <NavLink to="/m/cart">
+      <NavLink to="/cart">
         <CustomButton onClick={onClick} fullWidth>
           <ShoppingCartIcon
             className="add-to-cart-button-icon-in-cart-preview"
