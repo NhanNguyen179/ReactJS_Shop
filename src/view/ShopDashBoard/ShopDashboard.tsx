@@ -47,7 +47,7 @@ function DashboardContent() {
               ></Route>
               <Route
                 exact
-                path="/shop-dash-board/order-data"
+                path="/shop-dash-board/data-center"
                 component={DataOrderContainer}
               ></Route>
             </Switch>

@@ -48,6 +48,11 @@ function ResponsiveDrawer(props: any) {
       <List>
         {[
           {
+            text: "shop-dash-board/data-center",
+            display: "Thống kê",
+            icon: "trending_up",
+          },
+          {
             text: "shop-dash-board/products",
             display: "Sản phẩm",
             icon: "shopping_cart",
