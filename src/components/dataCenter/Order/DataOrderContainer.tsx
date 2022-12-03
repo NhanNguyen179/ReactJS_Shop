@@ -64,7 +64,7 @@ export default function DataOrderContainer(){
             paddingBottom:50
         }}>
             {/*container*/}
-            <div style={{width:1024,backgroundColor:"white",minHeight:500
+            <div style={{width:900,backgroundColor:"white",minHeight:500
             ,margin:'100px auto',
                 boxSizing:"border-box",
                 padding:'0 16px 100px'
