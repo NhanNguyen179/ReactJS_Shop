@@ -27,10 +27,6 @@ export default function ProductView() {
       setLoading(true);
       const respone: any = await productFunction.getDetailProduct(productId);
       setProduct(respone);
-      setQuantityState({
-        quantity: respone.quantity,
-        name: respone.name,
-      });
       setLoading(false);
     };
     fetch();
