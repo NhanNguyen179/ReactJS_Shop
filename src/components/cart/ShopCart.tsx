@@ -1,15 +1,13 @@
-import { Button, Grid, useMediaQuery } from "@material-ui/core";
+import { Grid, useMediaQuery } from "@material-ui/core";
 import { useContext } from "react";
 import { AppContext } from "../../context/Context";
 import EachItemInCartBiggerScreen from "../cart/EachItemInCartBiggerScreen";
 import EachItemInCartMobile from "../cart/EachItemInCartMobile";
-
 import { Types } from "../../context/Reducers";
 import styled from "styled-components";
-
 import { useHistory } from "react-router-dom";
 import { CustomButton } from "../common/CustomButton";
-import Value from "../Value";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 type Props = {
   shopId?: string;
   listProductShop?: any;
@@ -95,21 +93,40 @@ const ShopCart = ({ shopId, listProductShop, shopName }: Props) => {
   };
   const payItem = () => {
     setInvoice(listProductShop);
-    history.push("/m/bill/1");
+    history.push("/m/bill");
   };
   return (
     <>
       <WrapShopCardItem>
-        <WrapTitle>
-          <Value
-            value={`Tên cửa hàng: ${listProductShop[0].shopName} `}
-            size="20px"
-            color="white"
-          />
-        </WrapTitle>
+        <Grid container>
+          <Grid
+            item
+            xs={1}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "3.75rem",
+              boxSizing: "border-box",
+            }}
+          >
+            <AddBusinessIcon />
+            {isMobile ? "" : "Cửa hàng:"}
+          </Grid>
+          <Grid
+            item
+            xs={5}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "1rem",
+            }}
+          >
+            {listProductShop[0].shopName}
+          </Grid>
+        </Grid>
         {listProductShop?.map((productInCart: any) => (
           <div key={productInCart.id}>
-            <hr />
             {isMobile ? (
               <EachItemInCartMobile
                 category={productInCart.category}
@@ -145,34 +162,30 @@ const ShopCart = ({ shopId, listProductShop, shopName }: Props) => {
             )}
           </div>
         ))}
-        <WrapButton>
-          <CustomButton onClick={payItem}>Thanh toán</CustomButton>
-        </WrapButton>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <CustomButton fullWidth={isMobile ? true : false} onClick={payItem}>
+            Thanh toán
+          </CustomButton>
+        </div>
       </WrapShopCardItem>
     </>
   );
 };
 export default ShopCart;
 const WrapShopCardItem = styled.div`
-  background-color: #f3b94e;
-  border-top: 1px solid #3e3e3e;
+  background: #fff;
   margin-top: 10px;
-  border-radius: 10px;
+  border-radius: 0.125rem;
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 5%);
+  margin-bottom: 0.9375rem;
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
   }
-`;
-const WrapButton = styled.div`
-  display: flex;
-  justify-content: end;
-  margin-right: 20px;
-`;
-const WrapTitle = styled.div`
-  margin-top: 10px;
-  display: flex;
-  justify-content: start;
-  margin-left: 20px;
-  align-item :center;
-  height: 100%;
+  padding: 1rem;
 `;

@@ -37,8 +37,19 @@ const CartPreviewContentsSwitch = ({ onClick }: CartPreviewContentsProps) => {
     return (
       <div>
         {state.products.map((productInCart) => (
-          <Card className={classes.root} key={productInCart.id}>
-            <NavLink to={`/product/${productInCart.id}`} onClick={onClick}>
+          <Card
+            style={{
+              display: "flex",
+              boxShadow: "none",
+              borderRadius: "5px",
+              overflow: "hidden",
+              margin: "10px 0",
+              padding: "10px",
+              border: "1px solid #e0e0e0",
+            }}
+            key={productInCart.id}
+          >
+            <NavLink to={`/m/product/${productInCart.id}`} onClick={onClick}>
               <CardMedia
                 className={classes.cover}
                 image={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${productInCart.image[0]}`}

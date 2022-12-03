@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import QuantitySelectCartTextField from "./QuantitySelectCart_TextField";
 import QuantitySelectCartDropDown from "./QuantitySelectCart_DropDown";
 import QuantitySetButtonSwitch from "./QuantitySetButtonSwitch";
-import { useStyles } from "./CartStyles";
-import DeleteIcon from '@mui/icons-material/Delete';
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import { Checkbox, Grid } from "@mui/material";
+import util from "../order/util";
 
 type eachItemProps = {
   category: string;
@@ -16,7 +16,7 @@ type eachItemProps = {
   name: string;
   currentQuantity: string;
   button: boolean;
-  shopId : string;
+  shopId: string;
   handleChangeQuantity_TextField: (id: string, e: string) => void;
   handleUpdateQuantity_TextField: (
     id: string,
@@ -47,7 +47,8 @@ const EachItemInCartBiggerScreen = ({
   deleteProduct,
   shopId,
 }: eachItemProps) => {
-  const classes = useStyles();
+  console.log(currentQuantity);
+  console.log(quantity);
 
   const QuantityPresentationSwitch = () => {
     if (parseInt(currentQuantity) >= 10) {
@@ -81,34 +82,111 @@ const EachItemInCartBiggerScreen = ({
   };
 
   return (
-    <div>
-      <div
+    <>
+      <Grid
+        container
         style={{
-          justifyContent: "space-between",
-          display: "flex",
-          alignItems: "center",
-          marginBottom: "10px",
+          borderRadius: "5px",
+          border: "1px solid #e0e0e0",
+          margin: "10px 0",
+          padding: "10px 0",
+          boxSizing: "border-box",
         }}
       >
-        <NavLink to={`/product/${category}/${id}`}>
-          <CardMedia className={classes.cover} image={` ${process.env.REACT_APP_API_BASE_URl_IMAGE}/${image[0]}`} />
-        </NavLink>
-        <div
-          className="product-name-in-cart_bigger-screen"
-          style={{ flexBasis: "20%" }}
+        <Grid
+          item
+          xs={1}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          {name}
-        </div>
-        <QuantityPresentationSwitch />
-        <div className="price-in-cart_bigger-screen">{price} VND</div>
-        <Button
-          onClick={() => deleteProduct(id, quantity, price)}
-          className="delete-button-in-cart_bigger-screen"
+          <AddShoppingCartIcon />
+        </Grid>
+        <Grid item xs={5} style={{ display: "flex", alignItems: "center" }}>
+          <NavLink to={`/m/product/${id}`}>
+            <img
+              src={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${image[0]}`}
+              alt=""
+              style={{
+                width: "130px",
+                height: "130px",
+                display: "block",
+              }}
+            />
+          </NavLink>
+          <div
+            style={{
+              display: "flex",
+              overflow: "hidden",
+              lineHeight: "16px",
+              padding: "5px 20px 0 10px",
+            }}
+          >
+            {name}
+          </div>
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <DeleteIcon />
-        </Button>
-      </div>
-    </div>
+          <Grid container>
+            <Grid
+              item
+              xs={3}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {util.convertToMoneyString(price)}
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <QuantityPresentationSwitch />
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {util.convertToMoneyString(price)}
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <DeleteOutlinedIcon
+                onClick={() => deleteProduct(id, quantity, price)}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 

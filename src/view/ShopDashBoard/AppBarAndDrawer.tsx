@@ -47,23 +47,16 @@ function ResponsiveDrawer(props: any) {
       <Divider />
       <List>
         {[
-          // { text: "home", icon: "home" },
-          // { text: "login", icon: "lock" },
-          { text: "dash-board/users", display: "Người dùng", icon: "person" },
           {
-            text: "dash-board/shops",
-            display: "Cửa hàng",
+            text: "shop-dash-board/products",
+            display: "Sản phẩm",
             icon: "shopping_cart",
           },
           {
-            text: "dash-board/orders",
+            text: "shop-dash-board/orders",
             display: "Đơn hàng",
-            icon: "shopping_cart",
+            icon: "receipt",
           },
-          // { text: "people", icon: "people" },
-          // { text: "map", icon: "map" },
-          // { text: "components", icon: "apps" },
-          // { text: "settings", icon: "settings" },
         ].map(({ text, display, icon }, index) => (
           <ListItem
             component={RouterLink}
@@ -96,7 +89,7 @@ function ResponsiveDrawer(props: any) {
             component={RouterLink}
             className={classes.logo}
           >
-            Trang quản trị
+            Chào mừng đến với trang quản lý cửa hàng
           </Typography>
           <div style={{ flexGrow: 1 }}></div>
           <IconButton color="inherit" aria-label="open drawer" edge="end">
