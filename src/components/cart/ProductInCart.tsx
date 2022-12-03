@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/Context";
-import ShopCart from "../ShopCart";
+import ShopCart from "./ShopCart";
 
 const ProductInCart = () => {
   const { state } = useContext(AppContext);

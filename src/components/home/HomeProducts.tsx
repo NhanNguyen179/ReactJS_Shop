@@ -77,7 +77,7 @@ export default function HomeProducts() {
         ) : (
           <ProductList products={products} />
         )}
-        <NavLink className={classes.more} to={`/products`}>
+        <NavLink className={classes.more} to={`/m/products`}>
           Xem thêm
         </NavLink>
       </div>

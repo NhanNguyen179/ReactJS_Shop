@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import QuantitySelectCartTextField from "./QuantitySelectCart_TextField";
 import QuantitySelectCartDropDown from "./QuantitySelectCart_DropDown";
 import QuantitySetButtonSwitch from "./QuantitySetButtonSwitch";
-import { useStyles } from "./CartStyles";
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 
 type eachItemProps = {
   category: string;
@@ -18,7 +18,7 @@ type eachItemProps = {
   price: number;
   name: string;
   currentQuantity: string;
-  shopId : string;
+  shopId: string;
   button: boolean;
   handleChangeQuantity_TextField: (id: string, e: string) => void;
   handleUpdateQuantity_TextField: (
@@ -34,6 +34,36 @@ type eachItemProps = {
   ) => void;
   deleteProduct: (id: string, quantity: string, price: number) => void;
 };
+
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: "flex",
+      boxShadow: "none",
+      overFlow: "hidden",
+      borderRadius: "5px",
+      border: "1px solid #e0e0e0",
+      margin: "10px 0",
+      padding: "10px 0",
+      boxSizing: "border-box",
+    },
+    details: {
+      display: "flex",
+      flexDirection: "column",
+      width: "66%",
+    },
+    content: {
+      flex: "1 0 auto",
+      padding: "0px 0px 0px 20px",
+      paddingBottom: "0 !important",
+      position: "relative",
+    },
+    cover: {
+      width: 130,
+      height: 130,
+    },
+  })
+);
 
 const EachItemInCartMobile = ({
   category,
@@ -92,15 +122,16 @@ const EachItemInCartMobile = ({
   return (
     <div>
       <Card className={classes.root}>
-        <NavLink to={`/product/${category}/${id}`}>
-          <CardMedia className={classes.cover} image={` ${process.env.REACT_APP_API_BASE_URl_IMAGE}/${image}`} />
+        <NavLink to={`/m/product/${id}`}>
+          <CardMedia
+            className={classes.cover}
+            image={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${image[0]}`}
+          />
         </NavLink>
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <div className="product-name-in-cart_mobile">{name}</div>
-            <div className="quantity-select-title-in-cart_mobile">
-              Quantity:
-            </div>
+            <div className="quantity-select-title-in-cart_mobile">Số lượng</div>
             <QuantityPresentationSwitch />
             <div className="price-in-cart_mobile">{price} VND</div>
             <Button

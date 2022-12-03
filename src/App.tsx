@@ -16,14 +16,13 @@ import FooterPositioning from "./context/FooterPositioning";
 import Main from "./components/Main";
 import { Switch } from "react-router-dom";
 
-
 export default function App() {
   return (
     <AppProvider>
       <AppProviderSearch>
         <FooterPositioning>
           <Switch>
-           <Main/>
+            <Main />
           </Switch>
         </FooterPositioning>
       </AppProviderSearch>
