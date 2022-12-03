@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Product from "./Product";
 import ShopOrder from "./ShopOrder";
 import Order from "./Order";
+import Voucher from "./Voucher";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +47,10 @@ function DashboardContent() {
                 exact
                 path="/dash-board/orders"
                 component={ShopOrder}
+              ></Route>
+              <Route
+                  path="/dash-board/vouchers"
+                  component={Voucher}
               ></Route>
               <Route exact path="/dash-board/users" component={Users}></Route>
               <Route exact path="/dash-board/shops" component={Shop}></Route>
