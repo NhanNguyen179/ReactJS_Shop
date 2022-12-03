@@ -20,7 +20,7 @@ export default function Index(chart:IChartResponse) {
     const theme = useTheme();
 
   return (
-    <div style={{ width: 900, height: 300, margin: " 50px auto",position:'relative' }}>
+    <div style={{ width: 700, height: 300, margin: " 50px auto",position:'relative' }}>
         <h1 style={{position:"absolute",top:0,left:0}}>Doanh số (VNĐ) </h1>
         <h1 style={{position:"absolute",bottom:-50,left:'50%'}}>Thời gian</h1>
       <div

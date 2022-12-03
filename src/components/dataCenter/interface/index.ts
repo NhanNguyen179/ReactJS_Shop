@@ -25,6 +25,7 @@ interface IOrderDataResponse {
     name: string;
     info: string;
     value: string;
+    icon:string;
 }
 
 export type {
