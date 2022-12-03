@@ -3,9 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Shop from "./Shop";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-import Product from "./Product";
 import ShopOrder from "./ShopOrder";
-import Order from "./Order";
 
 const useStyles = makeStyles((theme) => ({
   root: {
