@@ -3,9 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import Shop from "./Shop";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-import Product from "./Product";
 import ShopOrder from "./ShopOrder";
-import Order from "./Order";
+import DataOrderContainer from "../../components/dataCenter/Order/DataOrderContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +44,11 @@ function DashboardContent() {
                 exact
                 path="/shop-dash-board/products"
                 component={ShopOrder}
+              ></Route>
+              <Route
+                  exact
+                  path="/shop-dash-board/order-data"
+                  component={DataOrderContainer}
               ></Route>
             </Switch>
           </Container>
