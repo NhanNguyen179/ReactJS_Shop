@@ -77,7 +77,7 @@ const Register = () => {
         district: districts.find(
           (district: any) => district.districtId === districtId
         ).name,
-        province_code: data.get("Tỉnh"),
+        province_code: data.get("Thành phố"),
         province: provinces.find(
           (province: any) => province.provinceId === provinceId
         ).name,
@@ -194,9 +194,9 @@ const Register = () => {
                 wards === null
                   ? []
                   : wards.map((item: any) => ({
-                    value: item.wardId,
-                    label: item.name,
-                  }))
+                      value: item.wardId,
+                      label: item.name,
+                    }))
               }
               value={wardId}
               setValue={setWardId}
