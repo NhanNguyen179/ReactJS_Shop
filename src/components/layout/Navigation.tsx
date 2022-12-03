@@ -84,7 +84,13 @@ export default function Navigation() {
         <div className="logo_bigger-screen">
           <NavLink to="/m" style={navlinkLogoStyle}>
             <img src={logo} alt="logo" style={logoStyle} />
-            ShopBee
+            <h2
+              style={{
+                fontSize: "1.5rem",
+              }}
+            >
+              ShopBee
+            </h2>
           </NavLink>
         </div>
         {auth ? (

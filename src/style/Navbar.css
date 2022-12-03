@@ -60,7 +60,6 @@
 }
 
 .logo_mobile {
-  font-family: "Cinzel", serif;
   color: #242424;
   text-align: center;
   margin: 15px auto 15px auto;
@@ -68,7 +67,6 @@
 }
 
 .logo_bigger-screen {
-  font-family: "Cinzel", serif;
   color: #242424;
   text-align: center;
   -webkit-tap-highlight-color: transparent;
@@ -76,7 +74,6 @@
 }
 
 .nav-link-text {
-  font-family: "Roboto", sans-serif;
   color: #242424;
   display: flex;
   text-align: center;
@@ -143,6 +140,7 @@
 .cart-state {
   color: #000000;
   text-align: center;
+  margin-top: 2px;
 }
 
 /* Navbar common end */
