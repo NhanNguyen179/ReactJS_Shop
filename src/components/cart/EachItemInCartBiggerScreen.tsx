@@ -105,7 +105,7 @@ const EachItemInCartBiggerScreen = ({
           <AddShoppingCartIcon />
         </Grid>
         <Grid item xs={5} style={{ display: "flex", alignItems: "center" }}>
-          <NavLink to={`/m/product/${id}`}>
+          <NavLink to={`/product/${id}`}>
             <img
               src={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${image[0]}`}
               alt=""

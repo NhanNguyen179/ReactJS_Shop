@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function Product() {
+export default function ShopProduct() {
   const [products, setProducts] = React.useState([]);
   const [active, setActive] = React.useState(true);
   const [snackOpen, setSnackOpen] = React.useState(false);
@@ -84,11 +84,6 @@ export default function Product() {
   };
 
   const getDeactiveProducts = async () => {
-    const request = {
-      params: {
-        shopId: auth.Id,
-      },
-    };
     const respone: any = await productAPI.getDeactiveProducts();
     setProducts(respone.data);
   };

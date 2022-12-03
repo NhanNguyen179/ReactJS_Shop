@@ -65,7 +65,7 @@ const ProductList = ({ products }: any) => {
           lg={2}
           className={styles.item}
         >
-          <NavLink to={`/m/product/${product.id}`}>
+          <NavLink to={`/product/${product.id}`}>
             <Card className={styles.card}>
               <CardMedia
                 component="img"

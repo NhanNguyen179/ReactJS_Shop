@@ -26,7 +26,7 @@ export default function MainButton() {
     <div
       className={isMobile ? "main-button_mobile" : "main-button_bigger-screen"}
     >
-      <NavLink to="/m/products">
+      <NavLink to="/products">
         <Button variant="contained" className={styles.button}>
           Mua ngay hôm nay
           <KeyboardArrowRightIcon style={{ marginLeft: "13px" }} />

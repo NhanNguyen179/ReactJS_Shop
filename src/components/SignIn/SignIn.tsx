@@ -32,30 +32,21 @@ export default function SignIn() {
       setLoading(true);
       const response: any = await userFunction.login(data, roleUi);
       localStorage.setItem("jwtToken", response.data.access_token);
-      console.log("response.data.role", response.data.role);
-      localStorage.setItem("role",response.data.role);
+      localStorage.setItem("role", response.data.role);
       setRole(response.data.role);
       switch (roleUi) {
         case "shop":
-          // code block
           navigated.push("/shop-dash-board");
-
           break;
         case "customer":
-          // code block
-          navigated.push("/m");
-
+          navigated.push("/");
           break;
         case "admin":
-          // code block
           navigated.push("/dash-board");
-
           break;
         default:
-        // code block
       }
       setLoading(false);
-
     } catch (err) {
       console.log(err);
       setError("Sai tên đăng nhập hoặc mật khẩu");

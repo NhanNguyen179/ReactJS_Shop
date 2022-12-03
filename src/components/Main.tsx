@@ -1,4 +1,4 @@
-import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Home from "./home/Home";
 import ProductView from "./productDetail/ProductView";
 import SearchResults from "./SearchResults";
@@ -11,11 +11,8 @@ import React, { useEffect } from "react";
 import { AppContext } from "../context/Context";
 import Invoice from "../view/Invoice";
 import Dashboard from "../view/DashBoard/Dashboard";
-import SignIn from "./SignIn";
-import Register from "./Register";
-import Forgotpassword from "./change_for_password/forgotpassword";
-import ChangePassword from "./change_for_password/changepassword";
 import ShopDashBoard from "../view/ShopDashBoard/ShopDashboard";
+import { useHistory } from "react-router";
 import { CardInfo } from "./cart/CartInfo";
 
 export default function Main() {
@@ -24,64 +21,45 @@ export default function Main() {
   useEffect(() => {
     setRole(window.localStorage.getItem("role"));
   }, [role]);
+
   return (
     <>
-      <BrowserRouter>
-        <Route exact path="/">
-          <Redirect to="/m" />
+      <Navigation />
+      <Switch>
+        <Route exact path={"/"} component={Home}></Route>
+        <Route
+          path={`/products/query=:query`}
+          component={SearchResults}
+        ></Route>
+        <Route exact path={`/products`} component={ProductsPage}></Route>
+        <Route path={`/product/:productId`} component={ProductView}></Route>
+        <Route exact path={`/cart`} component={CardInfo}></Route>
+
+        <Route exact path={`/profile`} component={Profile}>
+          {role ? <Profile /> : <Redirect to="/sign-in" />}
         </Route>
-        <Route path="/sign-in" component={SignIn}></Route>
-        <Route path="/sign-up" component={Register}></Route>
-        <Route path="/forgot-password" component={Forgotpassword}></Route>
-        <Route path="/change-password" component={ChangePassword}></Route>
-        {role ? (
-          <>
-            <Switch>
-              {/* {role === "admin" && ( */}
-              <Route path="/dash-board" component={Dashboard}></Route>
-              {/* )} */}
-              {/* {role === "shop" && ( */}
-              <Route path="/shop-dash-board" component={ShopDashBoard}></Route>
-              {/* )} */}
 
-              {/* {(role === "customer" || role === undefined) && ( */}
-              <Route
-                path="/m"
-                render={({ match: { url } }) => (
-                  <>
-                    <Navigation />
-                    <Route
-                      path={`${url}/products`}
-                      component={ProductsPage}
-                    ></Route>
-                    <Route
-                      path={`${url}/product/:productId`}
-                      component={ProductView}
-                    ></Route>
-                    <Route path={`${url}/cart`} component={CardInfo}></Route>
-                    <Route path={`${url}/profile`} component={Profile}></Route>
-                    <Route
-                      path={`${url}/order`}
-                      component={OrderContainer}
-                    ></Route>
-                    <Route
-                      path={`${url}/search/query=:query`}
-                      component={SearchResults}
-                    ></Route>
-                    <Route path={`${url}/bill`} component={Invoice}></Route>
+        <Route path="/dash-board" component={Dashboard}>
+          {role === "admin" ? <Dashboard /> : <Redirect to="/sign-in" />}
+        </Route>
 
-                    <Route exact path={`${url}`} component={Home}></Route>
-                  </>
-                )}
-              />
-              {/* )} */}
-            </Switch>
-            <Footer />
-          </>
-        ) : (
-          <div></div>
-        )}
-      </BrowserRouter>
+        <Route path="/shop-dash-board" component={ShopDashBoard}>
+          {role === "shop" ? <ShopDashBoard /> : <Redirect to="/sign-in" />}
+        </Route>
+
+        <Route path={`/bill`} component={Invoice}>
+          {role === "customer" ? <Invoice /> : <Redirect to="/sign-in" />}
+        </Route>
+
+        <Route path={`/order`} component={OrderContainer}>
+          {role === "customer" ? (
+            <OrderContainer />
+          ) : (
+            <Redirect to="/sign-in" />
+          )}
+        </Route>
+      </Switch>
+      <Footer />
     </>
   );
 }
