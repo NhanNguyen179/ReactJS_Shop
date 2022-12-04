@@ -22,6 +22,7 @@ import { CustomButton } from "../../components/common/CustomButton";
 import Value from "../../components/Value";
 import { CustomSelect } from "../../components/common/CustomSelect";
 import { useHistory } from "react-router-dom";
+import util from "../../components/order/util";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -149,29 +150,34 @@ export default function Invoice() {
       .reduce((acc: any, value: any) => acc + value)
       .toFixed(2)
   );
-  // React.useEffect(() => {
-  //   async function fetchData() {
-  //     const voucher = await orderApi.getVoucher();
-  //     const objectShip = {
-  //       from_district: Number(auth.profile.district_code),
-  //       to_district: 1526,
-  //     };
-  //     const service = await orderApi.getService(objectShip);
-  //     setService(service.data);
-  //     setVoucher(voucher.data);
-  //   }
-  //   fetchData();
-  // }, [auth.profile.district_code]);
+  const [finalPrice, setFinalPrice] = React.useState<any>(totalPrice);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      const voucher = await orderApi.getVoucher();
+      const objectShip = {
+        from_district: Number(auth.profile.district_code),
+        to_district: 1526,
+      };
+      const service = await orderApi.getService(objectShip);
+      setService(service.data);
+      setVoucher(voucher.data);
+    }
+    fetchData();
+  }, []);
 
   const handleChangeVoucher = (e: any) => {
-    // let temp = Number(totalPrice);
-    // if (e.target.value > 1) {
-    //   temp = temp - Number(e.target.value);
-    // } else {
-    //   temp = temp * (1 - Number(e.target.value));
-    // }
-    // setTotalPrice(temp);
     setVoucherId(e.target.value);
+    let temp = totalPrice;
+    if (e.target.value.discountPercent > 0) {
+      temp = temp * (1 - Number(e.target.value.discountPercent));
+    } else {
+      temp = temp - Number(e.target.value.discountValue);
+    }
+    if (feeShip > 0) {
+      temp = Number(temp) + Number(feeShip);
+    }
+    setFinalPrice(temp);
   };
   const getFeeShip = (e: any) => {
     const objectCall = {
@@ -186,8 +192,17 @@ export default function Invoice() {
       })),
     };
     orderApi.getFeeShip(objectCall).then((rs) => {
-      setTotalPrice(Number(totalPrice) + Number(rs.data.total));
+      let temp = finalPrice;
+      console.log("temp", temp);
+      if (feeShip > 0) {
+        temp = Number(temp) - Number(feeShip);
+      }
+      temp = Number(temp) + Number(rs.data.total);
+      console.log("temp after", temp);
+
+      setFinalPrice(temp);
       setFeeShip(Number(rs.data.total));
+
       setServiceId(e.target.value);
     });
   };
@@ -289,7 +304,7 @@ export default function Invoice() {
             <Grid container spacing={4}>
               <Grid item md={12}>
                 <WrapVoucher>
-                  <Value value={`Phương thức vận chuyển `} size="24px"  />
+                  <Value value={`Phương thức vận chuyển `} size="24px" />
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -315,7 +330,7 @@ export default function Invoice() {
                     onChange={handleChangeVoucher}
                   >
                     {voucher?.map((item: any) => (
-                      <MenuItem value={item.id}>{item.name}</MenuItem>
+                      <MenuItem value={item}>{item.name}</MenuItem>
                     ))}
                   </Select>
                 </WrapVoucher>
@@ -338,15 +353,34 @@ export default function Invoice() {
               <Grid item md={6}>
                 <WrapPrice>
                   <Value value={`Tổng tiền: `} size="16px" />
-                  <Value value={`${totalPrice} VNĐ`} size="16px" />
+                  <Value
+                    value={`${util.convertToMoneyString(totalPrice)} VNĐ`}
+                    size="16px"
+                  />
                 </WrapPrice>
                 <WrapPrice>
                   <Value value={`Giảm giá: `} size="16px" />
-                  <Value value={`- ${totalPrice} VNĐ`} size="16px" />
+                  <Value
+                    value={` ${
+                      voucherId
+                        ? voucherId.discountPercent > 0
+                          ? `- ${voucherId.discountPercent * 100}%`
+                          : `- ${voucherId.discountValue}VND`
+                        : "Chưa có voucher"
+                    }`}
+                    size="16px"
+                  />
+                </WrapPrice>
+                <WrapPrice>
+                  <Value value={`Phí vận chuyển: `} size="16px" />
+                  <Value
+                    value={` ${util.convertToMoneyString(feeShip)} VNĐ`}
+                    size="16px"
+                  />
                 </WrapPrice>
                 <WrapPrice>
                   <Value value={`Cần thanh toán: `} size="16px" />
-                  <Value value={`${totalPrice} VNĐ`} size="16px" color="red" />
+                  <Value value={`${finalPrice} VNĐ`} size="16px" color="red" />
                 </WrapPrice>
               </Grid>
             </Grid>
