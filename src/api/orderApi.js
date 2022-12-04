@@ -1,3 +1,4 @@
+import AddVoucher from "../view/DashBoard/Components/AddVoucher";
 import orderConfig from "./orderConfig";
 
 const orderApi = {
@@ -62,8 +63,13 @@ const orderApi = {
   },
   async getDataCenterOrder(data){
     return await orderConfig.post(`/data-center/order/me`,data)
+  },
+  async AddVoucher(data){
+    return await orderConfig.post(`/vouchers`,data)
+  },
+  async UpdateVoucher(data,id){
+    return await orderConfig.put(`/vouchers/${id}`,data)
   }
-  
 };
 
 export default orderApi;
