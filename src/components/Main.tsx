@@ -13,7 +13,7 @@ import Invoice from "../view/Invoice";
 import Dashboard from "../view/DashBoard/Dashboard";
 import ShopDashBoard from "../view/ShopDashBoard/ShopDashboard";
 import { CardInfo } from "./cart/CartInfo";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 import orderApi from "../api/orderApi";
 import orderConfig from "../api/orderConfig";
 import axios from "axios";
@@ -27,8 +27,8 @@ export default function Main() {
   return (
     <>
       <Navigation />
-      <Button style={{marginTop:100,marginBottom:100}} onClick={(e)=> {
-        orderApi.createPayment(10000).then((res :any)=>{
+      <Button style={{ marginTop: 100, marginBottom: 100 }} onClick={(e) => {
+        orderApi.createPayment(10000).then((res: any) => {
           window.location.href = res.url
         });
       }}>asd</Button>
@@ -47,11 +47,11 @@ export default function Main() {
         </Route>
 
         <Route path="/dash-board" component={Dashboard}>
-          {role === "admin" ? <Dashboard /> : <Redirect to="/sign-in" />}
+          {role === "admin" ? <Redirect to="/dash-board" /> : <Redirect to="/sign-in" />}
         </Route>
 
         <Route path="/shop-dash-board" component={ShopDashBoard}>
-          {role === "shop" ? <ShopDashBoard /> : <Redirect to="/sign-in" />}
+          {role === "shop" ? <Redirect to="/shop-dash-board" /> : <Redirect to="/sign-in" />}
         </Route>
 
         <Route path={`/bill`} component={Invoice}>
