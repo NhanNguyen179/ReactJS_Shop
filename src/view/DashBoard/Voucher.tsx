@@ -27,6 +27,7 @@ import {
 } from "@material-ui/core";
 import orderApi from "../../api/orderApi";
 import AddVoucher from "./Components/AddVoucher";
+import { CustomButton } from "../../components/common/CustomButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,7 +78,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Voucher() {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [dataUpdate, setDataUpdate] = React.useState("");
+
+  const handleOpen = () => {
+    setDataUpdate("");
+    setOpen(true);
+  };
+
   const handleClose = () => setOpen(false);
   const [vouchers, setVouchers] = React.useState([]);
   let history = useHistory();
@@ -101,7 +108,7 @@ export default function Voucher() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <AddVoucher />
+        <AddVoucher data={dataUpdate} />
       </Modal>
       <Paper elevation={2} className={classes.summaryCard}>
         <Typography color={"textSecondary"} variant="h5" gutterBottom>
@@ -116,18 +123,12 @@ export default function Voucher() {
               <TableCell>Số lượng</TableCell>
               <TableCell>Giảm tiền</TableCell>
               <TableCell>Giảm %</TableCell>
+              <TableCell>Cập nhập</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {vouchers?.map((voucher: any, index) => (
-              <TableRow
-                hover
-                key={voucher.id}
-                onClick={(e) => {
-                  history.push(`/dash-board/voucher/${voucher.id}`);
-                }}
-                style={{ cursor: "pointer" }}
-              >
+              <TableRow hover key={voucher.id} style={{ cursor: "pointer" }}>
                 <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
                   {index}
                 </TableCell>
@@ -145,6 +146,16 @@ export default function Voucher() {
                 </TableCell>
                 <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
                   {voucher.discountPercent}
+                </TableCell>
+                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
+                  <CustomButton
+                    onClick={(e) => {
+                      setDataUpdate(voucher);
+                      setOpen(true);
+                    }}
+                  >
+                    Cập nhập
+                  </CustomButton>
                 </TableCell>
               </TableRow>
             ))}
