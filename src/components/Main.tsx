@@ -13,10 +13,6 @@ import Invoice from "../view/Invoice";
 import Dashboard from "../view/DashBoard/Dashboard";
 import ShopDashBoard from "../view/ShopDashBoard/ShopDashboard";
 import { CardInfo } from "./cart/CartInfo";
-import {Button} from "@mui/material";
-import orderApi from "../api/orderApi";
-import orderConfig from "../api/orderConfig";
-import axios from "axios";
 
 export default function Main() {
   const { role, setRole } = React.useContext(AppContext);
@@ -27,11 +23,6 @@ export default function Main() {
   return (
     <>
       <Navigation />
-      <Button style={{marginTop:100,marginBottom:100}} onClick={(e)=> {
-        orderApi.createPayment(10000).then((res :any)=>{
-          window.location.href = res.url
-        });
-      }}>asd</Button>
       <Switch>
         <Route exact path={"/"} component={Home}></Route>
         <Route

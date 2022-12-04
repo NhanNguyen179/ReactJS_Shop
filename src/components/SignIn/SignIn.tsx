@@ -115,6 +115,7 @@ export default function SignIn() {
               ]}
               value={roleUi}
               setValue={setRoleUi}
+              defaultValue="customer"
             />
             <CustomCheckBox label="Nhớ tài khoản" />
             <Typography

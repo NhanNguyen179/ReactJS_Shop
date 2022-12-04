@@ -4,7 +4,6 @@ import {
   CardMedia,
   Container,
   Grid,
-  InputLabel,
   makeStyles,
   MenuItem,
   Paper,
@@ -20,13 +19,11 @@ import { AppContext } from "../../context/Context";
 import orderApi from "../../api/orderApi";
 import { CustomButton } from "../../components/common/CustomButton";
 import Value from "../../components/Value";
-import { CustomSelect } from "../../components/common/CustomSelect";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
     background: "rgba(255, 255, 255, 0.8)",
-    border: " 1px solid rgb(219 125 13) !important",
     borderRadius: "10px",
     padding: "20px",
   },
@@ -149,6 +146,13 @@ export default function Invoice() {
       .reduce((acc: any, value: any) => acc + value)
       .toFixed(2)
   );
+  const [paymentType, setPaymentType] = React.useState<string>("COD");
+
+  const handlePaymentTypeChange = (event: any) => {
+    setPaymentType("");
+    setPaymentType(event.target.value as string);
+  };
+
   // React.useEffect(() => {
   //   async function fetchData() {
   //     const voucher = await orderApi.getVoucher();
@@ -192,72 +196,47 @@ export default function Invoice() {
     });
   };
   const orderProduct = async () => {
-    const objectCall = {
-      // shopId: "8dcc9380-95ed-4ec2-a43f-9e3eeae7d697",
-      shopId: invoice?.at(0)?.shopId,
-      address: `${auth.profile.address},${auth.profile.district},${auth.profile.ward},${auth.profile.province}`,
-      toName: auth.profile.name,
-      toPhone: auth.profile.phone_number,
-      toStreet: auth.profile.address,
-      toWardCode: auth.profile.ward_code,
-      toDistrictId: auth.profile.district_code,
-      serviceId: serviceId,
-      voucherId: voucherId,
-      items: invoice.map((item: any) => ({
-        product_id: item.id,
-        quantity: item.quantity,
-      })),
-    };
-    await orderApi.createOrder(objectCall);
+    if (paymentType === "COD") {
+      const objectCall = {
+        shopId: invoice?.at(0)?.shopId,
+        address: `${auth.profile.address},${auth.profile.district},${auth.profile.ward},${auth.profile.province}`,
+        toName: auth.profile.name,
+        toPhone: auth.profile.phone_number,
+        toStreet: auth.profile.address,
+        toWardCode: auth.profile.ward_code,
+        toDistrictId: auth.profile.district_code,
+        serviceId: serviceId,
+        voucherId: voucherId,
+        items: invoice.map((item: any) => ({
+          product_id: item.id,
+          quantity: item.quantity,
+        })),
+      };
+      await orderApi.createOrder(objectCall);
+    } else {
+      orderApi.createPayment(10000).then((res: any) => {
+        window.location.href = res.url;
+      });
+    }
   };
 
   return (
     <WrapAll style={{ padding: 20 }}>
       <WrapContainer maxWidth="md">
-        {/* <CustomButton onClick={() => history.goBack()}>Quay lại</CustomButton> */}
-
         <Paper className={classes.tableContainer}>
-          {/* <div>
-            <Value
-              value={`Tên: ${auth.profile.name} `}
-              size="20px"
-              color="#FFA500"
-            />
-          </div>
-          <div>
-            <Value
-              value={`Địa chỉ: ${auth.profile.name} `}
-              size="20px"
-              color="#FFA500"
-            />
-          </div>
-          <div>
-            <Value
-              value={`Email: : ${auth.profile.email} `}
-              size="20px"
-              color="#FFA500"
-            />
-          </div>
-          <div>
-            <Value
-              value={`SDT: ${auth.profile.phone_number} `}
-              size="20px"
-              color="#FFA500"
-            />{" "}
-          </div> */}
           <WrapTitle>
-            <Value value={`Đơn hàng của bạn `} size="50px" color="#FFA500" />
+            <Value value={`Đơn hàng của bạn`} size="30px" />
           </WrapTitle>
 
           <TableContainer className={classes.tablerContainer}>
             <Table>
               <TableHead className={classes.THead}>
                 <TableRow>
-                  <TableCell>Ảnh sản phẩm</TableCell>
-                  <TableCell>Tên sản phẩm</TableCell>
+                  <TableCell>Ảnh</TableCell>
+                  <TableCell>Sản phẩm</TableCell>
                   <TableCell align="right">Số lượng</TableCell>
                   <TableCell align="right">Đơn giá</TableCell>
-                  <TableCell align="right">Giá tiền</TableCell>
+                  <TableCell align="right">Thành tiền</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -269,8 +248,10 @@ export default function Invoice() {
                   return (
                     <TableRow key={item.name}>
                       <TableCell>
-                        <CardMedia
-                          image={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item.image[0]}`}
+                        <img
+                          src={`${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item.image[0]}`}
+                          alt="anh"
+                          width={100}
                         />
                       </TableCell>
                       <TableCell>{item.name}</TableCell>
@@ -289,13 +270,20 @@ export default function Invoice() {
             <Grid container spacing={4}>
               <Grid item md={12}>
                 <WrapVoucher>
-                  <Value value={`Phương thức vận chuyển `} size="24px"  />
+                  <Value value={`Phương thức thanh toán`} size="16px" />
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Age"
-                    onChange={getFeeShip}
+                    value={paymentType}
+                    onChange={handlePaymentTypeChange}
                   >
+                    <MenuItem value={"COD"}>Thanh toán khi nhận hàng</MenuItem>
+                    <MenuItem value={"VNPay"}>Thanh toán qua VNPay</MenuItem>
+                  </Select>
+                </WrapVoucher>
+              </Grid>
+              <Grid item md={12}>
+                <WrapVoucher>
+                  <Value value={`Phương thức vận chuyển`} size="16px" />
+                  <Select onChange={getFeeShip}>
                     {service?.map((item: any) => (
                       <MenuItem value={item?.service_id}>
                         {item.short_name}
@@ -306,14 +294,8 @@ export default function Invoice() {
               </Grid>
               <Grid item md={12}>
                 <WrapVoucher>
-                  <Value value={`Bee Voucher `} size="24px" />
-
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Age"
-                    onChange={handleChangeVoucher}
-                  >
+                  <Value value={`Bee Voucher`} size="16px" />
+                  <Select onChange={handleChangeVoucher}>
                     {voucher?.map((item: any) => (
                       <MenuItem value={item.id}>{item.name}</MenuItem>
                     ))}
@@ -353,7 +335,7 @@ export default function Invoice() {
           </WrapActionBill>
           <WrapCenter>
             <CustomButton onClick={orderProduct}>
-              HOÀN TẤT ĐẶT HÀNG
+              Mua hàng và thanh toán
             </CustomButton>
           </WrapCenter>
         </Paper>
@@ -397,14 +379,6 @@ const WrapTitle = styled.div`
   width: 100%;
   margin-bottom: 30px;
   padding: 10px;
-`;
-
-const WrapSelect = styled.div`
-  margin-top: 20px;
-  display: flex;
-  align-item: center;
-  width: 100%;
-  gap: 20px;
 `;
 
 const WrapVoucher = styled.div`
