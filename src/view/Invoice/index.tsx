@@ -20,6 +20,7 @@ import orderApi from "../../api/orderApi";
 import { CustomButton } from "../../components/common/CustomButton";
 import Value from "../../components/Value";
 import util from "../../components/order/util";
+import NoProductInCart from "../../components/cart/NoProductInCart";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -152,9 +153,11 @@ export default function Invoice() {
   const [serviceId, setServiceId] = React.useState<any>();
   const [totalPrice, setTotalPrice] = React.useState<any>(
     invoice
-      .map((item: any) => item.quantity * item.price)
-      .reduce((acc: any, value: any) => acc + value)
-      .toFixed(2)
+      ? invoice
+          .map((item: any) => item.quantity * item.price)
+          .reduce((acc: any, value: any) => acc + value)
+          .toFixed(2)
+      : 0
   );
   const [paymentType, setPaymentType] = React.useState<string>("COD");
 
@@ -219,12 +222,10 @@ export default function Invoice() {
     };
     orderApi.getFeeShip(objectCall).then((rs) => {
       let temp = finalPrice;
-      console.log("temp", temp);
       if (feeShip > 0) {
         temp = Number(temp) - Number(feeShip);
       }
       temp = Number(temp) + Number(rs.data.total);
-      console.log("temp after", temp);
 
       setFinalPrice(temp);
       setFeeShip(Number(rs.data.total));
@@ -243,7 +244,7 @@ export default function Invoice() {
         toWardCode: auth.profile.ward_code,
         toDistrictId: auth.profile.district_code,
         serviceId: serviceId,
-        voucherId: voucherId,
+        voucherId: voucherId.id,
         items: invoice.map((item: any) => ({
           product_id: item.id,
           quantity: item.quantity,
@@ -251,11 +252,25 @@ export default function Invoice() {
       };
       await orderApi.createOrder(objectCall);
     } else {
-      orderApi.createPayment(10000).then((res: any) => {
-        window.location.href = res.url;
+      const objectCall = {
+        shopId: invoice?.at(0)?.shopId,
+        serviceId: serviceId,
+        voucherId: voucherId.id,
+        items: invoice.map((item: any) => ({
+          product_id: item.id,
+          quantity: item.quantity,
+        })),
+      };
+      orderApi.createPayment(objectCall).then((res: any) => {
+        window.location.href = res.data.url;
+        // console.log(res);
       });
     }
   };
+
+  if (invoice === null || invoice.length === 0) {
+    return <NoProductInCart />;
+  }
 
   return (
     <WrapAll style={{ padding: 20 }}>

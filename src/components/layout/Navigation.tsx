@@ -79,6 +79,7 @@ function SimpleDialog(props: SimpleDialogProps) {
             onClick={(e) => {
               localStorage.removeItem("jwtToken");
               localStorage.removeItem("role");
+              localStorage.removeItem("user");
             }}
             to="/sign-in"
             style={{
