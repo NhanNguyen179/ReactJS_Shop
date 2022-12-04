@@ -38,8 +38,7 @@ export default function Main() {
         </Route>
 
         <Route path="/dash-board" component={Dashboard}>
-           <Dashboard /> 
-
+          {role === "admin" ? <Dashboard /> : <Redirect to="/sign-in" />}
         </Route>
 
         <Route path="/shop-dash-board" component={ShopDashBoard}>
@@ -47,7 +46,7 @@ export default function Main() {
         </Route>
 
         <Route path={`/bill`} component={Invoice}>
-         <Invoice /> 
+          <Invoice />
         </Route>
 
         <Route path={`/order`} component={OrderContainer}>

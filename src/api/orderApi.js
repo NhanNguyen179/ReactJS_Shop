@@ -1,3 +1,4 @@
+import AddVoucher from "../view/DashBoard/Components/AddVoucher";
 import orderConfig from "./orderConfig";
 import axios from "axios";
 
@@ -68,6 +69,12 @@ const orderApi = {
   },
   async createPayment(data) {
     return await orderConfig.post("/orders/create-payment", data);
+  },
+  async AddVoucher(data) {
+    return await orderConfig.post(`/vouchers`, data);
+  },
+  async UpdateVoucher(data, id) {
+    return await orderConfig.put(`/vouchers/${id}`, data);
   },
 };
 

@@ -19,6 +19,8 @@ import SignIn from "./components/SignIn";
 import Register from "./components/Register";
 import Forgotpassword from "./components/change_for_password/forgotpassword";
 import ChangePassword from "./components/change_for_password/changepassword";
+import Dashboard from "./view/DashBoard/Dashboard";
+import ShopDashBoard from "./view/ShopDashBoard/ShopDashboard";
 
 export default function App() {
   return (
