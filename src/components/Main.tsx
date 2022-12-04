@@ -12,7 +12,6 @@ import { AppContext } from "../context/Context";
 import Invoice from "../view/Invoice";
 import Dashboard from "../view/DashBoard/Dashboard";
 import ShopDashBoard from "../view/ShopDashBoard/ShopDashboard";
-import { useHistory } from "react-router";
 import { CardInfo } from "./cart/CartInfo";
 
 export default function Main() {
