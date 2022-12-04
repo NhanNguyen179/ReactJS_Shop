@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import {
-  CardMedia,
   Container,
   Grid,
   makeStyles,
@@ -19,7 +19,6 @@ import { AppContext } from "../../context/Context";
 import orderApi from "../../api/orderApi";
 import { CustomButton } from "../../components/common/CustomButton";
 import Value from "../../components/Value";
-import { useHistory } from "react-router-dom";
 import util from "../../components/order/util";
 
 const useStyles = makeStyles((theme) => ({
@@ -136,6 +135,16 @@ export default function Invoice() {
   const history = useHistory();
   const { state, dispatch, invoice, setInvoice, auth, setAuth } =
     React.useContext(AppContext);
+
+  if (!auth) {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setAuth(JSON.parse(user));
+    } else {
+      history.push("/sign-in");
+    }
+  }
+
   const [feeShip, setFeeShip] = React.useState<any>();
   const [voucher, setVoucher] = React.useState<any>();
   const [service, setService] = React.useState<any>();
