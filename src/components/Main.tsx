@@ -21,6 +21,7 @@ export default function Main() {
 
   useEffect(() => {
     setRole(window.localStorage.getItem("role"));
+
   }, [role]);
   return (
     <>
@@ -51,7 +52,7 @@ export default function Main() {
 
         <Route path="/dash-board" component={Dashboard}>
           {role === "admin" ? (
-            <Redirect to="/dash-board" />
+            <Dashboard />
           ) : (
             <Redirect to="/sign-in" />
           )}
@@ -59,7 +60,7 @@ export default function Main() {
 
         <Route path="/shop-dash-board" component={ShopDashBoard}>
           {role === "shop" ? (
-            <Redirect to="/shop-dash-board" />
+            <ShopDashBoard />
           ) : (
             <Redirect to="/sign-in" />
           )}

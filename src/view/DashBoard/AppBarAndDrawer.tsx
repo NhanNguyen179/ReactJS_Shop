@@ -1,21 +1,74 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core/styles";
-import {Link as RouterLink, useLocation} from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import Icon from "@material-ui/core/Icon";
-import Avatar from "@material-ui/core/Avatar";
+import { AppContext } from "../../context/Context";
+import userAPI from "../../api/userFunction";
+import { NavLink } from "react-router-dom";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import {
+    Avatar,
+    Dialog,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemIcon,
+    ListItemText,
+} from "@mui/material";
 
 export const drawerWidth = 240;
+
+export interface SimpleDialogProps {
+    open: boolean;
+    selectedValue: string;
+    onClose: (value: string) => void;
+}
+
+function SimpleDialog(props: SimpleDialogProps) {
+    const { onClose, selectedValue, open } = props;
+
+    const handleClose = () => {
+        onClose(selectedValue);
+    };
+
+    const handleListItemClick = (value: string) => {
+        onClose(value);
+    };
+
+    return (
+        <Dialog onClose={handleClose} open={open}>
+            <List sx={{ pt: 0 }}>
+                <ListItem onClick={() => handleListItemClick("addAccount")}>
+                    <NavLink
+                        onClick={(e) => {
+                            localStorage.removeItem("jwtToken");
+                            localStorage.removeItem("role");
+                        }}
+                        to="/sign-in"
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <ListItemAvatar>
+                            <Avatar>
+                                <ExitToAppIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="Đăng xuất" />
+                    </NavLink>
+                </ListItem>
+            </List>
+        </Dialog>
+    );
+}
 
 const useStyles = makeStyles((theme: any) => ({
     root: {
@@ -39,17 +92,44 @@ const useStyles = makeStyles((theme: any) => ({
 
 function ResponsiveDrawer(props: any) {
     const classes = useStyles();
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
+    const { auth, setAuth } = useContext(AppContext);
+    const [open, setOpen] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState("");
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value: string) => {
+        setOpen(false);
+        setSelectedValue(value);
+    };
+
+
+    useEffect(() => {
+        async function fetch() {
+            const infor = await userAPI.getInforUser();
+            setAuth(infor);
+        }
+    }, [])
+
+    let navlinkStyle = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+    };
 
     const drawer = (
         <div>
-            <div className={classes.toolbar}/>
-            <Divider/>
+            <div className={classes.toolbar} />
+            <Divider />
             <List>
                 {[
                     // { text: "home", icon: "home" },
                     // { text: "login", icon: "lock" },
-                    {text: "dash-board/users", display: "Người dùng", icon: "person"},
+                    { text: "dash-board/users", display: "Người dùng", icon: "person" },
                     {
                         text: "dash-board/shops",
                         display: "Cửa hàng",
@@ -69,7 +149,7 @@ function ResponsiveDrawer(props: any) {
                     // { text: "map", icon: "map" },
                     // { text: "components", icon: "apps" },
                     // { text: "settings", icon: "settings" },
-                ].map(({text, display, icon}, index) => (
+                ].map(({ text, display, icon }, index) => (
                     <ListItem
                         component={RouterLink}
                         selected={pathname === `/${text}`}
@@ -80,17 +160,17 @@ function ResponsiveDrawer(props: any) {
                         <ListItemIcon>
                             <Icon>{icon}</Icon>
                         </ListItemIcon>
-                        <ListItemText primary={display.toUpperCase()}/>
+                        <ListItemText primary={display.toUpperCase()} />
                     </ListItem>
                 ))}
             </List>
-            <Divider/>
+            <Divider />
         </div>
     );
 
     return (
         <div className={classes.root}>
-            <CssBaseline/>
+            <CssBaseline />
 
             <AppBar position="sticky" className={classes.appBar}>
                 <Toolbar>
@@ -103,10 +183,28 @@ function ResponsiveDrawer(props: any) {
                     >
                         Trang quản trị
                     </Typography>
-                    <div style={{flexGrow: 1}}></div>
-                    <IconButton color="inherit" aria-label="open drawer" edge="end">
-                        <Avatar src=""/>
-                    </IconButton>
+                    <div style={{ flexGrow: 1 }}></div>
+                    <div>
+                        <a style={navlinkStyle} onClick={handleClickOpen}>
+                            <Avatar src={auth.profile.avatar} />
+                            <span
+                                style={{
+                                    marginLeft: "5px",
+                                    maxWidth: "100px",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                }}
+                            >
+                                {auth.profile.name}
+                            </span>
+                        </a>
+                        <SimpleDialog
+                            selectedValue={selectedValue}
+                            open={open}
+                            onClose={handleClose}
+                        />
+                    </div>
                 </Toolbar>
             </AppBar>
 
