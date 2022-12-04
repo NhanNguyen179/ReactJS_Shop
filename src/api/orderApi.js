@@ -1,4 +1,5 @@
 import orderConfig from "./orderConfig";
+import axios from "axios";
 
 const orderApi = {
   async getProvinces() {
@@ -62,8 +63,16 @@ const orderApi = {
   },
   async getDataCenterOrder(data){
     return await orderConfig.post(`/data-center/order/me`,data)
+  },
+  async createPayment(amount){
+    return await orderConfig.post("/create_payment_url",{
+      amount:amount,
+      bankCode:"",
+      orderDescription:"test",
+      orderType:"billpayment",
+      language:"vn"
+    })
   }
-  
 };
 
 export default orderApi;
