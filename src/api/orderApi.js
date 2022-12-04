@@ -1,3 +1,4 @@
+import AddVoucher from "../view/DashBoard/Components/AddVoucher";
 import orderConfig from "./orderConfig";
 import axios from "axios";
 
@@ -5,8 +6,8 @@ const orderApi = {
   async getProvinces() {
     return await orderConfig.get("/provinces/");
   },
-  async getReviewByOrderId(id){
-    return await orderConfig.get(`/reviews/${id}`)
+  async getReviewByOrderId(id) {
+    return await orderConfig.get(`/reviews/${id}`);
   },
   async getDistricts(idProvice) {
     return await orderConfig.get(`districts/${idProvice}`);
@@ -36,43 +37,51 @@ const orderApi = {
     return await orderConfig.post(`/sv1/users/${idShop}`);
   },
   // manage order
-  async searchOrderByStatus(status,page = 1,shopId = ""){
-    return await orderConfig.get(`/orders?limit=5&page=${page}&status=${status}&shopId=${shopId}`)
+  async searchOrderByStatus(status, page = 1, shopId = "") {
+    return await orderConfig.get(
+      `/orders?limit=5&page=${page}&status=${status}&shopId=${shopId}`
+    );
   },
-  async updateStatusOrder(id,data){
-    return await orderConfig.patch(`/orders/${id}`, data)
+  async updateStatusOrder(id, data) {
+    return await orderConfig.patch(`/orders/${id}`, data);
   },
-  async detailOrderById(id){
-    return await orderConfig.get(`/orders/${id}`)
+  async detailOrderById(id) {
+    return await orderConfig.get(`/orders/${id}`);
   },
   async getReviewByProductId(productId, rating = 0, limit = 20, page = 1) {
     return await orderConfig.get(
-        `/reviews?product=${productId}&rating=${rating}&limit=${limit}&page=${page}`
+      `/reviews?product=${productId}&rating=${rating}&limit=${limit}&page=${page}`
     );
   },
-  async createReview(payload){
-    return await orderConfig.post('/reviews',payload)
+  async createReview(payload) {
+    return await orderConfig.post("/reviews", payload);
   },
-  async updateReview(payload){
-    return await orderConfig.put(`/reviews/${payload.id}`,payload)
+  async updateReview(payload) {
+    return await orderConfig.put(`/reviews/${payload.id}`, payload);
   },
 
   // data center
-  async getConfigDataCenter(){
-    return await orderConfig.get(`/config-order/data-center`)
+  async getConfigDataCenter() {
+    return await orderConfig.get(`/config-order/data-center`);
   },
-  async getDataCenterOrder(data){
-    return await orderConfig.post(`/data-center/order/me`,data)
+  async getDataCenterOrder(data) {
+    return await orderConfig.post(`/data-center/order/me`, data);
   },
-  async createPayment(amount){
-    return await orderConfig.post("/create_payment_url",{
-      amount:amount,
-      bankCode:"",
-      orderDescription:"test",
-      orderType:"billpayment",
-      language:"vn"
-    })
-  }
+  async AddVoucher(data) {
+    return await orderConfig.post(`/vouchers`, data);
+  },
+  async UpdateVoucher(data, id) {
+    return await orderConfig.put(`/vouchers/${id}`, data);
+  },
+  async createPayment(amount) {
+    return await orderConfig.post("/create_payment_url", {
+      amount: amount,
+      bankCode: "",
+      orderDescription: "test",
+      orderType: "billpayment",
+      language: "vn",
+    });
+  },
 };
 
 export default orderApi;
