@@ -5,11 +5,24 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import userAPI from "../../api/userFunction";
-import { Avatar, Container, DialogActions, Paper, Typography } from "@mui/material";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, FormControl, MenuItem, Modal } from "@material-ui/core";
+import {Avatar, Container, DialogActions, Paper, Typography} from "@mui/material";
+import {makeStyles, Theme, createStyles} from "@material-ui/core/styles";
+import {useHistory} from "react-router-dom";
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    FormControl,
+    MenuItem,
+    Modal
+} from "@material-ui/core";
 import orderApi from "../../api/orderApi";
+import AddIcon from "@material-ui/icons/Add";
+import ProductDialog from "./ProductDialog";
+import VoucherDialog from "./VoucherDialog";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -59,9 +72,11 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
+
 export default function Voucher() {
 
     const [vouchers, setVouchers] = React.useState([]);
+    const [snackOpen, setSnackOpen] = React.useState(false);
     let history = useHistory();
     const classes = useStyles();
     const getVouchers = async () => {
@@ -76,6 +91,19 @@ export default function Voucher() {
 
     return (
         <Container>
+            <VoucherDialog
+                edge="end"
+                onSave={() => {
+                    setSnackOpen(false);
+                }}
+                render={(open: any) => (
+                    <div style={{textAlign:"right"}}>
+                        <Button  variant="outlined" startIcon={<AddIcon/>} onClick={open}>
+                            Thêm
+                        </Button>
+                    </div>
+                )}
+            />
             <Paper elevation={2} className={classes.summaryCard}>
                 <Typography color={"textSecondary"} variant="h5" gutterBottom>
                     Cửa hàng
@@ -92,31 +120,31 @@ export default function Voucher() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {vouchers?.map((voucher: any,index) => (
+                        {vouchers?.map((voucher: any, index) => (
                             <TableRow
                                 hover
                                 key={voucher.id}
                                 onClick={(e) => {
                                     history.push(`/dash-board/voucher/${voucher.id}`);
                                 }}
-                                style={{ cursor: "pointer" }}
+                                style={{cursor: "pointer"}}
                             >
-                                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
+                                <TableCell style={{maxWidth: "100px", overflow: "hidden"}}>
                                     {index}
                                 </TableCell>
-                                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
+                                <TableCell style={{maxWidth: "100px", overflow: "hidden"}}>
                                     {voucher.code}
                                 </TableCell>
-                                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
+                                <TableCell style={{maxWidth: "100px", overflow: "hidden"}}>
                                     {voucher.name}
                                 </TableCell>
-                                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
+                                <TableCell style={{maxWidth: "100px", overflow: "hidden"}}>
                                     {voucher.quantity}
                                 </TableCell>
-                                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
+                                <TableCell style={{maxWidth: "100px", overflow: "hidden"}}>
                                     {voucher.discountValue}
                                 </TableCell>
-                                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
+                                <TableCell style={{maxWidth: "100px", overflow: "hidden"}}>
                                     {voucher.discountPercent}
                                 </TableCell>
                             </TableRow>

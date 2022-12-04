@@ -208,7 +208,6 @@ export default function Invoice() {
         quantity: item.quantity,
       })),
     };
-    await orderApi.createOrder(objectCall);
   };
 
   return (

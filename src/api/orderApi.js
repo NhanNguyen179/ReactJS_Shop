@@ -30,7 +30,7 @@ const orderApi = {
     return await orderConfig.post(`/services`, data);
   },
   async createOrder(data) {
-    return await orderConfig.post(`/orders/`, data);
+    return await orderConfig.post(`/orders/calculate`, data);
   },
   async getInformationShop(idShop) {
     return await orderConfig.post(`/sv1/users/${idShop}`);
