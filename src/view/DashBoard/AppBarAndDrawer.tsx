@@ -142,10 +142,6 @@ function ResponsiveDrawer(props: any) {
             display: "Voucher",
             icon: "discount_icon",
           },
-          // { text: "people", icon: "people" },
-          // { text: "map", icon: "map" },
-          // { text: "components", icon: "apps" },
-          // { text: "settings", icon: "settings" },
         ].map(({ text, display, icon }, index) => (
           <ListItem
             component={RouterLink}
