@@ -21,7 +21,16 @@ import Forgotpassword from "./components/change_for_password/forgotpassword";
 import ChangePassword from "./components/change_for_password/changepassword";
 import Dashboard from "./view/DashBoard/Dashboard";
 import ShopDashBoard from "./view/ShopDashBoard/ShopDashboard";
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";Sentry.init({
+  dsn: "https://8577fd5846c4423a813629335a736519@o4504282191167488.ingest.sentry.io/4504282555088896",
+  integrations: [new BrowserTracing()],
 
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 export default function App() {
   return (
     <AppProvider>
