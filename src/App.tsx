@@ -39,8 +39,6 @@ export default function App() {
           <Switch>
             <Route exact path="/sign-in" component={SignIn}></Route>
             <Route exact path="/sign-up" component={Register}></Route>
-            <Route exact path="/dash-board" component={Dashboard}></Route>
-            <Route exact path="/shop-dash-board" component={ShopDashBoard}></Route>
             <Route
               exact
               path="/forgot-password"

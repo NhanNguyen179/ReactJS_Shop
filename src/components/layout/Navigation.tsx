@@ -79,6 +79,7 @@ function SimpleDialog(props: SimpleDialogProps) {
             onClick={(e) => {
               localStorage.removeItem("jwtToken");
               localStorage.removeItem("role");
+              localStorage.removeItem("user");
             }}
             to="/sign-in"
             style={{
@@ -114,14 +115,16 @@ export default function Navigation() {
     setSelectedValue(value);
   };
 
-  //
-
   useEffect(() => {
     async function fetchData() {
       const information = await userAPI.getInforUser();
+      localStorage.setItem("user", JSON.stringify(information));
       setAuth(information);
     }
-    if (auth !== null) {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setAuth(JSON.parse(user));
+    } else {
       fetchData();
     }
   }, []);

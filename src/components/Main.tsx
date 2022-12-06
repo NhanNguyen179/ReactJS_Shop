@@ -13,8 +13,6 @@ import Invoice from "../view/Invoice";
 import Dashboard from "../view/DashBoard/Dashboard";
 import ShopDashBoard from "../view/ShopDashBoard/ShopDashboard";
 import { CardInfo } from "./cart/CartInfo";
-import { Button } from "@mui/material";
-import orderApi from "../api/orderApi";
 
 export default function Main() {
   const { role, setRole } = React.useContext(AppContext);
@@ -25,16 +23,6 @@ export default function Main() {
   return (
     <>
       <Navigation />
-      <Button
-        style={{ marginTop: 100, marginBottom: 100 }}
-        onClick={(e) => {
-          orderApi.createPayment(10000).then((res: any) => {
-            window.location.href = res.url;
-          });
-        }}
-      >
-        asd
-      </Button>
       <Switch>
         <Route exact path={"/"} component={Home}></Route>
         <Route
@@ -50,19 +38,11 @@ export default function Main() {
         </Route>
 
         <Route path="/dash-board" component={Dashboard}>
-          {role === "admin" ? (
-            <Redirect to="/dash-board" />
-          ) : (
-            <Redirect to="/sign-in" />
-          )}
+          {role === "admin" ? <Dashboard /> : <Redirect to="/sign-in" />}
         </Route>
 
         <Route path="/shop-dash-board" component={ShopDashBoard}>
-          {role === "shop" ? (
-            <Redirect to="/shop-dash-board" />
-          ) : (
-            <Redirect to="/sign-in" />
-          )}
+          {role === "shop" ? <ShopDashBoard /> : <Redirect to="/sign-in" />}
         </Route>
 
         <Route path={`/bill`} component={Invoice}>

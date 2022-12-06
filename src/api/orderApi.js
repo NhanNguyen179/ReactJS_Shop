@@ -67,20 +67,14 @@ const orderApi = {
   async getDataCenterOrder(data) {
     return await orderConfig.post(`/data-center/order/me`, data);
   },
+  async createPayment(data) {
+    return await orderConfig.post("/orders/create-payment", data);
+  },
   async AddVoucher(data) {
     return await orderConfig.post(`/vouchers`, data);
   },
   async UpdateVoucher(data, id) {
     return await orderConfig.put(`/vouchers/${id}`, data);
-  },
-  async createPayment(amount) {
-    return await orderConfig.post("/create_payment_url", {
-      amount: amount,
-      bankCode: "",
-      orderDescription: "test",
-      orderType: "billpayment",
-      language: "vn",
-    });
   },
 };
 
