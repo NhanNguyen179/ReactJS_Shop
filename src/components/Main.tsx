@@ -53,7 +53,7 @@ export default function Main() {
           <Invoice />
         </Route>
 
-        <Route path={`/order`} component={OrderContainer}>
+        <Route exact path={`/order`} component={OrderContainer}>
           {role === "customer" ? (
             <OrderContainer />
           ) : (
