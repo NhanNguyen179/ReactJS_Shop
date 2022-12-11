@@ -19,6 +19,9 @@ export default function PaymentOnlineResponse() {
         vnp_ResponseCode: new URLSearchParams(search).get("vnp_ResponseCode"),
         vnp_TmnCode: new URLSearchParams(search).get("vnp_TmnCode"),
         vnp_TransactionNo: new URLSearchParams(search).get("vnp_TransactionNo"),
+        vnp_TransactionStatus: new URLSearchParams(search).get(
+          "vnp_TransactionStatus"
+        ),
         vnp_TxnRef: new URLSearchParams(search).get("vnp_TxnRef"),
         vnp_SecureHash: new URLSearchParams(search).get("vnp_SecureHash"),
         vnp_SecureHashType: new URLSearchParams(search).get(
