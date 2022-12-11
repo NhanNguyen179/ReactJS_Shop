@@ -42,7 +42,6 @@ function NotificationModal(props) {
     textUrl,
   } = props;
   // const history = useHistory();
-  React.useEffect(() => {}, []);
 
   const handleCancel = () => {
     setIsModalSuccessVisible(false);
