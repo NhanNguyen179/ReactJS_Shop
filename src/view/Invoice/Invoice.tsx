@@ -234,36 +234,26 @@ export default function Invoice() {
     });
   };
   const orderProduct = async () => {
+    const objectCall = {
+      shopId: invoice?.at(0)?.shopId,
+      address: `${auth.profile.address},${auth.profile.district},${auth.profile.ward},${auth.profile.province}`,
+      toName: auth.profile.name,
+      toPhone: auth.profile.phone_number,
+      toStreet: auth.profile.address,
+      toWardCode: auth.profile.ward_code,
+      toDistrictId: auth.profile.district_code,
+      serviceId: serviceId,
+      voucherId: voucherId.id,
+      items: invoice.map((item: any) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+      })),
+    };
     if (paymentType === "COD") {
-      const objectCall = {
-        shopId: invoice?.at(0)?.shopId,
-        address: `${auth.profile.address},${auth.profile.district},${auth.profile.ward},${auth.profile.province}`,
-        toName: auth.profile.name,
-        toPhone: auth.profile.phone_number,
-        toStreet: auth.profile.address,
-        toWardCode: auth.profile.ward_code,
-        toDistrictId: auth.profile.district_code,
-        serviceId: serviceId,
-        voucherId: voucherId.id,
-        items: invoice.map((item: any) => ({
-          product_id: item.id,
-          quantity: item.quantity,
-        })),
-      };
       await orderApi.createOrder(objectCall);
     } else {
-      const objectCall = {
-        shopId: invoice?.at(0)?.shopId,
-        serviceId: serviceId,
-        voucherId: voucherId.id,
-        items: invoice.map((item: any) => ({
-          product_id: item.id,
-          quantity: item.quantity,
-        })),
-      };
       orderApi.createPayment(objectCall).then((res: any) => {
         window.location.href = res.data.url;
-        // console.log(res);
       });
     }
   };

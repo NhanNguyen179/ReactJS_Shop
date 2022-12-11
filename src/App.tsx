@@ -19,8 +19,7 @@ import SignIn from "./components/SignIn";
 import Register from "./components/Register";
 import Forgotpassword from "./components/change_for_password/forgotpassword";
 import ChangePassword from "./components/change_for_password/changepassword";
-import Dashboard from "./view/DashBoard/Dashboard";
-import ShopDashBoard from "./view/ShopDashBoard/ShopDashboard";
+import PaymentOnlineResponse from "./view/Invoice/PaymentOnlineResponse";
 
 export default function App() {
   return (
@@ -39,6 +38,11 @@ export default function App() {
               exact
               path="/change-password"
               component={ChangePassword}
+            ></Route>
+            <Route
+              exact
+              path={`/order/payment-response`}
+              component={PaymentOnlineResponse}
             ></Route>
             <Route path="/" component={Main}></Route>
           </Switch>

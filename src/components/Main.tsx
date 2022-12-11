@@ -9,17 +9,21 @@ import Profile from "../view/Profile";
 import OrderContainer from "./order/OrderContainer";
 import React, { useEffect } from "react";
 import { AppContext } from "../context/Context";
-import Invoice from "../view/Invoice";
 import Dashboard from "../view/DashBoard/Dashboard";
 import ShopDashBoard from "../view/ShopDashBoard/ShopDashboard";
 import { CardInfo } from "./cart/CartInfo";
+import NotFoundPage from "./NotFoundPage";
+import Invoice from "../view/Invoice/Invoice";
+import PaymentOnlineResponse from "../view/Invoice/PaymentOnlineResponse";
 
 export default function Main() {
   const { role, setRole } = React.useContext(AppContext);
 
   useEffect(() => {
+    console.log("role", window.localStorage.getItem("role"));
     setRole(window.localStorage.getItem("role"));
-  }, [role]);
+    console.log("role", role);
+  }, []);
   return (
     <>
       <Navigation />
@@ -56,6 +60,8 @@ export default function Main() {
             <Redirect to="/sign-in" />
           )}
         </Route>
+
+        <Route path="*" component={NotFoundPage}></Route>
       </Switch>
       <Footer />
     </>
