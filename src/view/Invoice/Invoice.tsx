@@ -21,6 +21,7 @@ import { CustomButton } from "../../components/common/CustomButton";
 import Value from "../../components/Value";
 import util from "../../components/order/util";
 import NoProductInCart from "../../components/cart/NoProductInCart";
+import NotificationModal from "../../components/NotificationModal";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -150,6 +151,7 @@ export default function Invoice() {
   const [voucher, setVoucher] = React.useState<any>();
   const [service, setService] = React.useState<any>();
   const [voucherId, setVoucherId] = React.useState<any>();
+
   const [serviceId, setServiceId] = React.useState<any>();
   const [totalPrice, setTotalPrice] = React.useState<any>(
     invoice
@@ -166,6 +168,13 @@ export default function Invoice() {
     setPaymentType(event.target.value as string);
   };
 
+  const [visibleModal, setVisibleModal] = React.useState(false);
+  const [statusModal, setStatusModal] = React.useState({
+    message: "",
+    statusSuccess: true,
+    url : "./",
+    textUrl : "Quay về trang chủ"
+  });
   // React.useEffect(() => {
   //   async function fetchData() {
   //     const voucher = await orderApi.getVoucher();
@@ -193,6 +202,7 @@ export default function Invoice() {
       setVoucher(voucher.data);
     }
     fetchData();
+    console.log("auth", auth)
   }, []);
 
   const handleChangeVoucher = (e: any) => {
@@ -250,7 +260,27 @@ export default function Invoice() {
       })),
     };
     if (paymentType === "COD") {
-      await orderApi.createOrder(objectCall);
+      orderApi.createOrder(objectCall).then( (rs) => {
+        setStatusModal(
+          {
+            message : "Đặt hàng thành công",
+            statusSuccess : true,
+            url : '/order',
+            textUrl : "Quay về trang đặt hàng",
+          }
+        )
+        setVisibleModal(true);
+      }).catch((rs) => {
+        setStatusModal(
+          {
+            message : "Đặt hàng thất bại",
+            statusSuccess : false,
+            url : '/',
+            textUrl : "Quay về trang chủ",
+          }
+        )
+        setVisibleModal(true);
+      });
     } else {
       orderApi.createPayment(objectCall).then((res: any) => {
         window.location.href = res.data.url;
@@ -264,6 +294,14 @@ export default function Invoice() {
 
   return (
     <WrapAll style={{ padding: 20 }}>
+      <NotificationModal
+        isModalSuccessVisible={visibleModal}
+        setIsModalSuccessVisible={setVisibleModal}
+        message={statusModal.message}
+        success={statusModal.statusSuccess}
+        url = {statusModal.url}
+        textUrl = {statusModal.textUrl}
+      />
       <WrapContainer maxWidth="md">
         <Paper className={classes.tableContainer}>
           <WrapTitle>
@@ -346,16 +384,16 @@ export default function Invoice() {
               </Grid>
               <Grid item md={6} xs={12}>
                 <WrapInformation>
-                  <Value value={`Tên: `} size="16px" />
+                  <Value value={`Tên: ${auth.profile.name}`} size="16px" />
                 </WrapInformation>
                 <WrapInformation>
-                  <Value value={`Địa chỉ:  `} size="16px" />
+                  <Value value={`Địa chỉ: ${auth.profile.address} `} size="16px" />
                 </WrapInformation>
                 <WrapInformation>
-                  <Value value={`Email: : `} size="16px" />
+                  <Value value={`Email: : ${auth.profile.email} `} size="16px" />
                 </WrapInformation>
                 <WrapInformation>
-                  <Value value={`SĐT: `} size="16px" />{" "}
+                  <Value value={`SĐT: ${auth.profile.phone_number} `} size="16px" />{" "}
                 </WrapInformation>
               </Grid>
 

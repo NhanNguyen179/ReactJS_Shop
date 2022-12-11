@@ -2,11 +2,35 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import orderApi from "../../api/orderApi";
 import Loading from "../../components/Loading";
+import SuccessImage from "../../img/success.png";
+import FailedImage from "../../img/failed.png";
+import { useHistory } from "react-router-dom";
+import { CustomButton } from "../../components/common/CustomButton";
+import { Box } from "@mui/material";
 
-export default function PaymentOnlineResponse() {
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: "10px",
+};
+
+function PaymentOnlineResponse() {
+  const history = useHistory();
   const search = useLocation().search;
   const [loading, setLoading] = useState<boolean>(true);
   const [paymentResponse, setPaymentResponse] = useState<string>();
+
+  const handleRedirect = (url: string) => {
+    history.push(url);
+  };
+
   const getPaymentResponse = async () => {
     const request = {
       params: {
@@ -36,14 +60,77 @@ export default function PaymentOnlineResponse() {
 
   useEffect(() => {
     setLoading(true);
-    getPaymentResponse().then(() => setLoading(false));
+    getPaymentResponse()
+      .then(() => setLoading(false))
+      .catch(() => setLoading(false));
   }, []);
 
   if (loading) return <Loading />;
 
   return paymentResponse === "thành công" ? (
-    <div>Thanh toán thành công</div>
+    <Box sx={style}>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <img src={SuccessImage} alt="ConfirmDelete" style={{ width: "30%" }} />
+        <p
+          style={{
+            fontFamily: "Inter",
+            fontStyle: "normal",
+            fontWeight: "700",
+            fontSize: "24px",
+            lineHeight: "150%",
+            textAlign: "center",
+            letterSpacing: "1px",
+            color: "#171B2F",
+          }}
+        >
+          Đặt hàng thành công{" "}
+        </p>
+        <CustomButton onClick={() => handleRedirect("/order")}>
+          Quay về trang đặt hàng
+        </CustomButton>
+      </div>
+    </Box>
   ) : (
-    <div>Thanh toán thất bại</div>
+    <Box sx={style}>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <img src={FailedImage} alt="ConfirmDelete" style={{ width: "30%" }} />
+        <p
+          style={{
+            fontFamily: "Inter",
+            fontStyle: "normal",
+            fontWeight: "700",
+            fontSize: "24px",
+            lineHeight: "150%",
+            textAlign: "center",
+            letterSpacing: "1px",
+            color: "#171B2F",
+          }}
+        >
+          Đặt hàng thất bại{" "}
+        </p>
+        <CustomButton onClick={() => handleRedirect("/")}>
+          Quay về trang chủ
+        </CustomButton>
+      </div>
+    </Box>
   );
 }
+export default PaymentOnlineResponse;
