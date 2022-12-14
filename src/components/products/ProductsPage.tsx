@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import ProductList from "../products/ProductList";
@@ -9,9 +8,6 @@ import Loading from "../Loading";
 import * as React from "react";
 import { makeStyles } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
-type Params = {
-  categoryId: string;
-};
 
 const useStyles = makeStyles(() => ({
   ul: {

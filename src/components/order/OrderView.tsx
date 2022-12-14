@@ -107,6 +107,10 @@ export default function OrderView(child: any) {
     fetchOrders().then();
   }, [page, inputStatus]);
 
+  useEffect(() => {
+    setPage(1)
+  }, [ inputStatus]);
+
   // fetch, api
   const updateStatusOrder = async (temp: IOrderUpdatePayload | null = null) => {
     const data = {
@@ -245,7 +249,7 @@ export default function OrderView(child: any) {
             >
               <Pagination
                 count={numOfPage}
-                defaultPage={1}
+                defaultPage={page}
                 color={"primary"}
                 variant="outlined"
                 onChange={(e, value) => handleChangePage(e, value)}

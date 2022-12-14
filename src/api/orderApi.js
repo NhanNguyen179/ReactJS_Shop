@@ -76,6 +76,9 @@ const orderApi = {
   async UpdateVoucher(data, id) {
     return await orderConfig.put(`/vouchers/${id}`, data);
   },
+  async GetPaymentOnline(request) {
+    return await orderConfig.get(`/orders/payment-online`, request);
+  },
 };
 
 export default orderApi;
