@@ -38,8 +38,8 @@ function SimpleDialog(props: SimpleDialogProps) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <List sx={{ pt: 0 }}>
+    <Dialog onClose={handleClose} open={open} >
+      <List sx={{ pt: 0 }} style={{padding: '12px'}}> 
         <ListItem onClick={() => handleListItemClick("addAccount")}>
           <NavLink
             to="/profile"

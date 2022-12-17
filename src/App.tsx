@@ -20,9 +20,12 @@ import Register from "./components/Register";
 import Forgotpassword from "./components/change_for_password/forgotpassword";
 import ChangePassword from "./components/change_for_password/changepassword";
 import PaymentOnlineResponse from "./view/Invoice/PaymentOnlineResponse";
+import "react-toastify/dist/ReactToastify.css";
+import ServerError from "./view/ErorPage/ServerError";
+import BadRequest from "./view/ErorPage/BadRequest";
+import NotFound from "./view/ErorPage/NotFound";
 
 export default function App() {
- 
   return (
     <AppProvider>
       <AppProviderSearch>
@@ -45,6 +48,10 @@ export default function App() {
               path={`/order/payment-response`}
               component={PaymentOnlineResponse}
             ></Route>
+            <Route exact path={`/server-error`} component={ServerError}></Route>
+            <Route exact path={`/bad-request`} component={BadRequest}></Route>
+            <Route exact path={`/not-found`} component={NotFound}></Route>
+
             <Route path="/" component={Main}></Route>
           </Switch>
         </FooterPositioning>
