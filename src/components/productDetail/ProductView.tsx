@@ -27,6 +27,10 @@ export default function ProductView() {
       setLoading(true);
       const respone: any = await productFunction.getDetailProduct(productId);
       setProduct(respone);
+      setQuantityState({
+        quantity: respone.quantity,
+        name: respone.name,
+      });
       setLoading(false);
     };
     fetch();
@@ -34,7 +38,7 @@ export default function ProductView() {
   const isMobile = useMediaQuery("(max-width:599px)");
 
   const { dispatch } = useContext(AppContext);
-  const AddProduct = () => 
+  const AddProduct = () => {
     dispatch({
       type: Types.Add,
       payload: {
@@ -64,7 +68,6 @@ export default function ProductView() {
         quantity: quantityState.quantity,
       },
     });
-    
   };
 
   const [quantityState, setQuantityState] = useState<{
