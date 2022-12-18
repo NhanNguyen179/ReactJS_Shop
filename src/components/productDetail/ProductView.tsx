@@ -12,7 +12,6 @@ import productFunction from "../../api/productFunction";
 import ReviewContainer from "../review/ReviewContainer";
 import { Container } from "@material-ui/core";
 import Loading from "../Loading";
-import { toast } from "react-toastify";
 
 type Params = {
   productId: string;
@@ -35,18 +34,7 @@ export default function ProductView() {
   const isMobile = useMediaQuery("(max-width:599px)");
 
   const { dispatch } = useContext(AppContext);
-  const AddProduct = () => {
-    console.log("Toast")
-    toast.success('🦄 Wow so easy!', {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      });
+  const AddProduct = () => 
     dispatch({
       type: Types.Add,
       payload: {
