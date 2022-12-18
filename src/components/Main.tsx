@@ -55,16 +55,16 @@ export default function Main() {
               {role === "shop" ? <ShopDashBoard /> : <Redirect to="/sign-in" />}
             </Route>
 
-            <Route path={`/bill`} component={Invoice}>
-              <Invoice />
-            </Route>
-
-            <Route path={`/order`} component={OrderContainer}>
+            <Route exact path={`/order`} component={OrderContainer}>
               {role === "customer" ? (
                 <OrderContainer />
               ) : (
                 <Redirect to="/sign-in" />
               )}
+            </Route>
+
+            <Route path={`/bill`} component={Invoice}>
+              <Invoice />
             </Route>
 
             <Route path="*" component={NotFoundPage}></Route>
