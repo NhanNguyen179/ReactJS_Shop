@@ -25,8 +25,17 @@ export default function ProductView() {
   React.useEffect(() => {
     const fetch = async () => {
       setLoading(true);
-      const respone: any = await productFunction.getDetailProduct(productId);
-      setProduct(respone);
+      try {
+        const respone: any = await productFunction.getDetailProduct(productId);
+        setProduct(respone);
+
+        setQuantityState({
+          quantity: respone.quantity,
+          name: respone.name,
+        });
+      } catch {
+        setLoading(false);
+      }
       setLoading(false);
     };
     fetch();
@@ -76,91 +85,96 @@ export default function ProductView() {
 
   if (loading) return <Loading />;
 
-  if (product && isMobile) {
-    return (
-      <Container fixed style={{ marginTop: "100px", backgroundColor: "white" }}>
-        <ImageView
-          category={product?.category}
-          images={product?.imageUrl.map((item: any) => {
-            return {
-              original: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
-              thumbnail: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
-            };
-          })}
-          name={product?.name}
-        />
-        <DescriptionView
-          name={product?.name}
-          description={product?.description}
-          price={product?.price}
-          id={product?.id}
-          quantityState={quantityState}
-          setQuantityState={setQuantityState}
-          quantity={product.quantity}
-          options={product?.options.map((item: any) => {
-            return {
-              id: item.id,
-              name: item.option,
-              choices: item.name,
-            };
-          })}
-          AddProduct={AddProduct}
-        />
-      </Container>
-    );
-  } else if (product && !isMobile) {
-    return (
-      <Container
-        fixed
-        style={{
-          marginTop: "100px",
-          backgroundColor: "white",
-          borderRadius: "10px",
-        }}
-        maxWidth="lg"
-      >
-        <Grid
-          container
-          style={{
-            justifyContent: "space-between",
-            width: "100%",
-          }}
+  if (product !== undefined) {
+    if (isMobile) {
+      return (
+        <Container
+          fixed
+          style={{ marginTop: "100px", backgroundColor: "white" }}
         >
-          <Grid item xs={12} sm={6} style={{ flexBasis: "45%" }}>
-            <ImageView
-              category={product?.category}
-              images={product?.imageUrl.map((item: any) => {
-                return {
-                  original: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
-                  thumbnail: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
-                };
-              })}
-              name={product?.name}
-            />
+          <ImageView
+            category={product?.category}
+            images={product?.imageUrl.map((item: any) => {
+              return {
+                original: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
+                thumbnail: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
+              };
+            })}
+            name={product?.name}
+          />
+          <DescriptionView
+            name={product?.name}
+            description={product?.description}
+            price={product?.price}
+            id={product?.id}
+            quantityState={quantityState}
+            setQuantityState={setQuantityState}
+            quantity={product.quantity}
+            options={product?.options.map((item: any) => {
+              return {
+                id: item.id,
+                name: item.option,
+                choices: item.name,
+              };
+            })}
+            AddProduct={AddProduct}
+          />
+        </Container>
+      );
+    } else {
+      return (
+        <Container
+          fixed
+          style={{
+            marginTop: "100px",
+            backgroundColor: "white",
+            borderRadius: "10px",
+          }}
+          maxWidth="lg"
+        >
+          <Grid
+            container
+            style={{
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Grid item xs={12} sm={6} style={{ flexBasis: "45%" }}>
+              <ImageView
+                category={product?.category}
+                images={product?.imageUrl.map((item: any) => {
+                  return {
+                    original: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
+                    thumbnail: `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item}`,
+                  };
+                })}
+                name={product?.name}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} style={{ flexBasis: "55%" }}>
+              <DescriptionView
+                name={product?.name}
+                description={product?.description}
+                price={product?.price}
+                id={product?.id}
+                quantityState={quantityState}
+                setQuantityState={setQuantityState}
+                quantity={product.quantity}
+                options={product?.options.map((item: any) => {
+                  return {
+                    id: item.id,
+                    name: item.option,
+                    choices: item.name,
+                  };
+                })}
+                AddProduct={AddProduct}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6} style={{ flexBasis: "55%" }}>
-            <DescriptionView
-              name={product?.name}
-              description={product?.description}
-              price={product?.price}
-              id={product?.id}
-              quantityState={quantityState}
-              setQuantityState={setQuantityState}
-              quantity={product.quantity}
-              options={product?.options.map((item: any) => {
-                return {
-                  id: item.id,
-                  name: item.option,
-                  choices: item.name,
-                };
-              })}
-              AddProduct={AddProduct}
-            />
-          </Grid>
-        </Grid>
-        <ReviewContainer productId={productId} />
-      </Container>
-    );
+          <ReviewContainer productId={productId} />
+        </Container>
+      );
+    }
   } else {
     return (
       <div style={{ maxWidth: "1280px", margin: "0px auto" }}>

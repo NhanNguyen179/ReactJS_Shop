@@ -11,6 +11,7 @@ import userAPI from "../../api/userFunction";
 import { Avatar, Box, Grid, IconButton, TextField } from "@mui/material";
 import orderApi from "../../api/orderApi";
 import { PhotoCamera } from "@mui/icons-material";
+import NotificationModal from "../../components/NotificationModal";
 
 export default function Profile() {
   const navigated = useHistory();
@@ -29,6 +30,13 @@ export default function Profile() {
   const [wards, setWards] = React.useState<any>([]);
   const [gender, setGender] = useState<string>("");
   const [image, setImage] = useState<any>();
+  const [visibleModal, setVisibleModal] = React.useState(false);
+  const [statusModal, setStatusModal] = React.useState({
+    message: "",
+    statusSuccess: true,
+    url : "./",
+    textUrl : "Quay về trang chủ"
+  });
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -62,7 +70,28 @@ export default function Profile() {
     paymentApi.province = provinceName.name;
     paymentApi.ward = wardName.name;
     paymentApi.district = districtname.name;
-    await userAPI.updateProfile(JSON.parse(JSON.stringify(paymentApi)));
+     userAPI.updateProfile(JSON.parse(JSON.stringify(paymentApi))).then((rs)=> {
+      setStatusModal(
+        {
+          message : "Cập nhập thành công",
+          statusSuccess : true,
+          url : '/',
+          textUrl : "Quay về trang chủ",
+        }
+      )
+      setVisibleModal(true);
+     }).catch((rs)=> 
+     {
+      setStatusModal(
+        {
+          message : "Cập nhập thất bại",
+          statusSuccess : false,
+          url : '/',
+          textUrl : "Quay về trang chủ",
+        }
+      )
+      setVisibleModal(true);
+     });
   };
   React.useEffect(() => {
     const fetchProvince = async () => {
@@ -160,6 +189,14 @@ export default function Profile() {
 
   return (
     <Grid container>
+       <NotificationModal
+        isModalSuccessVisible={visibleModal}
+        setIsModalSuccessVisible={setVisibleModal}
+        message={statusModal.message}
+        success={statusModal.statusSuccess}
+        url = {statusModal.url}
+        textUrl = {statusModal.textUrl}
+      />
       <Container component="main" maxWidth="sm">
         <Box
           sx={{
