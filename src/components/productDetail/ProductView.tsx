@@ -12,9 +12,8 @@ import productFunction from "../../api/productFunction";
 import ReviewContainer from "../review/ReviewContainer";
 import { Container } from "@material-ui/core";
 import Loading from "../Loading";
-import 'react-toastify/dist/ReactToastify.css';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
 type Params = {
   productId: string;
@@ -33,7 +32,7 @@ export default function ProductView() {
         setProduct(respone);
 
         setQuantityState({
-          quantity: respone.quantity,
+          quantity: "1",
           name: respone.name,
         });
       } catch {
@@ -85,7 +84,7 @@ export default function ProductView() {
       draggable: true,
       progress: undefined,
       theme: "light",
-      });
+    });
   };
 
   const [quantityState, setQuantityState] = useState<{
@@ -105,6 +104,8 @@ export default function ProductView() {
           fixed
           style={{ marginTop: "100px", backgroundColor: "white" }}
         >
+          <ToastContainer />
+
           <ImageView
             category={product?.category}
             images={product?.imageUrl.map((item: any) => {
@@ -136,7 +137,6 @@ export default function ProductView() {
       );
     } else {
       return (
-        
         <Container
           fixed
           style={{
@@ -146,7 +146,7 @@ export default function ProductView() {
           }}
           maxWidth="lg"
         >
-           <ToastContainer />
+          <ToastContainer />
           <Grid
             container
             style={{

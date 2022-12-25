@@ -21,6 +21,7 @@ import {
   Add,
 } from "@mui/icons-material";
 import productFunction from "../../api/productFunction";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ProductDialog({ render, onSave }: any) {
   const [open, setOpen] = React.useState(false);
@@ -110,13 +111,42 @@ export default function ProductDialog({ render, onSave }: any) {
         options[i].optionValue
       );
     }
-    await productFunction.createProduct(formData);
+    productFunction
+      .createProduct(formData)
+      .then((rs) => {
+        toast.success(`Thêm sản phẩm ${name} thành công`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((rs) => {
+        console.log(rs)
+        toast.error(`${rs.response.data.message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
   };
 
   return (
     <>
+      <ToastContainer />
+
       {render(handleClickOpen)}
       <Dialog fullWidth maxWidth={"md"} open={open} onClose={handleClose}>
+
         <DialogTitle>Thêm sản phẩm</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>

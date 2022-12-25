@@ -21,6 +21,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 
 export const drawerWidth = 240;
 
@@ -107,11 +108,20 @@ function ResponsiveDrawer(props: any) {
   };
 
   useEffect(() => {
-    async function fetch() {
-      const infor = await userAPI.getInforUser();
-      setAuth(infor);
+    if (auth !== undefined && auth !==null) {
+      toast.info(`Chào mừng trở lại, ${auth.profile.name}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
     }
-  }, []);
+  }, [auth]);
 
   let navlinkStyle = {
     display: "flex",
@@ -124,6 +134,7 @@ function ResponsiveDrawer(props: any) {
     <div>
       <div className={classes.toolbar} />
       <Divider />
+      
       <List>
         {[
           { text: "dash-board/users", display: "Người dùng", icon: "person" },
@@ -164,7 +175,7 @@ function ResponsiveDrawer(props: any) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-
+      <ToastContainer />
       <AppBar position="sticky" className={classes.appBar}>
         <Toolbar>
           <Typography
@@ -179,7 +190,7 @@ function ResponsiveDrawer(props: any) {
           <div style={{ flexGrow: 1 }}></div>
           <div>
             <a style={navlinkStyle} onClick={handleClickOpen}>
-              <Avatar src={auth.profile.avatar} />
+              <Avatar src={auth?.profile.avatar} />
               <span
                 style={{
                   marginLeft: "5px",
@@ -189,7 +200,7 @@ function ResponsiveDrawer(props: any) {
                   whiteSpace: "nowrap",
                 }}
               >
-                {auth.profile.name}
+                {auth?.profile.name}
               </span>
             </a>
             <SimpleDialog

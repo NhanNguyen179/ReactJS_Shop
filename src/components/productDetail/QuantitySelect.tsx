@@ -30,6 +30,7 @@ export default function Quantityselect({
   return (
     <FormControl variant="outlined" fullWidth>
       <Select
+        defaultValue="1"
         value={value}
         onChange={onChange}
         inputProps={{

@@ -147,7 +147,7 @@ export default function Voucher() {
                 <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
                   {voucher.discountPercent}
                 </TableCell>
-                <TableCell style={{ maxWidth: "100px", overflow: "hidden" }}>
+                <TableCell style={{ maxWidth: "100px",maxHeight: "100px", overflow: "hidden" }}>
                   <CustomButton
                     onClick={(e) => {
                       setDataUpdate(voucher);

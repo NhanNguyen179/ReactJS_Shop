@@ -1,3 +1,4 @@
+import  { useEffect, useContext } from "react";
 import AppBarAndDrawer from "./AppBarAndDrawer";
 import { Route, Switch } from "react-router-dom";
 import Shop from "./Shop";
@@ -8,6 +9,8 @@ import Product from "./Product";
 import ShopOrder from "./ShopOrder";
 import Order from "./Order";
 import Voucher from "./Voucher";
+import userAPI from "../../api/userFunction";
+import { AppContext } from "../../context/Context";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DashboardContent() {
+  
   const classes = useStyles();
   return (
     <div>
@@ -68,5 +72,15 @@ function DashboardContent() {
 }
 
 export default function Dashboard() {
+  const { auth, setAuth } = useContext(AppContext);
+
+ useEffect(() => {
+    async function fetchData() {
+      const information = await userAPI.getInforUser();
+      localStorage.setItem("user", JSON.stringify(information));
+      setAuth(information)
+    }
+    fetchData()
+  }, []);
   return <DashboardContent />;
 }
