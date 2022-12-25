@@ -12,6 +12,9 @@ import productFunction from "../../api/productFunction";
 import ReviewContainer from "../review/ReviewContainer";
 import { Container } from "@material-ui/core";
 import Loading from "../Loading";
+import 'react-toastify/dist/ReactToastify.css';
+
+import { ToastContainer, toast } from 'react-toastify';
 
 type Params = {
   productId: string;
@@ -73,6 +76,16 @@ export default function ProductView() {
         quantity: quantityState.quantity,
       },
     });
+    toast.success(`Đã thêm sản phẩm ${product.name} vào giỏ hàng!`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
   };
 
   const [quantityState, setQuantityState] = useState<{
@@ -123,6 +136,7 @@ export default function ProductView() {
       );
     } else {
       return (
+        
         <Container
           fixed
           style={{
@@ -132,6 +146,7 @@ export default function ProductView() {
           }}
           maxWidth="lg"
         >
+           <ToastContainer />
           <Grid
             container
             style={{

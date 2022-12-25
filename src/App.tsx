@@ -24,7 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ServerError from "./view/ErorPage/ServerError";
 import BadRequest from "./view/ErorPage/BadRequest";
 import NotFound from "./view/ErorPage/NotFound";
-
+import 'react-toastify/dist/ReactToastify.css';
 export default function App() {
   return (
     <AppProvider>
