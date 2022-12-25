@@ -76,8 +76,8 @@ export default function ProductView() {
       },
     });
     toast.success(`Đã thêm sản phẩm ${product.name} vào giỏ hàng!`, {
-      position: "top-right",
-      autoClose: 5000,
+      position: "bottom-right",
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

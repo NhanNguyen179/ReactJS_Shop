@@ -52,8 +52,8 @@ export default function AddVoucher(data?: any) {
         .AddVoucher(voucher)
         .then((rs) => {
           toast.success(`Thêm voucher thành công`, {
-            position: "top-right",
-            autoClose: 5000,
+            position: "bottom-right",
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -65,8 +65,8 @@ export default function AddVoucher(data?: any) {
         })
         .catch((rs) => {
           toast.error(`${rs.response.data.message}`, {
-            position: "top-right",
-            autoClose: 5000,
+            position: "bottom-right",
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -80,8 +80,8 @@ export default function AddVoucher(data?: any) {
         .UpdateVoucher(voucher, data.data.id)
         .then((rs) => {
           toast.success(`Cập nhập voucher thành công`, {
-            position: "top-right",
-            autoClose: 5000,
+            position: "bottom-right",
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -93,8 +93,8 @@ export default function AddVoucher(data?: any) {
         })
         .catch((rs) => {
           toast.error(`${rs.response.data.message}`, {
-            position: "top-right",
-            autoClose: 5000,
+            position: "bottom-right",
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,

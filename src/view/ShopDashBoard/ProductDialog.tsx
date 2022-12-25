@@ -112,14 +112,13 @@ export default function ProductDialog({ render, onSave }: any) {
         options[i].optionValue
       );
     }
-    await productFunction.createProduct(formData);
     handleClose();
     productFunction
       .createProduct(formData)
       .then((rs) => {
         toast.success(`Thêm sản phẩm ${name} thành công`, {
-          position: "top-right",
-          autoClose: 5000,
+          position: "bottom-right",
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -131,8 +130,8 @@ export default function ProductDialog({ render, onSave }: any) {
       .catch((rs) => {
         console.log(rs);
         toast.error(`${rs.response.data.message}`, {
-          position: "top-right",
-          autoClose: 5000,
+          position: "bottom-right",
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

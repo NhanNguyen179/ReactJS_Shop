@@ -45,11 +45,11 @@ export default function Home() {
   const handleClose = () => setOpen(false);
   React.useEffect(() => {
     const user = localStorage.getItem("user");
-    if (user !== undefined && user !==null) {
+    if (user !== undefined && user !== null) {
       const inforUser = JSON.parse(user);
       toast.info(`Happy shopping, ${inforUser.profile.name}`, {
-        position: "top-right",
-        autoClose: 5000,
+        position: "bottom-right",
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
