@@ -162,7 +162,7 @@ export default function OrderView(child: any) {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Cửa hàng</TableCell>
-                  <TableCell align="left">trạng thái</TableCell>
+                  <TableCell align="left">Phương thức thanh toán</TableCell>
                   <TableCell align="left">tổng tiền</TableCell>
                   <TableCell align="left">ngày mua</TableCell>
                   <TableCell align="left">số sản phẩm</TableCell>
@@ -198,7 +198,7 @@ export default function OrderView(child: any) {
                       </Box>
                     </TableCell>
                     <TableCell align="left">
-                      {util.getNameStatusByValue(row.status)}
+                      {row.paymentName}
                     </TableCell>
                     <TableCell align="left">
                       {util.convertToMoneyString(row.total)}
