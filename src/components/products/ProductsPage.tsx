@@ -26,15 +26,20 @@ export default function CategoryPage() {
   const search = useLocation().search;
   const categoryId = new URLSearchParams(search).get("categoryId");
 
-  var params = new URLSearchParams();
-  if (categoryId) {
-    params.append("categoryId", categoryId);
-  }
-
   const [products, setProducts] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [page, setPage] = React.useState<number>(1);
   const [totalPage, setTotalPage] = React.useState<number>(1);
+
+  var params = new URLSearchParams();
+  if (categoryId) {
+    params.append("categoryId", categoryId);
+    params.append("page", page.toString());
+  }
+  const handleChange = (e: any, p: any) => {
+    console.log("PAGE",p)
+    setPage(p);
+  };
   const styles = useStyles();
 
   React.useEffect(() => {
@@ -48,7 +53,7 @@ export default function CategoryPage() {
       setPage(respone.pageNo);
     };
     fetch().then(() => setLoading(false));
-  }, []);
+  }, [page]);
 
   if (loading) {
     return <Loading />;
@@ -68,6 +73,7 @@ export default function CategoryPage() {
                   variant="outlined"
                   classes={{ ul: styles.ul }}
                   size="large"
+                  onChange={handleChange}
                 />
               </Stack>
             </Container>

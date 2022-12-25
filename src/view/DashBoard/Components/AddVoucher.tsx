@@ -8,7 +8,8 @@ import { Grid, Switch, TextField } from "@material-ui/core";
 import Value from "../../../components/Value";
 import { CustomButton } from "../../../components/common/CustomButton";
 import orderApi from "../../../api/orderApi";
-
+import { ToastContainer, toast } from "react-toastify";
+import { useHistory } from "react-router";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -47,12 +48,61 @@ export default function AddVoucher(data?: any) {
   );
   const handleSubmit = async () => {
     if (data.data === "") {
-      await orderApi.AddVoucher(voucher);
-
-      window.alert("Thêm voucher thành công");
+      orderApi
+        .AddVoucher(voucher)
+        .then((rs) => {
+          toast.success(`Thêm voucher thành công`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          window.location.href = "/dash-board/vouchers";
+        })
+        .catch((rs) => {
+          toast.error(`${rs.response.data.message}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        });
     } else {
-      await orderApi.UpdateVoucher(voucher, data.data.id);
-      window.alert("Cập nhập voucher thành công");
+      orderApi
+        .UpdateVoucher(voucher, data.data.id)
+        .then((rs) => {
+          toast.success(`Cập nhập voucher thành công`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          window.location.href = "/dash-board/vouchers";
+        })
+        .catch((rs) => {
+          toast.error(`${rs.response.data.message}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        });
     }
   };
   return (

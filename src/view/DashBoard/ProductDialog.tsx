@@ -82,7 +82,6 @@ export default function ProductDialog({ render, onSave }: any) {
 
   const handleClose = () => {
     setOpen(false);
-    clearForm();
   };
 
   const handleUpload = (e: any) => {
@@ -112,8 +111,6 @@ export default function ProductDialog({ render, onSave }: any) {
         options[i].optionValue
       );
     }
-    await productFunction.createProduct(formData);
-    handleClose();
     productFunction
       .createProduct(formData)
       .then((rs) => {
@@ -129,7 +126,7 @@ export default function ProductDialog({ render, onSave }: any) {
         });
       })
       .catch((rs) => {
-        console.log(rs);
+        console.log(rs)
         toast.error(`${rs.response.data.message}`, {
           position: "top-right",
           autoClose: 5000,
@@ -143,27 +140,13 @@ export default function ProductDialog({ render, onSave }: any) {
       });
   };
 
-  const clearForm = () => {
-    setName("");
-    setDescription("");
-    setPrice("");
-    setQuantity("");
-    setWeight("");
-    setHeight("");
-    setWidth("");
-    setLength("");
-    setCategory("");
-    setBrand("");
-    setImages([]);
-    setOptions([]);
-    setActiveStep(0);
-  };
-
   return (
     <>
       <ToastContainer />
+
       {render(handleClickOpen)}
       <Dialog fullWidth maxWidth={"md"} open={open} onClose={handleClose}>
+
         <DialogTitle>Thêm sản phẩm</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>

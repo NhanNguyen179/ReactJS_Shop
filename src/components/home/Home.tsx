@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@mui/material/colors";
 import { Box, Dialog, Modal, Typography } from "@material-ui/core";
 import React from "react";
-
+import { ToastContainer, toast } from "react-toastify";
 const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: grey[100],
@@ -31,10 +31,9 @@ const style = {
   p: 4,
   maxHeight: "400px",
   maxWidth: "400px",
-  "&:focus":
-  {
-    outline: 'none' 
-  }
+  "&:focus": {
+    outline: "none",
+  },
 };
 
 export default function Home() {
@@ -44,12 +43,30 @@ export default function Home() {
   const [open, setOpen] = React.useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  React.useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user !== undefined && user !==null) {
+      const inforUser = JSON.parse(user);
+      toast.info(`Happy shopping, ${inforUser.profile.name}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+    }
+  }, []);
   return (
     <div
       style={isMobile ? { paddingBottom: "120px" } : { paddingBottom: "90px" }}
       className={styles.container}
     >
       <div style={{ outline: "none" }}>
+        <ToastContainer />
         <Modal
           open={open}
           aria-labelledby="modal-modal-title"
