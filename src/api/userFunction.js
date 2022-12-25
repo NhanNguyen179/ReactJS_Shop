@@ -60,7 +60,7 @@ const userAPI = {
   },
   async changePassword(data) {
     return await userApi.put(`sv1/auth/me/change_password/`, data);
-  }
+  },
 };
 
 export default userAPI;

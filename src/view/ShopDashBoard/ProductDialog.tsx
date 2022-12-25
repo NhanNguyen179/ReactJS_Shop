@@ -81,6 +81,7 @@ export default function ProductDialog({ render, onSave }: any) {
 
   const handleClose = () => {
     setOpen(false);
+    clearForm();
   };
 
   const handleUpload = (e: any) => {
@@ -111,6 +112,23 @@ export default function ProductDialog({ render, onSave }: any) {
       );
     }
     await productFunction.createProduct(formData);
+    handleClose();
+  };
+
+  const clearForm = () => {
+    setName("");
+    setDescription("");
+    setPrice("");
+    setQuantity("");
+    setWeight("");
+    setHeight("");
+    setWidth("");
+    setLength("");
+    setCategory("");
+    setBrand("");
+    setImages([]);
+    setOptions([]);
+    setActiveStep(0);
   };
 
   return (

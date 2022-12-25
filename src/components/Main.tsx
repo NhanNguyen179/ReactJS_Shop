@@ -14,18 +14,14 @@ import ShopDashBoard from "../view/ShopDashBoard/ShopDashboard";
 import { CardInfo } from "./cart/CartInfo";
 import NotFoundPage from "./NotFoundPage";
 import Invoice from "../view/Invoice/Invoice";
-import PaymentOnlineResponse from "../view/Invoice/PaymentOnlineResponse";
 
 export default function Main() {
   const { role, setRole } = React.useContext(AppContext);
   const [pathAdmin, setPathAdmin] = React.useState(window.location.href);
   useEffect(() => {
-    console.log("role", window.localStorage.getItem("role"));
-    console.log("href", window.location.pathname);
     setPathAdmin(window.location.href);
     const role = window.localStorage.getItem("role") || "guest";
     setRole(role);
-    console.log("role", role);
   }, [setRole]);
   return (
     <>

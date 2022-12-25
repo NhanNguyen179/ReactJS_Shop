@@ -4,19 +4,10 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import AddIcon from "@material-ui/icons/Add";
-import {
-  Avatar,
-  Button,
-  Container,
-  Paper,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Avatar, Button, Container, Paper, Typography } from "@mui/material";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import productAPI from "../../api/productFunction";
 import { CustomSelect } from "../../components/common/CustomSelect";
-import ProductDialog from "./ProductDialog";
 import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -69,7 +60,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Product() {
   const [products, setProducts] = React.useState([]);
   const [active, setActive] = React.useState(true);
-  const [snackOpen, setSnackOpen] = React.useState(false);
   const shopId = useParams<{ shopId: string }>().shopId;
   const classes = useStyles();
   const getProducts = async () => {
@@ -88,7 +78,7 @@ export default function Product() {
         shopId: shopId,
       },
     };
-    const respone: any = await productAPI.getDeactiveProducts();
+    const respone: any = await productAPI.getAllDeactiveProducts(request);
     setProducts(respone.data);
   };
 
@@ -117,20 +107,6 @@ export default function Product() {
 
   return (
     <Container>
-      <Toolbar>
-        <div className={classes.spacer} />
-        <ProductDialog
-          edge="end"
-          onSave={() => {
-            setSnackOpen(false);
-          }}
-          render={(open: any) => (
-            <Button variant="outlined" startIcon={<AddIcon />} onClick={open}>
-              Thêm
-            </Button>
-          )}
-        />
-      </Toolbar>
       <Paper elevation={2} className={classes.summaryCard}>
         <Typography color={"textSecondary"} variant="h5" gutterBottom>
           Sản phẩm

@@ -22,6 +22,9 @@ const productAPI = {
   async getDeactiveProducts() {
     return await productApi.get(`/sv2/products/deactive`);
   },
+  async getAllDeactiveProducts(request) {
+    return await productApi.get(`/sv2/products/all-deactive`, request);
+  },
   async deactiveProduct(id) {
     await productApi.put(`/sv2/products/${id}/deactive`);
   },

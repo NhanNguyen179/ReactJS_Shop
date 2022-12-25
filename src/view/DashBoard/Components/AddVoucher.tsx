@@ -24,7 +24,6 @@ const style = {
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
 export default function AddVoucher(data?: any) {
-  console.log("data", data);
   const [voucher, setVoucher] = React.useState(
     data.data !== ""
       ? {

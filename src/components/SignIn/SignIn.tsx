@@ -21,6 +21,13 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [roleUi, setRoleUi] = useState<string>("");
+  const { auth, setAuth } = React.useContext(AppContext);
+
+  async function fetchData() {
+    const information = await userFunction.getInforUser();
+    localStorage.setItem("user", JSON.stringify(information));
+    setAuth(information);
+  }
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const dataTemp = new FormData(event.currentTarget);
@@ -34,24 +41,12 @@ export default function SignIn() {
       localStorage.setItem("jwtToken", response.data.access_token);
       localStorage.setItem("role", response.data.role);
       setRole(response.data.role);
-      switch (roleUi) {
-        case "shop":
-          navigated.push("/shop-dash-board");
-          break;
-        case "customer":
-          navigated.push("/");
-          break;
-        case "admin":
-          navigated.push("/dash-board");
-          break;
-        default:
-      }
-      setLoading(false);
+      fetchData();
+      navigated.push("/");
     } catch (err) {
-      console.log(err);
       setError("Sai tên đăng nhập hoặc mật khẩu");
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   let logoStyle = {

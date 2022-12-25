@@ -11,9 +11,15 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import {
+  Link as RouterLink,
+  NavLink,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import Icon from "@material-ui/core/Icon";
 import Avatar from "@material-ui/core/Avatar";
+import { Button } from "@mui/material";
 
 export const drawerWidth = 240;
 
@@ -29,7 +35,7 @@ const useStyles = makeStyles((theme: any) => ({
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    backgroundColor: `#FFA500`,
+    backgroundColor: "#fff",
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
@@ -40,6 +46,7 @@ const useStyles = makeStyles((theme: any) => ({
 function ResponsiveDrawer(props: any) {
   const classes = useStyles();
   const { pathname } = useLocation();
+  const navigated = useHistory();
 
   const drawer = (
     <div>
@@ -97,9 +104,14 @@ function ResponsiveDrawer(props: any) {
             Chào mừng đến với trang quản lý cửa hàng
           </Typography>
           <div style={{ flexGrow: 1 }}></div>
-          <IconButton color="inherit" aria-label="open drawer" edge="end">
-            <Avatar src="" />
-          </IconButton>
+          <div>
+            <Button
+              variant="outlined"
+              onClick={() => (window.location.href = "/")}
+            >
+              Trang chủ
+            </Button>
+          </div>
         </Toolbar>
       </AppBar>
 

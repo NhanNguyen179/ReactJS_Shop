@@ -108,8 +108,8 @@ export default function OrderView(child: any) {
   }, [page, inputStatus]);
 
   useEffect(() => {
-    setPage(1)
-  }, [ inputStatus]);
+    setPage(1);
+  }, [inputStatus]);
 
   // fetch, api
   const updateStatusOrder = async (temp: IOrderUpdatePayload | null = null) => {
