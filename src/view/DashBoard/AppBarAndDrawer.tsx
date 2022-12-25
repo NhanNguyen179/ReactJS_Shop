@@ -111,8 +111,8 @@ function ResponsiveDrawer(props: any) {
   useEffect(() => {
     if (auth !== undefined && auth !== null) {
       toast.info(`Chào mừng trở lại, ${auth.profile.name}`, {
-        position: "top-right",
-        autoClose: 5000,
+        position: "bottom-right",
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
