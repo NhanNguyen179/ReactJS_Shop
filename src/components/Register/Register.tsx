@@ -84,6 +84,7 @@ const Register = () => {
         ward_code: data.get("Phường"),
         ward: wards.find((ward: any) => ward.wardId === wardId).name,
         address: data.get("address"),
+        phone_number:data.get("phone_number")
       },
     };
     try {
@@ -160,6 +161,15 @@ const Register = () => {
               label="Căn cước công dân"
               type="text"
               id="cerfiticate"
+            />
+            <CustomTextField
+                margin="normal"
+                required
+                fullWidth
+                name="phone_number"
+                label="Số điện thoại"
+                type="text"
+                id="phone_number"
             />
             <CustomSelect
               label="Vai trò"
