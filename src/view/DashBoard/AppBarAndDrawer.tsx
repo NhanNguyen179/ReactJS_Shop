@@ -14,6 +14,7 @@ import { NavLink } from "react-router-dom";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import {
   Avatar,
+  Button,
   Dialog,
   List,
   ListItem,
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme: any) => ({
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    backgroundColor: `#FFA500`,
+    backgroundColor: `#fff`,
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
@@ -108,7 +109,7 @@ function ResponsiveDrawer(props: any) {
   };
 
   useEffect(() => {
-    if (auth !== undefined && auth !==null) {
+    if (auth !== undefined && auth !== null) {
       toast.info(`Chào mừng trở lại, ${auth.profile.name}`, {
         position: "top-right",
         autoClose: 5000,
@@ -134,7 +135,7 @@ function ResponsiveDrawer(props: any) {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      
+
       <List>
         {[
           { text: "dash-board/users", display: "Người dùng", icon: "person" },
@@ -189,25 +190,12 @@ function ResponsiveDrawer(props: any) {
           </Typography>
           <div style={{ flexGrow: 1 }}></div>
           <div>
-            <a style={navlinkStyle} onClick={handleClickOpen}>
-              <Avatar src={auth?.profile.avatar} />
-              <span
-                style={{
-                  marginLeft: "5px",
-                  maxWidth: "100px",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {auth?.profile.name}
-              </span>
-            </a>
-            <SimpleDialog
-              selectedValue={selectedValue}
-              open={open}
-              onClose={handleClose}
-            />
+            <Button
+              variant="outlined"
+              onClick={() => (window.location.href = "/")}
+            >
+              Trang chủ
+            </Button>
           </div>
         </Toolbar>
       </AppBar>

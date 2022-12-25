@@ -92,7 +92,6 @@ export default function Voucher() {
   const getVouchers = async () => {
     const response: any = await orderApi.getVoucher();
     setVouchers(response.data);
-    console.log(response.data);
   };
 
   React.useEffect(() => {

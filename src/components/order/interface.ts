@@ -28,6 +28,8 @@ interface IOrderSearch {
     status:string,
     total:number,
     reasonCancel:string,
+    paymentMethod : string,
+    paymentName : string,
     createdAt:string,
     updatedAt:string,
     shop:IShopOrder,

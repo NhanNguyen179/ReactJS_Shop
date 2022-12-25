@@ -17,8 +17,6 @@ const CartPreviewContentsSwitch = ({ onClick }: CartPreviewContentsProps) => {
 
   const { state } = useContext(AppContext);
 
-  console.log(state.products);
-
   if (state.products[0] == null) {
     return (
       <div

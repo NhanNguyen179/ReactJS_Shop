@@ -172,8 +172,8 @@ export default function Invoice() {
   const [statusModal, setStatusModal] = React.useState({
     message: "",
     statusSuccess: true,
-    url : "./",
-    textUrl : "Quay về trang chủ"
+    url: "./",
+    textUrl: "Quay về trang chủ",
   });
   // React.useEffect(() => {
   //   async function fetchData() {
@@ -202,7 +202,6 @@ export default function Invoice() {
       setVoucher(voucher.data);
     }
     fetchData();
-    console.log("auth", auth)
   }, []);
 
   const handleChangeVoucher = (e: any) => {
@@ -260,27 +259,26 @@ export default function Invoice() {
       })),
     };
     if (paymentType === "COD") {
-      orderApi.createOrder(objectCall).then( (rs) => {
-        setStatusModal(
-          {
-            message : "Đặt hàng thành công",
-            statusSuccess : true,
-            url : '/order',
-            textUrl : "Quay về trang đặt hàng",
-          }
-        )
-        setVisibleModal(true);
-      }).catch((rs) => {
-        setStatusModal(
-          {
-            message : "Đặt hàng thất bại",
-            statusSuccess : false,
-            url : '/',
-            textUrl : "Quay về trang chủ",
-          }
-        )
-        setVisibleModal(true);
-      });
+      orderApi
+        .createOrder(objectCall)
+        .then((rs) => {
+          setStatusModal({
+            message: "Đặt hàng thành công",
+            statusSuccess: true,
+            url: "/order",
+            textUrl: "Quay về trang đặt hàng",
+          });
+          setVisibleModal(true);
+        })
+        .catch((rs) => {
+          setStatusModal({
+            message: "Đặt hàng thất bại",
+            statusSuccess: false,
+            url: "/",
+            textUrl: "Quay về trang chủ",
+          });
+          setVisibleModal(true);
+        });
     } else {
       orderApi.createPayment(objectCall).then((res: any) => {
         window.location.href = res.data.url;
@@ -299,8 +297,8 @@ export default function Invoice() {
         setIsModalSuccessVisible={setVisibleModal}
         message={statusModal.message}
         success={statusModal.statusSuccess}
-        url = {statusModal.url}
-        textUrl = {statusModal.textUrl}
+        url={statusModal.url}
+        textUrl={statusModal.textUrl}
       />
       <WrapContainer maxWidth="md">
         <Paper className={classes.tableContainer}>
@@ -322,9 +320,6 @@ export default function Invoice() {
 
               <TableBody className={classes.TBody}>
                 {invoice?.map((item: any) => {
-                  console.log(
-                    `${process.env.REACT_APP_API_BASE_URl_IMAGE}/${item.image[0]}`
-                  );
                   return (
                     <TableRow key={item.name}>
                       <TableCell>
@@ -387,13 +382,22 @@ export default function Invoice() {
                   <Value value={`Tên: ${auth.profile.name}`} size="16px" />
                 </WrapInformation>
                 <WrapInformation>
-                  <Value value={`Địa chỉ: ${auth.profile.address} `} size="16px" />
+                  <Value
+                    value={`Địa chỉ: ${auth.profile.address} `}
+                    size="16px"
+                  />
                 </WrapInformation>
                 <WrapInformation>
-                  <Value value={`Email: : ${auth.profile.email} `} size="16px" />
+                  <Value
+                    value={`Email: : ${auth.profile.email} `}
+                    size="16px"
+                  />
                 </WrapInformation>
                 <WrapInformation>
-                  <Value value={`SĐT: ${auth.profile.phone_number} `} size="16px" />{" "}
+                  <Value
+                    value={`SĐT: ${auth.profile.phone_number} `}
+                    size="16px"
+                  />{" "}
                 </WrapInformation>
               </Grid>
 

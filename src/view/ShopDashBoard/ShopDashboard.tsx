@@ -2,9 +2,9 @@ import AppBarAndDrawer from "./AppBarAndDrawer";
 import { Route, Switch } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-import ShopOrder from "./ShopOrder";
 import DataOrderContainer from "../../components/dataCenter/Order/DataOrderContainer";
 import ShopProduct from "./ShopProduct";
+import Order from "./Order";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +42,7 @@ function DashboardContent() {
               <Route
                 exact
                 path="/shop-dash-board/orders"
-                component={ShopOrder}
+                component={Order}
               ></Route>
               <Route
                 exact

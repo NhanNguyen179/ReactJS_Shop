@@ -25,7 +25,6 @@ const style = {
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
 export default function AddVoucher(data?: any) {
-
   const [voucher, setVoucher] = React.useState(
     data.data !== ""
       ? {
@@ -49,7 +48,7 @@ export default function AddVoucher(data?: any) {
   );
   const handleSubmit = async () => {
     if (data.data === "") {
-       orderApi
+      orderApi
         .AddVoucher(voucher)
         .then((rs) => {
           toast.success(`Thêm voucher thành công`, {
@@ -62,8 +61,7 @@ export default function AddVoucher(data?: any) {
             progress: undefined,
             theme: "light",
           });
-          window.location.href = '/dash-board/vouchers';
-
+          window.location.href = "/dash-board/vouchers";
         })
         .catch((rs) => {
           toast.error(`${rs.response.data.message}`, {
@@ -77,9 +75,8 @@ export default function AddVoucher(data?: any) {
             theme: "light",
           });
         });
-
     } else {
-       orderApi
+      orderApi
         .UpdateVoucher(voucher, data.data.id)
         .then((rs) => {
           toast.success(`Cập nhập voucher thành công`, {
@@ -92,8 +89,7 @@ export default function AddVoucher(data?: any) {
             progress: undefined,
             theme: "light",
           });
-          window.location.href = '/dash-board/vouchers';
-
+          window.location.href = "/dash-board/vouchers";
         })
         .catch((rs) => {
           toast.error(`${rs.response.data.message}`, {

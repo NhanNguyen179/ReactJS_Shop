@@ -47,9 +47,6 @@ const EachItemInCartBiggerScreen = ({
   deleteProduct,
   shopId,
 }: eachItemProps) => {
-  console.log(currentQuantity);
-  console.log(quantity);
-
   const QuantityPresentationSwitch = () => {
     if (parseInt(currentQuantity) >= 10) {
       return (

@@ -5,7 +5,6 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import AddIcon from "@material-ui/icons/Add";
-import { AppContext } from "../../context/Context";
 import {
   Avatar,
   Button,
@@ -18,7 +17,7 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import productAPI from "../../api/productFunction";
 import { CustomSelect } from "../../components/common/CustomSelect";
 import ProductDialog from "./ProductDialog";
-import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,12 +70,17 @@ export default function ShopProduct() {
   const [products, setProducts] = React.useState([]);
   const [active, setActive] = React.useState(true);
   const [snackOpen, setSnackOpen] = React.useState(false);
-  const { auth, setAuth } = React.useContext(AppContext);
+  const navigated = useHistory();
+  let user: any = localStorage.getItem("user");
+  if (user === null) {
+    navigated.push("/sign-in");
+  }
+  user = JSON.parse(user);
   const classes = useStyles();
   const getProducts = async () => {
     const request = {
       params: {
-        shopId: auth.Id,
+        shopId: user.id,
       },
     };
     const respone: any = await productAPI.getProducts(request);
@@ -86,16 +90,6 @@ export default function ShopProduct() {
   const getDeactiveProducts = async () => {
     const respone: any = await productAPI.getDeactiveProducts();
     setProducts(respone.data);
-  };
-
-  const handleDeactive = async (id: string) => {
-    await productAPI.deactiveProduct(id);
-    getProducts();
-  };
-
-  const handleActive = async (id: string) => {
-    await productAPI.activeProduct(id);
-    getDeactiveProducts();
   };
 
   React.useEffect(() => {
@@ -148,7 +142,6 @@ export default function ShopProduct() {
               <TableCell>Tên</TableCell>
               <TableCell>Giá</TableCell>
               <TableCell></TableCell>
-              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -163,19 +156,6 @@ export default function ShopProduct() {
                 </TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.price} đ</TableCell>
-                <TableCell>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    onClick={
-                      active
-                        ? () => handleDeactive(product.id)
-                        : () => handleActive(product.id)
-                    }
-                  >
-                    {active ? "Hủy" : "Kích hoạt"}
-                  </Button>
-                </TableCell>
                 <TableCell>
                   <Button variant="outlined" color="error" fullWidth>
                     Xóa

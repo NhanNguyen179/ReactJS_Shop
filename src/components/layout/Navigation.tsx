@@ -19,6 +19,7 @@ import {
   ListItemAvatar,
   ListItemText,
 } from "@mui/material";
+import { Button } from "@material-ui/core";
 
 export interface SimpleDialogProps {
   open: boolean;
@@ -28,6 +29,7 @@ export interface SimpleDialogProps {
 
 function SimpleDialog(props: SimpleDialogProps) {
   const { onClose, selectedValue, open } = props;
+  const role = localStorage.getItem("role");
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -38,11 +40,11 @@ function SimpleDialog(props: SimpleDialogProps) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open} >
-      <List sx={{ pt: 0 }} style={{padding: '12px'}}> 
+    <Dialog onClose={handleClose} open={open}>
+      <List sx={{ pt: 0 }} style={{ padding: "12px" }}>
         <ListItem onClick={() => handleListItemClick("addAccount")}>
-          <NavLink
-            to="/profile"
+          <Button
+            onClick={() => (window.location.href = "/profile")}
             style={{
               display: "flex",
               justifyContent: "center",
@@ -55,33 +57,74 @@ function SimpleDialog(props: SimpleDialogProps) {
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary="Thông tin cá nhân" />
-          </NavLink>
+          </Button>
         </ListItem>
+        {role === "customer" && (
+          <ListItem onClick={() => handleListItemClick("addAccount")}>
+            <Button
+              onClick={() => (window.location.href = "/order")}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ListItemAvatar>
+                <Avatar>
+                  <ReceiptLongIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="Lịch sử đơn hàng" />
+            </Button>
+          </ListItem>
+        )}
+        {role === "admin" && (
+          <ListItem onClick={() => handleListItemClick("addAccount")}>
+            <Button
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onClick={() => (window.location.href = "/dash-board")}
+            >
+              <ListItemAvatar>
+                <Avatar>
+                  <ReceiptLongIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="Quản lý admin" />
+            </Button>
+          </ListItem>
+        )}
+        {role === "shop" && (
+          <ListItem onClick={() => handleListItemClick("addAccount")}>
+            <Button
+              onClick={() => (window.location.href = "/shop-dash-board")}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ListItemAvatar>
+                <Avatar>
+                  <ReceiptLongIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="Quản lý cửa hàng" />
+            </Button>
+          </ListItem>
+        )}
+
         <ListItem onClick={() => handleListItemClick("addAccount")}>
-          <NavLink
-            to="/order"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <ListItemAvatar>
-              <Avatar>
-                <ReceiptLongIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Lịch sử đơn hàng" />
-          </NavLink>
-        </ListItem>
-        <ListItem onClick={() => handleListItemClick("addAccount")}>
-          <NavLink
+          <Button
             onClick={(e) => {
               localStorage.removeItem("jwtToken");
               localStorage.removeItem("role");
               localStorage.removeItem("user");
+              window.location.href = "/sign-in";
             }}
-            to="/sign-in"
             style={{
               display: "flex",
               justifyContent: "center",
@@ -94,7 +137,7 @@ function SimpleDialog(props: SimpleDialogProps) {
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary="Đăng xuất" />
-          </NavLink>
+          </Button>
         </ListItem>
       </List>
     </Dialog>
@@ -116,16 +159,11 @@ export default function Navigation() {
   };
 
   useEffect(() => {
-    async function fetchData() {
-      const information = await userAPI.getInforUser();
-      localStorage.setItem("user", JSON.stringify(information));
-      setAuth(information);
-    }
-    const user = localStorage.getItem("user");
-    if (user) {
-      setAuth(JSON.parse(user));
-    } else {
-      fetchData();
+    if (auth !== null) {
+      const user = localStorage.getItem("user");
+      if (user) {
+        setAuth(JSON.parse(user));
+      }
     }
   }, []);
 

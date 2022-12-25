@@ -4,9 +4,9 @@ const userApi = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
     "Bypass-Tunnel-Reminder": "true",
-    'Cache-Control': 'no-cache',
-     'Pragma': 'no-cache',
-      'Expires': '0',
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
+    Expires: "0",
   },
 });
 
@@ -15,7 +15,7 @@ userApi.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     const accessToken = localStorage.getItem("jwtToken");
-    console.log("accessToken",accessToken)
+    console.log("accessToken", accessToken);
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
   },
@@ -35,7 +35,6 @@ userApi.interceptors.response.use(
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-
 
     throw error;
   }
