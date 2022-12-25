@@ -54,7 +54,6 @@ function PaymentOnlineResponse() {
       },
     };
     const respone: any = await orderApi.GetPaymentOnline(request);
-    console.log(respone);
     setPaymentResponse(respone.message);
   };
 

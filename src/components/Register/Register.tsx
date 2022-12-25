@@ -93,7 +93,7 @@ const Register = () => {
         navigated.push("/sign-in");
       }
     } catch (err) {
-      console.log(err);
+      navigated.push("/sign-in");
     }
   };
 

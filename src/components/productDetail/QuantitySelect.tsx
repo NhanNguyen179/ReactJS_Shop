@@ -30,13 +30,14 @@ export default function Quantityselect({
   return (
     <FormControl variant="outlined" fullWidth>
       <Select
-        value={value}
+        value={value ? value : 1}
         onChange={onChange}
         inputProps={{
           name: "quantity",
         }}
         MenuProps={MenuProps}
         fullWidth
+        defaultValue={1}
       >
         {[...Array(firstValue)].map((_, i) => (
           <MenuItem key={i} value={i + 1}>

@@ -4,33 +4,23 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import AddIcon from "@material-ui/icons/Add";
 import {
-  Avatar,
   Button,
   Container,
   DialogActions,
   Paper,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import productAPI from "../../api/productFunction";
 import { CustomSelect } from "../../components/common/CustomSelect";
-import ProductDialog from "./ProductDialog";
-import { useParams } from "react-router-dom";
-import listStatus from "../../components/order/util";
-import statusShop from "../../components/order/util";
 import util from "../../components/order/util";
 import orderApi from "../../api/orderApi";
-import { Value } from "sass";
 import {
   Box,
   Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
   Modal,
   TextField,
 } from "@material-ui/core";
@@ -85,28 +75,26 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Order() {
   const [products, setProducts] = React.useState([]);
   const [listStatus, setListStatus] = React.useState<any>([]);
-  const [valueStatus, setValueStatus] = React.useState<any>();
+  const [valueStatus, setValueStatus] =
+    React.useState<string>("wait_for_confirm");
   const [listNextStatus, setListNextStatus] = React.useState<any>();
-  const [nextStatus, setNextStatus] = React.useState<any>();
+  const [nextStatus, setNextStatus] =
+    React.useState<string>("wait_for_confirm");
   const [reasonCancel, setReasonCancel] = React.useState<any>();
-  const [idOrder,setIdOrder] = React.useState<any>();
+  const [idOrder, setIdOrder] = React.useState<any>();
   const [isModal, setIsModal] = React.useState<boolean>(false);
-
-  const shopId = useParams<{ shopId: string }>().shopId;
   const classes = useStyles();
 
   React.useEffect(() => {
     async function fetchData() {
-      const listStatusOrder: any = await orderApi.getConfigOrder();
-      setListStatus(listStatusOrder.data);
-      setValueStatus(listStatusOrder.data[0].value);
-      setListNextStatus(listStatus.data.nextAction);
-      const response: any = await orderApi.searchOrderByStatus(
-        listStatusOrder.data[0].value,
-        1,
-        shopId
-      );
-      setProducts(response.data.orders);
+      orderApi.getConfigOrder().then((res) => {
+        setListStatus(res.data);
+        setValueStatus(res.data[0].value);
+        setListNextStatus(res.data.nextAction);
+        orderApi.searchOrderByStatus(valueStatus, 1).then((response: any) => {
+          setProducts(response.data.orders);
+        });
+      });
     }
     fetchData();
   }, []);
@@ -116,17 +104,15 @@ export default function Order() {
   };
   const handleChange = async (value: any) => {
     setValueStatus(value);
-    const response: any = await orderApi.searchOrderByStatus(value, 1, shopId);
+    const response: any = await orderApi.searchOrderByStatus(value, 1);
     setListNextStatus(response.data.nextAction);
     setProducts(response.data.orders);
   };
-  const handleChangeStatus = async (id: any ) => {
+  const handleChangeStatus = async (id: any) => {
     if (nextStatus === "cancelled") {
-      setIsModal(true)
-      setIdOrder(id)
-    }
-    else 
-    {
+      setIsModal(true);
+      setIdOrder(id);
+    } else {
       const objectApi = {
         status: nextStatus,
         reason: "",
@@ -140,7 +126,7 @@ export default function Order() {
       reason: reasonCancel,
     };
     await orderApi.updateStatusOrder(idOrder, objectApi);
-  }
+  };
   return (
     <Container>
       <Paper elevation={2} className={classes.summaryCard}>
@@ -155,7 +141,7 @@ export default function Order() {
           }))}
           value={valueStatus}
           setValue={handleChange}
-          defaultValue={true}
+          defaultValue={"wait_for_confirm"}
         />
         <Table size="small" style={{ margin: "20px 0" }}>
           <TableHead>
@@ -237,13 +223,15 @@ export default function Order() {
                     width: "fit-content",
                   }}
                 >
-                 
-                  <TextField value={reasonCancel} onChange={handleChangeReason}/>
+                  <TextField
+                    value={reasonCancel}
+                    onChange={handleChangeReason}
+                  />
                 </Box>
               </DialogContent>
               <DialogActions>
-                <Button onClick={() => setIsModal(false)} >Hủy</Button>
-                <Button onClick= {() => handleSubmitWithReason()}>
+                <Button onClick={() => setIsModal(false)}>Hủy</Button>
+                <Button onClick={() => handleSubmitWithReason()}>
                   Xác nhận
                 </Button>
               </DialogActions>

@@ -35,28 +35,28 @@ productApi.interceptors.response.use(
     //   return;
     // }
     if (statusCode === 404) {
-      window.location.href = '/not-found';
+      window.location.href = "/not-found";
       return;
     }
 
-    if (statusCode === 401) {
-      window.location.href = '/login';
-      return;
-    }
+    // if (statusCode === 401) {
+    //   window.location.href = "/login";
+    //   return;
+    // }
 
     if (statusCode === 403) {
-      window.location.href = '/forbidden';
+      window.location.href = "/forbidden";
       return;
     }
 
     if (statusCode >= 500) {
       // show notification
-      window.location.href = '/server-error';
+      window.location.href = "/server-error";
       return;
     }
 
     throw error;
-  },
+  }
 );
 
 export default productApi;
