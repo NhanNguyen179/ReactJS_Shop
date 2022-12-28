@@ -45,6 +45,7 @@ export default function CategoryPage() {
   }
 
   params.append("pageNo", page.toString());
+  params.append("pageSize", "12");
 
   const handleChange = (e: any, p: any) => {
     setPage(p);
