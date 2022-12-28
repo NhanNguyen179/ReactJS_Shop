@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
+import util from "../order/util";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -78,21 +79,17 @@ const ProductList = ({ products }: any) => {
                 title={`${product.name}`}
                 className={styles.media}
               />
-              <CardContent>
+              <CardContent >
                 <Typography
                   gutterBottom
-                  variant="h5"
                   component="div"
                   className={styles.name}
                 >
                   {product.name}
                 </Typography>
-                <Typography
-                  color="textSecondary"
-                  component="p"
-                  className={styles.price}
-                >
-                  {product.price} đ
+                <br></br>
+                <Typography component="div" className={styles.price} >
+                  {util.convertToMoneyString(product.price)}
                 </Typography>
               </CardContent>
             </Card>

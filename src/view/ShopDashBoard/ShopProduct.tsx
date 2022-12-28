@@ -18,6 +18,7 @@ import productAPI from "../../api/productFunction";
 import { CustomSelect } from "../../components/common/CustomSelect";
 import ProductDialog from "./ProductDialog";
 import { useHistory } from "react-router-dom";
+import util from "../../components/order/util";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -155,7 +156,7 @@ export default function ShopProduct() {
                   />
                 </TableCell>
                 <TableCell>{product.name}</TableCell>
-                <TableCell>{product.price} đ</TableCell>
+                <TableCell>{util.convertToMoneyString(product.price)} </TableCell>
                 <TableCell>
                   <Button variant="outlined" color="error" fullWidth>
                     Xóa

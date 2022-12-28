@@ -24,6 +24,8 @@ import {
   Modal,
   TextField,
 } from "@material-ui/core";
+import { ToastContainer, toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -73,6 +75,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Order() {
+  const history = useHistory();
   const [products, setProducts] = React.useState([]);
   const [listStatus, setListStatus] = React.useState<any>([]);
   const [valueStatus, setValueStatus] =
@@ -108,16 +111,43 @@ export default function Order() {
     setListNextStatus(response.data.nextAction);
     setProducts(response.data.orders);
   };
-  const handleChangeStatus = async (id: any) => {
-    if (nextStatus === "cancelled") {
+  const handleChangeStatus = async (id: any, status?: any) => {
+    if (status === "cancelled") {
       setIsModal(true);
       setIdOrder(id);
     } else {
       const objectApi = {
-        status: nextStatus,
+        status: status,
         reason: "",
       };
-      await orderApi.updateStatusOrder(id, objectApi);
+      orderApi
+        .updateStatusOrder(id, objectApi)
+        .then((rs) => {
+          toast.success(`Chuyển trạng thái thành công!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          window.location.href = "/shop-dash-board/orders";
+        })
+        .catch((rs) => {
+          toast.error(`Chuyển trạng thái thất bại!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          window.location.href = "/shop-dash-board/orders";
+        });
     }
   };
   const handleSubmitWithReason = async () => {
@@ -129,9 +159,11 @@ export default function Order() {
   };
   return (
     <Container>
+      <ToastContainer />
+
       <Paper elevation={2} className={classes.summaryCard}>
         <Typography color={"textSecondary"} variant="h5" gutterBottom>
-          Sản phẩm
+          Đơn hàng
         </Typography>
         <CustomSelect
           label=""
@@ -148,8 +180,8 @@ export default function Order() {
             <TableRow>
               <TableCell>Tên shop</TableCell>
               <TableCell>Ngày tạo </TableCell>
-              <TableCell>Số sản phẩm</TableCell>
-              <TableCell> Tổng tiền</TableCell>
+              <TableCell>Tổng tiền</TableCell>
+              <TableCell>Trạng thái</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -168,25 +200,19 @@ export default function Order() {
                 </TableCell>
                 {/* <TableCell>{product.items.length}</TableCell> */}
                 <TableCell>{product?.total} đ</TableCell>
+
                 <TableCell>
-                  <CustomSelect
-                    label="Trạng thái tiếp theo"
-                    options={listNextStatus?.map((item: any) => ({
-                      value: item.value,
-                      label: item.name,
-                    }))}
-                    value={nextStatus}
-                    setValue={setNextStatus}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    onClick={() => handleChangeStatus(product?.id)}
-                  >
-                    Lưu
-                  </Button>
+                  {listNextStatus?.map((item: any) => (
+                    <Button
+                      variant="outlined"
+                      onClick={() =>
+                        handleChangeStatus(product?.id, item.value)
+                      }
+                      style={{ marginRight: "5px" }}
+                    >
+                      {item.name}
+                    </Button>
+                  ))}
                 </TableCell>
               </TableRow>
             ))}

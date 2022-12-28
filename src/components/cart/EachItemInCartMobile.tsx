@@ -109,9 +109,9 @@ const EachItemInCartMobile = ({
       );
     } else if (parseInt(currentQuantity) <= 9) {
       return (
-        <QuantitySelectCartDropDown
+        <QuantitySelectCartTextField
           onChange={(e) =>
-            handleUpdateQuantity_DropDown(id, quantity, price, e.target.value)
+            handleChangeQuantity_TextField(id, e.target.value.toString())
           }
           value={quantity}
         />

@@ -37,7 +37,7 @@ export default function InputSubmitButton({ onClick }: QantitySetButtonProps) {
         onClick={onClick}
         style={{ position: "absolute" }}
       >
-        Update
+        Cập nhập
       </Button>
     </div>
   );

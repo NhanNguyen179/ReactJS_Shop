@@ -9,6 +9,7 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import productAPI from "../../api/productFunction";
 import { CustomSelect } from "../../components/common/CustomSelect";
 import { useParams } from "react-router-dom";
+import util from "../../components/order/util";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -142,7 +143,7 @@ export default function Product() {
                   />
                 </TableCell>
                 <TableCell>{product.name}</TableCell>
-                <TableCell>{product.price} đ</TableCell>
+                <TableCell>{util.convertToMoneyString(product.price)} </TableCell>
                 <TableCell>
                   <Button
                     variant="outlined"

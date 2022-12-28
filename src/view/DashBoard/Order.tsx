@@ -138,7 +138,7 @@ export default function Order() {
     <Container>
       <Paper elevation={2} className={classes.summaryCard}>
         <Typography color={"textSecondary"} variant="h5" gutterBottom>
-          Sản phẩm
+          Đơn hàng
         </Typography>
         <CustomSelect
           label=""
@@ -155,8 +155,8 @@ export default function Order() {
             <TableRow>
               <TableCell>Tên shop</TableCell>
               <TableCell>Ngày tạo </TableCell>
-              <TableCell>Số sản phẩm</TableCell>
-              <TableCell> Tổng tiền</TableCell>
+              <TableCell>Tổng tiền</TableCell>
+              <TableCell>Trạng thái</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

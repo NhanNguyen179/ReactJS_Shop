@@ -289,7 +289,7 @@ export default function Invoice() {
   if (invoice === null || invoice.length === 0) {
     return <NoProductInCart />;
   }
-
+  console.log("auth", auth);
   return (
     <WrapAll style={{ padding: 20 }}>
       <NotificationModal
@@ -331,9 +331,12 @@ export default function Invoice() {
                       </TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell align="right">{item.quantity} </TableCell>
-                      <TableCell align="right"> {item.price} </TableCell>
                       <TableCell align="right">
-                        {item.quantity * item.price}
+                        {" "}
+                        {util.convertToMoneyString(item.price)}{" "}
+                      </TableCell>
+                      <TableCell align="right">
+                        {util.convertToMoneyString(item.quantity * item.price)}
                       </TableCell>
                     </TableRow>
                   );
@@ -379,23 +382,27 @@ export default function Invoice() {
               </Grid>
               <Grid item md={6} xs={12}>
                 <WrapInformation>
-                  <Value value={`Tên: ${auth.profile.name}`} size="16px" />
+                  <Value value={`Tên: ${auth?.profile.name}`} size="16px" />
                 </WrapInformation>
                 <WrapInformation>
                   <Value
-                    value={`Địa chỉ: ${auth.profile.address} `}
+                    value={`Địa chỉ: ${auth?.profile.address} `}
                     size="16px"
                   />
                 </WrapInformation>
                 <WrapInformation>
                   <Value
-                    value={`Email: : ${auth.profile.email} `}
+                    value={`Email: : ${auth?.profile.email} `}
                     size="16px"
                   />
                 </WrapInformation>
                 <WrapInformation>
                   <Value
-                    value={`SĐT: ${auth.profile.phone_number} `}
+                    value={`SĐT: ${
+                      auth?.profile.phone_number
+                        ? auth?.profile.phone_number
+                        : ""
+                    } `}
                     size="16px"
                   />{" "}
                 </WrapInformation>
@@ -405,7 +412,7 @@ export default function Invoice() {
                 <WrapPrice>
                   <Value value={`Tổng tiền: `} size="16px" />
                   <Value
-                    value={`${util.convertToMoneyString(totalPrice)} VNĐ`}
+                    value={`${util.convertToMoneyString(Number(totalPrice))} `}
                     size="16px"
                   />
                 </WrapPrice>
@@ -425,13 +432,17 @@ export default function Invoice() {
                 <WrapPrice>
                   <Value value={`Phí vận chuyển: `} size="16px" />
                   <Value
-                    value={` ${util.convertToMoneyString(feeShip)} VNĐ`}
+                    value={` ${util.convertToMoneyString(Number(feeShip))} `}
                     size="16px"
                   />
                 </WrapPrice>
                 <WrapPrice>
                   <Value value={`Cần thanh toán: `} size="16px" />
-                  <Value value={`${finalPrice} VNĐ`} size="16px" color="red" />
+                  <Value
+                    value={`${util.convertToMoneyString(Number(finalPrice))} `}
+                    size="16px"
+                    color="red"
+                  />
                 </WrapPrice>
               </Grid>
             </Grid>
