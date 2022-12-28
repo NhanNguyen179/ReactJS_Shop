@@ -43,12 +43,14 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     fontSize: "1rem",
-    height: "2rem",
+    lineHeight: "1.5rem",
+    height: "3rem",
     textOverflow: "ellipsis",
+    overflow: "hidden",
+    width: "100%",
   },
   price: {
     color: "#FFA500",
-    padding: "0.5rem 0",
   },
 }));
 
@@ -79,7 +81,7 @@ const ProductList = ({ products }: any) => {
                 title={`${product.name}`}
                 className={styles.media}
               />
-              <CardContent >
+              <CardContent>
                 <Typography
                   gutterBottom
                   component="div"
@@ -88,7 +90,7 @@ const ProductList = ({ products }: any) => {
                   {product.name}
                 </Typography>
                 <br></br>
-                <Typography component="div" className={styles.price} >
+                <Typography component="div" className={styles.price}>
                   {util.convertToMoneyString(product.price)}
                 </Typography>
               </CardContent>
