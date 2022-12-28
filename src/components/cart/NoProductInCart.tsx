@@ -14,7 +14,7 @@ const NoProductInCart = () => {
     >
       <h3>Không có sản phẩm trong giỏ hàng</h3>
       <div style={{ maxWidth: "270px" }}>
-        <NavLink to="/m">
+        <NavLink to="/">
           <CustomButton>
             <KeyboardReturnIcon />
             Tiếp tục mua sắm
