@@ -25,19 +25,28 @@ const useStyles = makeStyles(() => ({
 export default function CategoryPage() {
   const search = useLocation().search;
   const categoryId = new URLSearchParams(search).get("categoryId");
+  const pageQuery = new URLSearchParams(search).get("page");
+  const keyWord = new URLSearchParams(search).get("keyWord");
 
   const [products, setProducts] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [page, setPage] = React.useState<number>(1);
+  const [page, setPage] = React.useState<number>(
+    pageQuery ? parseInt(pageQuery) : 1
+  );
   const [totalPage, setTotalPage] = React.useState<number>(1);
 
   var params = new URLSearchParams();
   if (categoryId) {
     params.append("categoryId", categoryId);
-    params.append("page", page.toString());
   }
+
+  if (keyWord) {
+    params.append("keyWord", keyWord);
+  }
+
+  params.append("pageNo", page.toString());
+
   const handleChange = (e: any, p: any) => {
-    console.log("PAGE",p)
     setPage(p);
   };
   const styles = useStyles();
@@ -49,11 +58,11 @@ export default function CategoryPage() {
         params: params,
       });
       setProducts(respone.data);
-      setTotalPage(respone.totalPage);
+      setTotalPage(respone.totalPages);
       setPage(respone.pageNo);
     };
     fetch().then(() => setLoading(false));
-  }, [page]);
+  }, [page, categoryId, keyWord]);
 
   if (loading) {
     return <Loading />;

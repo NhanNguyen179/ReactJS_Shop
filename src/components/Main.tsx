@@ -1,7 +1,6 @@
 import { Switch, Route, Redirect } from "react-router-dom";
 import Home from "./home/Home";
 import ProductView from "./productDetail/ProductView";
-import SearchResults from "./SearchResults";
 import Navigation from "./layout/Navigation";
 import Footer from "./layout/Footer";
 import ProductsPage from "./products/ProductsPage";
@@ -31,10 +30,6 @@ export default function Main() {
 
           <Switch>
             <Route exact path={"/"} component={Home}></Route>
-            <Route
-              path={`/products/query=:query`}
-              component={SearchResults}
-            ></Route>
             <Route path={`/products`} component={ProductsPage}></Route>
             <Route path={`/product/:productId`} component={ProductView}></Route>
             <Route path={`/cart`} component={CardInfo}></Route>

@@ -1,7 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { AppContextSearch } from "../../context/ContextSearch";
-import { Types } from "../../context/ReducersSearch";
 import SearchIcon from "@material-ui/icons/Search";
 import { alpha, createStyles, makeStyles, Theme } from "@material-ui/core";
 import { InputBase } from "@mui/material";
@@ -56,26 +54,14 @@ export default function Search() {
     setLetters(event.target.value);
   };
 
-  const { state, dispatch } = useContext(AppContextSearch);
-  const handleUpdateLetters = () => {
-    dispatch({
-      type: Types.UpdateLetters,
-      payload: { search: letters },
-    });
-  };
-
   const history = useHistory();
   const handleOnKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && letters !== "") {
       event.preventDefault();
-      handleUpdateLetters();
-      history.push(`/search/query=${letters}`);
+      setLetters("");
+      history.push(`/products?keyWord=${letters}`);
     }
   };
-
-  useEffect(() => {
-    setLetters("");
-  }, [state.search]);
 
   return (
     <div className={styles.container}>
@@ -88,6 +74,7 @@ export default function Search() {
         className={styles.input}
         onChange={handleChangeLetters}
         onKeyDown={handleOnKeyPress}
+        value={letters}
       />
     </div>
   );
