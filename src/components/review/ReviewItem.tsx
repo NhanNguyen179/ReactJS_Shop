@@ -27,9 +27,7 @@ export default function ReviewItem(review: IReview) {
           >
             <Avatar
               sx={{ width: 50, height: 50 }}
-              src={
-                "https://image.shutterstock.com/shutterstock/photos/1907571817/display_1500/stock-vector-dogecoin-doge-cryptocurrency-isolated-on-white-background-face-of-the-shiba-inu-dog-on-coin-1907571817.jpg"
-              }
+              src={review.customer.avatar}
             />
           </div>
           <div style={{ textAlign: "center" }}>
@@ -58,7 +56,9 @@ export default function ReviewItem(review: IReview) {
                 <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
               }
             />
-            <span style={{ marginLeft: "20px" }}>{util.getFormattedDate(new Date(review.updatedAt))}</span>
+            <span style={{ marginLeft: "20px" }}>
+              {util.getFormattedDate(new Date(review.updatedAt))}
+            </span>
           </Box>
           <Box>
             <p style={{ fontSize: "16px" }}>{review.content}</p>
